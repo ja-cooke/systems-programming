@@ -10,7 +10,7 @@
       <TargetName>STM32F407 Flash</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6130001::V6.13.1::.\ARMCLANG</pCCUsed>
+      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -337,7 +337,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Wno-declaration-after-statement</MiscControls>
+              <MiscControls>-Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow</MiscControls>
               <Define>HSE_VALUE=8000000,PLL_M=8,PLL_N=336,PLL_P=2,PLL_Q=7</Define>
               <Undefine></Undefine>
               <IncludePath>inc</IncludePath>

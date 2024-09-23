@@ -1,54 +1,77 @@
 #include <stdint.h>
 #include "cmsis_armclang.h"
 
-#pragma GCC diagnostic ignored "-Wunused-variable"
-#pragma GCC diagnostic ignored "-Wmissing-prototypes"
-
 /**
  * HardFaultHandler_C:
- * This is called from the HardFault_Handler (below) with a pointer to the fault stack
+ * This is called from the HardFault_Handler (below) with a pointer to the Fault stack
  * as the parameter.  We can then unroll the stack and place them into local variables
  * for ease of reading.
- * 
  * The various fault status and address registers help diagnose the cause of the fault.
  * The function ends with a BKPT instruction to pass control back into the debugger.
- * 
- * HardFault_HandlerC is non-static because it must be accessible to the linker
- * (the compiler will not make the association with the B instruction in HardFault_Handler).
- * 
- * -Wunused-variable warnings suppressed for all locals in HardFault_HandlerC.
- * -Wmissing-prototypes warning suppressed for HardFault_Handler (it isn't part of the API
- * but cannot be static).
+ * Note: can't be static because it's called from assembly language (the linker
+ * resolves the symbol).
  */
+
 void HardFault_HandlerC(uint32_t *hardfault_args) {
-	volatile uint32_t stacked_r0  = hardfault_args[0];
-	volatile uint32_t stacked_r1  = hardfault_args[1];
-	volatile uint32_t stacked_r2  = hardfault_args[2];
-	volatile uint32_t stacked_r3  = hardfault_args[3];
-	volatile uint32_t stacked_r12 = hardfault_args[4];
-	volatile uint32_t stacked_lr  = hardfault_args[5];
-	volatile uint32_t stacked_pc  = hardfault_args[6];
-	volatile uint32_t stacked_psr = hardfault_args[7];
+	volatile uint32_t stacked_r0;
+	volatile uint32_t stacked_r1;
+	volatile uint32_t stacked_r2;
+	volatile uint32_t stacked_r3;
+	volatile uint32_t stacked_r12;
+	volatile uint32_t stacked_lr;
+	volatile uint32_t stacked_pc;
+	volatile uint32_t stacked_psr;
+	volatile uint32_t _CFSR;
+	volatile uint32_t _HFSR;
+	volatile uint32_t _DFSR;
+	volatile uint32_t _AFSR;
+	volatile uint32_t _BFAR;
+	volatile uint32_t _MMAR;
+
+	stacked_r0  = ((uint32_t)hardfault_args[0]);
+	stacked_r1  = ((uint32_t)hardfault_args[1]);
+	stacked_r2  = ((uint32_t)hardfault_args[2]);
+	stacked_r3  = ((uint32_t)hardfault_args[3]);
+	stacked_r12 = ((uint32_t)hardfault_args[4]);
+	stacked_lr  = ((uint32_t)hardfault_args[5]);
+	stacked_pc  = ((uint32_t)hardfault_args[6]);
+	stacked_psr = ((uint32_t)hardfault_args[7]);
 	
+	// Suppress "set but not used" warnings
+	(void) stacked_r0;
+	(void) stacked_r1;
+	(void) stacked_r2;
+	(void) stacked_r3;
+	(void) stacked_r12;
+	(void) stacked_lr;
+	(void) stacked_pc;
+	(void) stacked_psr;
+	(void) _CFSR;
+	(void) _HFSR;
+	(void) _DFSR;
+	(void) _AFSR;
+	(void) _BFAR;
+	(void) _MMAR;
+
 	// Configurable Fault Status Register
 	// Consists of MMSR, BFSR and UFSR
-	volatile uint32_t _CFSR = (*((volatile uint32_t *)(0xE000ED28))) ;   
+	_CFSR = (*((volatile uint32_t *)(0xE000ED28)));   
 																																									
 	// Hard Fault Status Register
-	volatile uint32_t _HFSR = (*((volatile uint32_t *)(0xE000ED2C))) ;
+	_HFSR = (*((volatile uint32_t *)(0xE000ED2C)));
 
 	// Debug Fault Status Register
-	volatile uint32_t _DFSR = (*((volatile uint32_t *)(0xE000ED30))) ;
+	_DFSR = (*((volatile uint32_t *)(0xE000ED30)));
 
 	// Auxiliary Fault Status Register
-	volatile uint32_t _AFSR = (*((volatile uint32_t *)(0xE000ED3C))) ;
+	_AFSR = (*((volatile uint32_t *)(0xE000ED3C)));
 
 	// Read the Fault Address Registers. These may not contain valid values.
 	// Check BFARVALID/MMARVALID to see if they are valid values
 	// MemManage Fault Address Register
-	volatile uint32_t _MMAR = (*((volatile uint32_t *)(0xE000ED34))) ;
+	_MMAR = (*((volatile uint32_t *)(0xE000ED34)));
 	// Bus Fault Address Register
-	volatile uint32_t _BFAR = (*((volatile uint32_t *)(0xE000ED38))) ;
+	_BFAR = (*((volatile uint32_t *)(0xE000ED38)));
 
 	__BKPT(0);
 }
@@ -70,6 +93,5 @@ void HardFault_Handler(void) {
 		"MRSNE		r0, PSP\n\t"
 		"MRSEQ		r0, MSP\n\t"
 		"B				HardFault_HandlerC"
-	::: "cc" /* Also clobbers r0 but this is used for the "call" */
 	);
 }

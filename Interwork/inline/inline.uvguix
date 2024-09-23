@@ -3611,7 +3611,7 @@
       <Size>100</Size>
       <ActiveTab>0</ActiveTab>
       <Doc>
-        <Name>.\asm\main.s</Name>
+        <Name>.\src\main.c</Name>
         <ColumnNumber>0</ColumnNumber>
         <TopLine>1</TopLine>
         <CurrentLine>1</CurrentLine>
