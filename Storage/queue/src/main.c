@@ -12,11 +12,16 @@ int main(void) {
 	
 	printf("\r\n --RESTART-- \r\n");
 	
-	for(int32_t i = 0; i < 10; i++) {
-		queue_put(&queue, i);
+	for(int32_t i = 0; i < 15; i++) {
+		if(queue_put(&queue, i)){
+			continue;
+		}
+		else{
+			printf("ERROR: Queue is full.\r\n");
+		}
 	}
 	
-	for(int32_t i = 0; i < 10; i++) {
+	for(int32_t i = 0; i < 15; i++) {
 		int8_t return_code;
 		return_code = 1;
 		int32_t dequeued_value;
@@ -26,7 +31,7 @@ int main(void) {
 			printf("Removed %" PRId32 " from queue\r\n", dequeued_value);
 		}
 		else{
-			printf("Dequeue Failure \r\n");
+			printf("ERROR: Queue is empty! There is nothing to get!\r\n");
 		}
 	}
 }
