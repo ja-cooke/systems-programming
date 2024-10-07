@@ -8,6 +8,8 @@ int main(void) {
 	configClock();
 	configUSART2(38400);
 	
+	printf("\r\n---RESTART---\r\n");
+	
 	int32_t store[20];
 	heap_t heap = HEAP_INITIALISER(store);
 

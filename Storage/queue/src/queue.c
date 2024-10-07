@@ -3,14 +3,14 @@
 #include "queue.h"
 
 static int32_t spaces_left = 0;
-static int32_t * spaces_left_ptr = &spaces_left;
+static int32_t *spaces_left_ptr = &spaces_left;
 
-void spaces(queue_t * queue){
+void spaces(queue_t *queue){
 	*spaces_left_ptr = (int32_t)(queue->remove - queue->insert) + QUEUE_SIZE - 1;
 	printf("Spaces left: %" PRId32 "\r\n", *spaces_left_ptr);
 }
 
-int8_t queue_put(queue_t * queue, int32_t data) {
+int8_t queue_put(queue_t *queue, int32_t data) {
 	spaces(queue);
 	
 	if(*spaces_left_ptr>0){
@@ -23,7 +23,7 @@ int8_t queue_put(queue_t * queue, int32_t data) {
 	return 1;
 }
 
-int32_t queue_get(queue_t * queue, int8_t * return_code) {	
+int32_t queue_get(queue_t *queue, int8_t *return_code) {	
 	uint_fast16_t insert = queue->insert;
 	uint_fast16_t remove = queue->remove;
 	
