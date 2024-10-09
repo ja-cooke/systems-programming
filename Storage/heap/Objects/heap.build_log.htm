@@ -27,14 +27,18 @@ Project File Date:  10/07/2024
 <h2>Output:</h2>
 *** Using Compiler 'V6.22', folder: 'c:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'STM32F407 Flash'
-src/heap.c(31): warning: unused parameter 'heap' [-Wunused-parameter]
-   31 | static void heap_down(heap_t *heap) {
+src/heap.c(10): warning: implicit conversion changes signedness: 'uint32_t' (aka 'unsigned int') to 'int32_t' (aka 'int') [-Wsign-conversion]
+   10 |         int32_t new_element_index = heap->size;
+      |                 ~~~~~~~~~~~~~~~~~   ~~~~~~^~~~
+src/heap.c(42): warning: unused parameter 'heap' [-Wunused-parameter]
+   42 | static void heap_down(heap_t *heap) {
       |                               ^
-1 warning generated.
+2 warnings generated.
 compiling heap.c...
+compiling main.c...
 linking...
-Program Size: Code=11408 RO-data=1072 RW-data=112 ZI-data=1888  
-".\Objects\heap.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=11452 RO-data=1072 RW-data=112 ZI-data=1888  
+".\Objects\heap.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -67,9 +71,9 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE@6.1.0
 
    * Component: Keil::Compiler&ARM Compiler:I/O:STDOUT&User@1.2.0
-      Source file:   Source/retarget_io.c
-      Source file:   Template/stdout_user.c
       Source file:   Template/stdout_USART.c
+      Source file:   Template/stdout_user.c
+      Source file:   Source/retarget_io.c
       Source file:   Template/stdout_display.c
 
    * Component: Keil::Compiler&ARM Compiler:I/O:TTY&User@1.2.0
@@ -78,8 +82,8 @@ Package Vendor: Keil
 
    * Component: Keil::Device:Startup@2.6.3
       Source file:   MDK/Device/Source/ARM/STM32F40xxx_41xxx_OPT.s
-      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f407xx.s
       Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
+      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f407xx.s
       Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
 Build Time Elapsed:  00:00:01
