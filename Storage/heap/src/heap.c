@@ -30,7 +30,6 @@ static void heap_up(heap_t *heap) {
 			offset_store[new_element_index] = swap_buffer;
 					
 			// Change the location of the pointer to the new element
-			offset_store[new_element_index] = offset_store[parent_index];
 			new_element_index = parent_index;
 					
 			// 6. With the element in its new location, go back to step 2
@@ -39,7 +38,50 @@ static void heap_up(heap_t *heap) {
 }
 
 static void heap_down(heap_t *heap) {
-	// Write me!
+	// offset array to concatinate the 'store' array from 1
+	// This makes navigation of the heap more human readable
+	int32_t * const offset_store = heap->store - 1;
+	uint32_t parent_index;
+	uint32_t child_index_a = (uint32_t) -1;
+	uint32_t child_index_b = (uint32_t) -1;
+	
+	// 1. Start with the root element
+	parent_index = 1;
+	
+	// 2. If it has no children, stop
+	while((parent_index * 2) <= heap->size){
+		// 3. Compare with its children
+		
+		// Determine the indices of the child nodes
+		child_index_a = (2*parent_index);
+		child_index_b = (2*parent_index)+1;
+		
+		// Detemine which of the two children has a smaller value
+		uint32_t smallest_child = (
+											offset_store[child_index_a] < offset_store[child_index_b]
+											) 
+											? child_index_a : child_index_b;
+			
+		if(offset_store[parent_index] <= offset_store[smallest_child]){
+			// 4. If the element is smaller than or equal to both children, stop
+			return;
+		}
+		else{
+			// 5. Swap the element with the smaller of the children
+			// Store the parent value in a memory buffer
+			int32_t swap_buffer;
+			swap_buffer = offset_store[parent_index];
+			
+			// Swap the parent and child values
+			offset_store[parent_index] = offset_store[smallest_child];
+			offset_store[smallest_child] = swap_buffer;
+					
+			// Change the location of the pointer to the new element
+			parent_index = smallest_child;
+			// 6. With the element in its new location, go back to step 2
+		}
+	
+	}
 }
 
 void heap_insert(heap_t *heap, int32_t value) {
