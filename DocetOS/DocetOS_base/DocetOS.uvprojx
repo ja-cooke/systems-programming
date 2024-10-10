@@ -336,7 +336,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow -Wpadded</MiscControls>
+              <MiscControls>-Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow -Wpadded -Wmissing-variable-declarations -Wmissing-prototypes</MiscControls>
               <Define>HSE_VALUE=8000000,PLL_M=8,PLL_N=336,PLL_P=2,PLL_Q=7</Define>
               <Undefine></Undefine>
               <IncludePath>inc</IncludePath>
