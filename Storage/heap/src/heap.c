@@ -91,8 +91,10 @@ static void heap_down(heap_t *heap) {
 	uint32_t child_index_a = (uint32_t) -1;
 	uint32_t child_index_b = (uint32_t) -1;
 	
-	// 1. Start with the root element
+	// 1. Start with the root element as a 'parent node'
 	parent_index = 1;
+	parent = &offset_store[parent_index];
+	
 	int_fast8_t number_of_children = number_of_children(parent, heap->size);
 	
 	// 2. If it has no children, stop
@@ -104,8 +106,6 @@ static void heap_down(heap_t *heap) {
 		uint32_t smallest_child_index;
 		int32_t *parent;
 		int32_t *smallest_child;
-		
-		parent = &offset_store[parent_index];
 		
 		// Case for only one child
 		if(number_of_children == 1){
@@ -150,6 +150,9 @@ static void heap_down(heap_t *heap) {
 					
 			// Change the location of the pointer to the new element
 			parent_index = smallest_child_index;
+			parent = &offset_store[parent_index];
+			// recalculate the number of children of the new parent node.
+			number_of_children = number_of_children(parent, heap->size);
 			// 6. With the element in its new location, go back to step 2
 			}
 		}
