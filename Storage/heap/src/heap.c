@@ -85,20 +85,20 @@ static void heap_down(heap_t *heap) {
 			return;
 		}
 		else{
-			// 5. Swap the element with the smaller of the children
-			// Store the parent value in a memory buffer
-			int32_t swap_buffer;
-			swap_buffer = offset_store[parent_index];
 			
-			// Swap the parent and child values
-			offset_store[parent_index] = offset_store[smallest_child];
-			offset_store[smallest_child] = swap_buffer;
+			
+			// 5. Swap the element with the smaller of the children
+			// Obtain pointers to the parent and child elements
+			int32_t *parent = &offset_store[parent_index];
+			int32_t *smallest_child_ptr = &offset_store[smallest_child];
+			
+			// Swap the two elements
+			swap(parent, smallest_child_ptr);
 					
 			// Change the location of the pointer to the new element
 			parent_index = smallest_child;
 			// 6. With the element in its new location, go back to step 2
 		}
-	
 	}
 }
 
