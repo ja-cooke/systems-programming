@@ -31,15 +31,15 @@ static int_fast8_t comparator(int32_t * element_a, int32_t * element_b) {
 	}
 }
 
-static int_fast8_t number_of_children(int32_t parent_index, int32_t heap_size){
+static uint32_t find_children(uint32_t parent_index, uint32_t heap_size){
 	// Determines the number of child nodes for a parent node of index 'parent_index' in a 
 	// binary heap of size 'heap_size'.
-	int_fast8_t index_of_first_child = parent_index*2;
+	uint32_t index_of_first_child = parent_index*2;
 	
-	if(index_of_first_child > heapsize){
+	if(index_of_first_child > heap_size){
 		return 0;
 	}
-	else if (index_of_first_child == heapsize){
+	else if (index_of_first_child == heap_size){
 		return 1;
 	}
 	else{
@@ -77,7 +77,7 @@ static void heap_up(heap_t *heap) {
 		}
 		else{
 			// 5. Swap the element with its parent
-			swap(parent, child);
+			swap_elements(parent, child);
 					
 			// Update the value of the index to the new element
 			new_element_index = parent_index;
@@ -98,6 +98,8 @@ static void heap_down(heap_t *heap) {
 	int32_t *child_b = 0;
 	int32_t *smallest_child = 0;
 	
+	uint32_t number_of_children;
+	
 	uint32_t parent_index = 0;
 	uint32_t child_index_a = 0;
 	uint32_t child_index_b = 0;
@@ -109,7 +111,7 @@ static void heap_down(heap_t *heap) {
 	parent_index = 1;
 	parent = &offset_store[parent_index];
 	
-	int_fast8_t number_of_children = number_of_children(parent, heap->size);
+	number_of_children = find_children(parent_index, heap->size);
 	
 	// 2. If it has no children, stop
 	// The parent will have no children if it's index * 2 is greater than the size of the heap.
@@ -131,7 +133,7 @@ static void heap_down(heap_t *heap) {
 			child_b = &offset_store[child_index_b];
 			
 			// Detemine which of the two children has a smaller value
-			comparator_result = comparator(child_a, child_b)  
+			comparator_result = comparator(child_a, child_b); 
 			
 			if(comparator_result >= 0){
 				smallest_child = child_a;
@@ -141,6 +143,7 @@ static void heap_down(heap_t *heap) {
 				smallest_child = child_b;
 				smallest_child_index = child_index_b;
 			}
+		}
 		
 		// Now the smallest child has been determined
 		
@@ -151,15 +154,14 @@ static void heap_down(heap_t *heap) {
 		else{
 			// 5. Swap the element with the smaller of the children
 			// Swap the two elements
-			swap(parent, smallest_child);
+			swap_elements(parent, smallest_child);
 					
 			// Change the location of the pointer to the new element
 			parent_index = smallest_child_index;
 			parent = &offset_store[parent_index];
 			// recalculate the number of children of the new parent node.
-			number_of_children = number_of_children(parent, heap->size);
+			number_of_children = find_children(parent_index, heap->size);
 			// 6. With the element in its new location, go back to step 2
-			}
 		}
 	}
 }
