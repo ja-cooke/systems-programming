@@ -1,5 +1,24 @@
 #include "heap.h"
 
+static void swap_elements(int32_t *element_a, int32_t *element_b){
+	// Swaps the contents of two memory elements
+	// Store the value of element_a in a memory buffer
+	int32_t swap_buffer;
+	swap_buffer = *element_a;
+					
+	// Swap the values in memory addressed by the pointers
+	*element_a = *element_b;
+	*element_b = swap_buffer;
+	
+	// Store the memory address of element_a in a buffer
+	int32_t * swap_buffer_ptr;
+	swap_buffer_ptr = element_a;
+	
+	// Swap the memory addresses stored in the pointers
+	element_a = element_b;
+	element_b = swap_buffer_ptr;
+}
+
 static void heap_up(heap_t *heap) {
 	// 1. Start with the last element in the heap
 	
@@ -21,13 +40,12 @@ static void heap_up(heap_t *heap) {
 		}
 		else{
 			// 5. Swap the element with its parent
-			// Store the parent value in a memory buffer
-			int32_t swap_buffer;
-			swap_buffer = offset_store[parent_index];
-					
-			// Swap the parent and child values
-			offset_store[parent_index] = offset_store[new_element_index];
-			offset_store[new_element_index] = swap_buffer;
+			// Obtain pointers to the parent and child elements
+			int32_t *parent = &offset_store[parent_index];
+			int32_t *child = &offset_store[new_element_index];
+			
+			// Swap the two elements
+			swap(parent, child);
 					
 			// Change the location of the pointer to the new element
 			new_element_index = parent_index;
