@@ -29,10 +29,11 @@ static int_fast8_t comparator(int32_t * element_a, int32_t * element_b) {
 	else{
 		return 0;
 	}
-
 }
 
 static int_fast8_t number_of_children(int32_t parent_index, int32_t heap_size){
+	// Determines the number of child nodes for a parent node of index 'parent_index' in a 
+	// binary heap of size 'heap_size'.
 	int_fast8_t index_of_first_child = parent_index*2;
 	
 	if(index_of_first_child > heapsize){
@@ -55,6 +56,9 @@ static void heap_up(heap_t *heap) {
 	// Initialise the parent_index as 0. This will be updated.
 	uint32_t parent_index = 0;
 	
+	int32_t *parent = 0;
+	int32_t *child = 0;
+	
 	// 2. If it's the root element, stop
 	while(new_element_index != 1){
 		// Determine the index of the parent node.
@@ -62,9 +66,9 @@ static void heap_up(heap_t *heap) {
 		// Hence the parent of a child can be found using integer division by 2.
 		parent_index = new_element_index / 2;	
 			
-		// Obtain pointers to the parent and child elements
-		int32_t *parent = &offset_store[parent_index];
-		int32_t *child = &offset_store[new_element_index];
+		// Direct pointers to the parent and child elements
+		parent = &offset_store[parent_index];
+		child = &offset_store[new_element_index];
 		
 		// 3. Compare it with its parent
 		if(comparator(parent, child) >= 0){
@@ -87,9 +91,19 @@ static void heap_down(heap_t *heap) {
 	// offset array to concatinate the 'store' array from 1
 	// This makes navigation of the heap more human readable
 	int32_t * const offset_store = heap->store - 1;
-	uint32_t parent_index;
-	uint32_t child_index_a = (uint32_t) -1;
-	uint32_t child_index_b = (uint32_t) -1;
+	
+	// Initialise all variables and pointers to zero
+	int32_t *parent = 0;
+	int32_t *child_a = 0;
+	int32_t *child_b = 0;
+	int32_t *smallest_child = 0;
+	
+	uint32_t parent_index = 0;
+	uint32_t child_index_a = 0;
+	uint32_t child_index_b = 0;
+	uint32_t smallest_child_index = 0;
+	
+	int_fast8_t comparator_result = 0;
 	
 	// 1. Start with the root element as a 'parent node'
 	parent_index = 1;
@@ -102,11 +116,6 @@ static void heap_down(heap_t *heap) {
 	// (i.e. the index of it's first child would be beyond the last heap element.)
 	while(number_of_children > 0){
 		// 3. Compare with its children
-		// Determine the indices of the child nodes
-		uint32_t smallest_child_index;
-		int32_t *parent;
-		int32_t *smallest_child;
-		
 		// Case for only one child
 		if(number_of_children == 1){
 			smallest_child_index = parent_index*2;
@@ -118,14 +127,10 @@ static void heap_down(heap_t *heap) {
 			child_index_a = (2*parent_index);
 			child_index_b = (2*parent_index)+1;
 			
-			int32_t *child_a;
-			int32_t *child_b;
-			
 			child_a = &offset_store[child_index_a];
 			child_b = &offset_store[child_index_b];
 			
 			// Detemine which of the two children has a smaller value
-			int_fast8_t comparator_result;
 			comparator_result = comparator(child_a, child_b)  
 			
 			if(comparator_result >= 0){
