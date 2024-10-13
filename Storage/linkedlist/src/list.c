@@ -18,8 +18,6 @@ void list_insert(list_t *list, list_item_t *item) {
 		// Point the pointers to these items
 		next_item = list->head;
 		previous_item = list->head->prev;
-		// Set the list head to the inserted item
-		list->head = item;
 		
 		// Update the list pointers
 		previous_item->next = item;
