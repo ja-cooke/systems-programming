@@ -8,7 +8,9 @@ int main(void) {
 	configClock();
 	configUSART2(38400);
 	
-	int32_t store[20];
+	printf("\r\n---RESTART---\r\n");
+	
+	int32_t store[20] = {0};
 	heap_t heap = HEAP_INITIALISER(store);
 
 	// Remember not to insert so many things that the heap overflows!
@@ -33,8 +35,9 @@ int main(void) {
 	heap_insert(&heap, 6);
 	heap_insert(&heap, 1);
 	
+	uint32_t heap_index = 0;
 	while (!heap_isEmpty(&heap)) {
-		printf("Extracted %" PRId32 "\r\n", heap_extract(&heap));
+		printf("Extracted index: %" PRIu32 " with value: %" PRId32 "\r\n", heap_index++, heap_extract(&heap));
 	}
 
 	while(1);
