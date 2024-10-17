@@ -5,9 +5,9 @@
 #define STATIC_ALLOC_POOLSIZE 16384UL
 #define STATIC_ALLOC_ALIGNMENT 8UL
 
-static uint8_t static_pool[STATIC_ALLOC_POOLSIZE];
+static uint8_t static_pool[STATIC_ALLOC_POOLSIZE] __attribute__ (( aligned(STATIC_ALLOC_ALIGNMENT) ));;
 static size_t pool_index = STATIC_ALLOC_POOLSIZE;
-static uint8_t bitmask = ~(STATIC_ALLOC_ALIGNMENT << (STATIC_ALLOC_ALIGNMENT - 2UL));
+static uint32_t bitmask = ~(STATIC_ALLOC_ALIGNMENT-1);
 
 void * static_alloc(size_t bytes) {
 	/* 
@@ -22,7 +22,7 @@ void * static_alloc(size_t bytes) {
 	}
 	else{
 		// Reduce the pool array index by the requested number of bytes.
-		pool_index = pool_index - bytes;
+		pool_index = (pool_index - bytes) & bitmask;
 		
 		// Return the new pool array index.
 	return &static_pool[pool_index];
