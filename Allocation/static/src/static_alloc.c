@@ -3,9 +3,11 @@
 
 // 16KB pool size
 #define STATIC_ALLOC_POOLSIZE 16384UL
+#define STATIC_ALLOC_ALIGNMENT 8UL
 
 static uint8_t static_pool[STATIC_ALLOC_POOLSIZE];
 static size_t pool_index = STATIC_ALLOC_POOLSIZE;
+static uint8_t bitmask = ~(STATIC_ALLOC_ALIGNMENT << (STATIC_ALLOC_ALIGNMENT - 2UL));
 
 void * static_alloc(size_t bytes) {
 	/* 
@@ -14,18 +16,15 @@ void * static_alloc(size_t bytes) {
 	* the number of requested bytes, all is fine. If not, zero should be returned
 	* to indicate failure.
 	*/
-	
-	size_t * pool_index_ptr = &pool_index;
-	size_t callpoint_pool_index = *pool_index_ptr;
-	
+
 	if(pool_index < bytes){
 		return 0;
 	}
 	else{
 		// Reduce the pool array index by the requested number of bytes.
-		*pool_index_ptr = *pool_index_ptr - bytes;
+		pool_index = pool_index - bytes;
 		
 		// Return the new pool array index.
-	return pool_index_ptr;
+	return &static_pool[pool_index];
 	}
 }
