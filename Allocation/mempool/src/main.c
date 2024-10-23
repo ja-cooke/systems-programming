@@ -24,6 +24,8 @@ int main(void) {
 		pool_add(&pool, &poolElements[i]);
 	}
 	
+	//pool_init(&pool, sizeof(packet_t), 10);
+	
 	/* Example use of the pool */
 	
 	/* Allocate two blocks for data packets and fill them in */

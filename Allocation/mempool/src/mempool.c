@@ -1,5 +1,6 @@
 #include "mempool.h"
 #include "static_alloc.h"
+#include <inttypes.h>
 
 void *pool_allocate(mempool_t *pool) {
 	void * output;
@@ -33,11 +34,21 @@ void pool_deallocate(mempool_t *pool, void *block) {
 
 void pool_init(mempool_t *pool, size_t blocksize, size_t blocks){
 	
+	size_t pool_index = 0;
 	pool = static_alloc(blocksize*blocks);
+	//static uint32_t bitmask = ~(7UL);
 	
-	
-	for (int i = 0; i < (int) blocks; ++i) {
-		pool_add(&pool, &poolElements[i]);
+	if(pool){
+		for (size_t i = 0; i < blocks; ++i) {
+			//pool_index = (pool_index - bytes) & bitmask;
+			pool_index = i * blocksize;
+			pool_add(pool, &pool[pool_index]);
+		}
 	}
+	else{
+		pool->head = 0;
+	}
+	
+	
 	
 }
