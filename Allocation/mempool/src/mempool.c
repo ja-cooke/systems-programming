@@ -2,6 +2,8 @@
 #include "static_alloc.h"
 #include <inttypes.h>
 
+#define STATIC_ALLOC_ALIGNMENT 8UL
+
 void *pool_allocate(mempool_t *pool) {
 	void * output;
 	
@@ -34,13 +36,16 @@ void pool_deallocate(mempool_t *pool, void *block) {
 
 void pool_init(mempool_t *pool, size_t blocksize, size_t blocks){
 	
+	// Round blocksize up to nearest multiple of 8 (one byte)
+	uint32_t bitmask = ~(STATIC_ALLOC_ALIGNMENT-1);
+	blocksize = (blocksize + 7UL) & bitmask;
+	
 	size_t pool_index = 0;
 	pool = static_alloc(blocksize*blocks);
-	//static uint32_t bitmask = ~(7UL);
+	
 	
 	if(pool){
 		for (size_t i = 0; i < blocks; ++i) {
-			//pool_index = (pool_index - bytes) & bitmask;
 			pool_index = i * blocksize;
 			pool_add(pool, &pool[pool_index]);
 		}
