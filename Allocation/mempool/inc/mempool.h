@@ -13,6 +13,8 @@ typedef struct {
 
 #define MEMPOOL_INITIALISER { .head = 0 }
 
+void * static_alloc(size_t bytes);
+
 void *pool_allocate(mempool_t *pool);
 void pool_deallocate(mempool_t *pool, void *block);
 void pool_init(mempool_t *pool, size_t blocksize, size_t blocks);
