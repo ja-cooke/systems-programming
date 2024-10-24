@@ -1,0 +1,153 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             storage,DATA
+    2 00000000         array
+    3 00000000         ; Total is 232 for the example list
+    4 00000000         ;DCD 1, 7, 31, 193, 2, -5, 1
+    5 00000000 00001550 
+              0000037E 
+              00000127 
+              FFFFFE38 
+              FFFFDDCE 
+              FFFFFFA7 
+              00000006 
+              FFFFFFB2 
+              00000005 
+              00000009         DCD              5456, 894, 295, -456, -8754, -8
+9, 6, -78, 5, 9
+    6 00000028         array_end
+    7 00000028         
+    8 00000028                 AREA             main,CODE
+    9 00000000                 EXPORT           asm_main
+   10 00000000         
+   11 00000000         mod
+   12 00000000         ; do something
+   13 00000000 2A00            CMP              r2, #0
+   14 00000002 D400            BMI              negative
+   15 00000004 4770            BX               LR
+   16 00000006         
+   17 00000006         negative
+   18 00000006 EA6F 0202       MVN              r2, r2
+   19 0000000A F102 0201       ADD              r2, #1
+   20 0000000E 4770            BX               LR
+   21 00000010         
+   22 00000010         asm_main
+   23 00000010         ; Your code goes here
+   24 00000010 4807            LDR              r0, =array
+   25 00000012 4908            LDR              r1, =array_end
+   26 00000014         
+   27 00000014 F850 2B04       LDR              r2, [r0], #4
+   28 00000018 F7FF FFF2       BL               mod
+   29 0000001C 4613            MOV              r3, r2
+   30 0000001E         
+   31 0000001E         loop
+   32 0000001E F850 2B04       LDR              r2, [r0], #4
+   33 00000022 F7FF FFED       BL               mod
+   34 00000026         
+   35 00000026 4413            ADD              r3, r2, r3
+   36 00000028         
+   37 00000028 4288            CMP              r0, r1
+   38 0000002A DBF8            BLT              loop
+   39 0000002C         
+   40 0000002C E7FE            B                .           ; Loop forever
+   41 0000002E         
+   42 0000002E 00 00           ALIGN
+   43 00000030                 END
+              00000000 
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4.fp.sp 
+--depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_STM32F407_Flash -IC:\Keil
+_v5\ARM\PACK\ARM\CMSIS\6.1.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\STM3
+2F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__UVISI
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+ON_VERSION SETA 541" --predefine="STM32F407xx SETA 1" --predefine="_RTE_ SETA 1
+" --list=.\listings\main.lst asm\main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+array 00000000
+
+Symbol: array
+   Definitions
+      At line 2 in file asm\main.s
+   Uses
+      At line 24 in file asm\main.s
+Comment: array used once
+array_end 00000028
+
+Symbol: array_end
+   Definitions
+      At line 6 in file asm\main.s
+   Uses
+      At line 25 in file asm\main.s
+Comment: array_end used once
+storage 00000000
+
+Symbol: storage
+   Definitions
+      At line 1 in file asm\main.s
+   Uses
+      None
+Comment: storage unused
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+asm_main 00000010
+
+Symbol: asm_main
+   Definitions
+      At line 22 in file asm\main.s
+   Uses
+      At line 9 in file asm\main.s
+Comment: asm_main used once
+loop 0000001E
+
+Symbol: loop
+   Definitions
+      At line 31 in file asm\main.s
+   Uses
+      At line 38 in file asm\main.s
+Comment: loop used once
+main 00000000
+
+Symbol: main
+   Definitions
+      At line 8 in file asm\main.s
+   Uses
+      None
+Comment: main unused
+mod 00000000
+
+Symbol: mod
+   Definitions
+      At line 11 in file asm\main.s
+   Uses
+      At line 28 in file asm\main.s
+      At line 33 in file asm\main.s
+
+negative 00000006
+
+Symbol: negative
+   Definitions
+      At line 17 in file asm\main.s
+   Uses
+      At line 14 in file asm\main.s
+Comment: negative used once
+5 symbols
+344 symbols in table
