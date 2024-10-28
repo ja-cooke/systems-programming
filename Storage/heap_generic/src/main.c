@@ -9,14 +9,19 @@ typedef struct {
 	uint32_t priority;
 } example_item_t;
 
+int_fast8_t static comparator(void * input_a, void * input_b);
+
 int main(void) {
 	
 	configClock();
 	configUSART2(38400);
 	
-	void *store[20];
+	void *store[20] = {0};
+	
 	heap_t heap = HEAP_INITIALISER(store, comparator);
 
+	printf("\r\n ---RESET--- \r\n");
+	
 	// Remember not to insert so many things that the heap overflows!
 	heap_insert(&heap, &(example_item_t){.name="first", .priority=2});
 	heap_insert(&heap, &(example_item_t){.name="second", .priority=4});
@@ -31,4 +36,25 @@ int main(void) {
 	}
 
 	while(1);
+}
+
+int_fast8_t static comparator(void * input_a, void * input_b){
+	
+	example_item_t *input_a_cast = input_a;
+	example_item_t *input_b_cast = input_b;
+	
+	uint32_t priority_a = input_a_cast->priority;
+	uint32_t priority_b = input_b_cast->priority;
+	// Return > 0 if the first parameter is "greater"
+	if(priority_a > priority_b){
+		return 1;
+	}
+	// Return < 0 if the first parameter is "less"
+	else if(priority_a < priority_b){
+		return -1;
+	}
+	// Return 0 if the first parameter is "equal"
+	else{
+		return 0;
+	}
 }
