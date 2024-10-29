@@ -1,0 +1,80 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             mainarea,CODE
+    2 00000000                 EXPORT           fib
+    3 00000000         
+    4 00000000         
+    5 00000000         branch
+    6 00000000 F1A2 0001       SUB              r0, r2, #1
+    7 00000004         
+    8 00000004 4623            MOV              r3, r4
+    9 00000006 461A            MOV              r2, r3
+   10 00000008         
+   11 00000008 E7FE            B                fib         ; Call to find n-1
+   12 0000000A         
+   13 0000000A 462B            MOV              r3, r5
+   14 0000000C         
+   15 0000000C E7FE            B                fib         ; Call to find n-2
+   16 0000000E         
+   17 0000000E 462C            MOV              r4, r5
+   18 00000010         
+   19 00000010 EB03 0204       ADD              r2, r3, r4
+   20 00000014         
+   21 00000014         fib
+   22 00000014 4671            MOV              r1, LR
+   23 00000016 4602            MOV              r2, r0
+   24 00000018         
+   25 00000018 2802            CMP              r0, #2
+   26 0000001A D8F1            BHI              branch
+   27 0000001C         
+   28 0000001C F04F 0501       MOV              r5, #1
+   29 00000020 468E            MOV              LR, r1
+   30 00000022         
+   31 00000022 4770            BX               LR
+   32 00000024         
+   33 00000024                 END
+Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4.fp.sp 
+--depend=.\objects\fibonnaci.d -o.\objects\fibonnaci.o -I.\RTE\_STM32F407_Flash
+ -I"C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Inclu
+de" -I"C:\Users\Jon Cooke\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Dri
+vers\CMSIS\Device\ST\STM32F4xx\Include" --predefine="__EVAL SETA 1" --predefine
+="__UVISION_VERSION SETA 541" --predefine="STM32F407xx SETA 1" --predefine="_RT
+E_ SETA 1" --list=.\listings\fibonnaci.lst asm\fibonnaci.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+branch 00000000
+
+Symbol: branch
+   Definitions
+      At line 5 in file asm\fibonnaci.s
+   Uses
+      At line 26 in file asm\fibonnaci.s
+Comment: branch used once
+fib 00000014
+
+Symbol: fib
+   Definitions
+      At line 21 in file asm\fibonnaci.s
+   Uses
+      At line 2 in file asm\fibonnaci.s
+      At line 11 in file asm\fibonnaci.s
+      At line 15 in file asm\fibonnaci.s
+
+mainarea 00000000
+
+Symbol: mainarea
+   Definitions
+      At line 1 in file asm\fibonnaci.s
+   Uses
+      None
+Comment: mainarea unused
+3 symbols
+338 symbols in table
