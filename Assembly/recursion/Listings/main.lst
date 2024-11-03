@@ -12,13 +12,17 @@ ARM Macro Assembler    Page 1
     6 00000000         asm_main
     7 00000000         
     8 00000000 F04F 0007       MOV              r0, #7
-    9 00000004 F7FF FFFE       BL               fib         ; Your call to 'fib
+    9 00000004         
+   10 00000004 F7FF FFFE       BL               fib         ; Your call to 'fib
                                                             ' goes here
-   10 00000008         
-   11 00000008 E7FE            B                .           ; Loop forever
-   12 0000000A         
-   13 0000000A 00 00           ALIGN
-   14 0000000C                 END
+   11 00000008         
+   12 00000008 F04F 0609       MOV              r6, #9
+   13 0000000C F04F 0709       MOV              r7, #9
+   14 00000010         
+   15 00000010 E7FE            B                .           ; Loop forever
+   16 00000012         
+   17 00000012 00 00           ALIGN
+   18 00000014                 END
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4.fp.sp 
 --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_STM32F407_Flash -I"C:\Use
 rs\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include" -I"C:\
@@ -61,7 +65,7 @@ Symbol: fib
    Definitions
       At line 4 in file asm\main.s
    Uses
-      At line 9 in file asm\main.s
+      At line 10 in file asm\main.s
 Comment: fib used once
 1 symbol
 338 symbols in table

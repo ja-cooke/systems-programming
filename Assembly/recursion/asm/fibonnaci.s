@@ -1,6 +1,5 @@
 	AREA mainarea,CODE
-	EXPORT fib
-		
+	EXPORT fib		
 		
 branch
 	SUB r0, r2, #1
@@ -15,12 +14,12 @@ branch
 	B fib 	; Call to find n-2
 	
 	MOV r4, r5
-	
 	ADD r2, r3, r4
+	
+	MOV LR, r1
+	BX LR		; exit
 		
 fib
-	CMP LR, fib
-	
 	MOV r1, LR
 	MOV r2, r0
 	
@@ -28,8 +27,7 @@ fib
 	BHI branch
 	
 	MOV r5, #1
-	MOV LR, r1
 	
-	BX LR
+	B branch
 	
 	END
