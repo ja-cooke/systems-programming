@@ -9,8 +9,8 @@ asm_main
 	
 	BL fib 		; Your call to 'fib' goes here
 
-	MOV r6, #9
-	MOV r7, #9
+	MOV r8, r0
+	MOV r9, r0
 
 	B .			; Loop forever
 

@@ -4,39 +4,243 @@
 ARM Macro Assembler    Page 1 
 
 
-    1 00000000                 AREA             mainarea,CODE
-    2 00000000                 EXPORT           fib
-    3 00000000         
-    4 00000000         branch
-    5 00000000 F1A2 0001       SUB              r0, r2, #1
-    6 00000004         
-    7 00000004 4623            MOV              r3, r4
-    8 00000006 461A            MOV              r2, r3
-    9 00000008         
-   10 00000008 E7FE            B                fib         ; Call to find n-1
-   11 0000000A         
-   12 0000000A 462B            MOV              r3, r5
-   13 0000000C         
-   14 0000000C E7FE            B                fib         ; Call to find n-2
-   15 0000000E         
-   16 0000000E 462C            MOV              r4, r5
-   17 00000010 EB03 0204       ADD              r2, r3, r4
-   18 00000014         
-   19 00000014 4770            BX               LR
-   20 00000016         
-   21 00000016         fib
-   22 00000016 4671            MOV              r1, LR
-   23 00000018 4602            MOV              r2, r0
-   24 0000001A         
-   25 0000001A 2802            CMP              r0, #2
-   26 0000001C D8F0            BHI              branch
-   27 0000001E         
-   28 0000001E F04F 0501       MOV              r5, #1
-   29 00000022 468E            MOV              LR, r1
-   30 00000024         
-   31 00000024 E7EC            B                branch
-   32 00000026         
-   33 00000026                 END
+    1 00000000                 AREA             storage,DATA
+    2 00000000         array
+    3 00000000 00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00               SPACE            16*31       ; Declares a 30x 32
+                                                            -bit storage area
+    4 000001F0         array_end
+    5 000001F0         
+    6 000001F0                 AREA             mainarea,CODE
+    7 00000000                 EXPORT           fib
+    8 00000000         
+    9 00000000         branch
+   10 00000000 F1A2 0001       SUB              r0, r2, #1
+   11 00000004         
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+   12 00000004 4623            MOV              r3, r4
+   13 00000006 461A            MOV              r2, r3
+   14 00000008         
+   15 00000008 E7FE            B                fib         ; Call to find n-1
+   16 0000000A         
+   17 0000000A 462B            MOV              r3, r5
+   18 0000000C         
+   19 0000000C E7FE            B                fib         ; Call to find n-2
+   20 0000000E         
+   21 0000000E 462C            MOV              r4, r5
+   22 00000010 EB03 0204       ADD              r2, r3, r4
+   23 00000014         
+   24 00000014 F856 1904       LDR              r1, [r6], #-4
+   25 00000018 468E            MOV              LR, r1
+   26 0000001A 4770            BX               LR          ; exit
+   27 0000001C         
+   28 0000001C         arrayStore
+   29 0000001C         
+   30 0000001C         arrayEnd
+   31 0000001C         
+   32 0000001C         fib
+   33 0000001C 4E06            LDR              r6, =array
+   34 0000001E 4F07            LDR              r7, =array_end
+   35 00000020         
+   36 00000020 4671            MOV              r1, LR
+   37 00000022         
+   38 00000022 F846 1B04       STR              r1, [r6], #4
+   39 00000026         
+   40 00000026 4602            MOV              r2, r0
+   41 00000028         
+   42 00000028 2802            CMP              r0, #2
+   43 0000002A D8E9            BHI              branch
+   44 0000002C         
+   45 0000002C F04F 0501       MOV              r5, #1
+   46 00000030         
+   47 00000030 F856 1904       LDR              r1, [r6], #-4
+   48 00000034 468E            MOV              LR, r1
+   49 00000036 4770            BX               LR          ; exit
+   50 00000038         
+   51 00000038                 END
+              00000000 
+              00000000 
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4.fp.sp 
 --depend=.\objects\fibonnaci.d -o.\objects\fibonnaci.o -I.\RTE\_STM32F407_Flash
  -I"C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Inclu
@@ -50,32 +254,78 @@ E_ SETA 1" --list=.\listings\fibonnaci.lst asm\fibonnaci.s
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Relocatable symbols
 
+array 00000000
+
+Symbol: array
+   Definitions
+      At line 2 in file asm\fibonnaci.s
+   Uses
+      At line 33 in file asm\fibonnaci.s
+Comment: array used once
+array_end 000001F0
+
+Symbol: array_end
+   Definitions
+      At line 4 in file asm\fibonnaci.s
+   Uses
+      At line 34 in file asm\fibonnaci.s
+Comment: array_end used once
+storage 00000000
+
+Symbol: storage
+   Definitions
+      At line 1 in file asm\fibonnaci.s
+   Uses
+      None
+Comment: storage unused
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+arrayEnd 0000001C
+
+Symbol: arrayEnd
+   Definitions
+      At line 30 in file asm\fibonnaci.s
+   Uses
+      None
+Comment: arrayEnd unused
+arrayStore 0000001C
+
+Symbol: arrayStore
+   Definitions
+      At line 28 in file asm\fibonnaci.s
+   Uses
+      None
+Comment: arrayStore unused
 branch 00000000
 
 Symbol: branch
    Definitions
-      At line 4 in file asm\fibonnaci.s
+      At line 9 in file asm\fibonnaci.s
    Uses
-      At line 26 in file asm\fibonnaci.s
-      At line 31 in file asm\fibonnaci.s
-
-fib 00000016
+      At line 43 in file asm\fibonnaci.s
+Comment: branch used once
+fib 0000001C
 
 Symbol: fib
    Definitions
-      At line 21 in file asm\fibonnaci.s
+      At line 32 in file asm\fibonnaci.s
    Uses
-      At line 2 in file asm\fibonnaci.s
-      At line 10 in file asm\fibonnaci.s
-      At line 14 in file asm\fibonnaci.s
+      At line 7 in file asm\fibonnaci.s
+      At line 15 in file asm\fibonnaci.s
+      At line 19 in file asm\fibonnaci.s
 
 mainarea 00000000
 
 Symbol: mainarea
    Definitions
-      At line 1 in file asm\fibonnaci.s
+      At line 6 in file asm\fibonnaci.s
    Uses
       None
 Comment: mainarea unused
-3 symbols
-338 symbols in table
+5 symbols
+345 symbols in table

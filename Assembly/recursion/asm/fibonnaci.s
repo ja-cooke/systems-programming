@@ -1,3 +1,8 @@
+	AREA storage,DATA
+array
+	SPACE 16*31	; Declares a 30x 32-bit storage area
+array_end
+	
 	AREA mainarea,CODE
 	EXPORT fib		
 		
@@ -16,11 +21,22 @@ branch
 	MOV r4, r5
 	ADD r2, r3, r4
 	
+	LDR r1, [r6], #-4
 	MOV LR, r1
 	BX LR		; exit
+	
+arrayStore
+
+arrayEnd
 		
 fib
+	LDR r6, =array
+	LDR r7, =array_end
+
 	MOV r1, LR
+	
+	STR r1, [r6], #4
+	
 	MOV r2, r0
 	
 	CMP r0, #2
@@ -28,6 +44,8 @@ fib
 	
 	MOV r5, #1
 	
-	B branch
+	LDR r1, [r6], #-4
+	MOV LR, r1
+	BX LR 		; exit
 	
 	END
