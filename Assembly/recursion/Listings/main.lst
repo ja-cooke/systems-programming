@@ -11,18 +11,16 @@ ARM Macro Assembler    Page 1
     5 00000000         
     6 00000000         asm_main
     7 00000000         
-    8 00000000 F04F 0007       MOV              r0, #7
+    8 00000000 F04F 0004       MOV              r0, #4
     9 00000004         
    10 00000004 F7FF FFFE       BL               fib         ; Your call to 'fib
                                                             ' goes here
-   11 00000008         
-   12 00000008 4680            MOV              r8, r0
-   13 0000000A 4681            MOV              r9, r0
+   11 00000008 4608            MOV              r0, r1
+   12 0000000A         
+   13 0000000A E7FE            B                .           ; Loop forever
    14 0000000C         
-   15 0000000C E7FE            B                .           ; Loop forever
-   16 0000000E         
-   17 0000000E 00 00           ALIGN
-   18 00000010                 END
+   15 0000000C                 ALIGN
+   16 0000000C                 END
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4.fp.sp 
 --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_STM32F407_Flash -I"C:\Use
 rs\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include" -I"C:\
