@@ -1,0 +1,159 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             storage,DATA
+    2 00000000         array
+    3 00000000 00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00               SPACE            4*19        ; Declares a 20-wor
+                                                            d storage area
+    4 0000004C         array_end
+    5 0000004C         
+    6 0000004C                 AREA             mainarea,CODE
+    7 00000000                 IMPORT           report
+    8 00000000                 EXPORT           fib
+    9 00000000         
+   10 00000000         fib
+   11 00000000 B570            STMFD            sp!, {r4-r6, lr}
+   12 00000002         
+   13 00000002 4C08            LDR              r4, =array
+   14 00000004 4D08            LDR              r5, =array_end
+   15 00000006         
+   16 00000006 F04F 0201       MOV              r2, #1
+   17 0000000A F04F 0301       MOV              r3, #1
+   18 0000000E         
+   19 0000000E C40C            STMIA            r4!, {r2, r3}
+   20 00000010         
+   21 00000010         loop
+   22 00000010 441A            ADD              r2, r2, r3
+   23 00000012 4413            ADD              r3, r2, r3
+   24 00000014 C40C            STMIA            r4!, {r2, r3}
+   25 00000016         
+   26 00000016 42AC            CMP              r4, r5
+   27 00000018 D3FA            BCC              loop
+   28 0000001A         
+   29 0000001A 4618            MOV              r0, r3
+   30 0000001C         
+   31 0000001C F7FF FFFE       BL               report
+   32 00000020         
+   33 00000020 E8BD 4070       LDMFD            sp!, {r4-r6, lr}
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   34 00000024         
+   35 00000024                 END
+              00000000 
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4.fp.sp 
+--depend=.\objects\asm.d -o.\objects\asm.o -I.\RTE\_STM32F407_Flash -IC:\Keil_v
+5\ARM\PACK\ARM\CMSIS\6.1.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F
+4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__UVISION
+_VERSION SETA 541" --predefine="STM32F407xx SETA 1" --predefine="_RTE_ SETA 1" 
+--list=.\listings\asm.lst asm\asm.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+array 00000000
+
+Symbol: array
+   Definitions
+      At line 2 in file asm\asm.s
+   Uses
+      At line 13 in file asm\asm.s
+Comment: array used once
+array_end 0000004C
+
+Symbol: array_end
+   Definitions
+      At line 4 in file asm\asm.s
+   Uses
+      At line 14 in file asm\asm.s
+Comment: array_end used once
+storage 00000000
+
+Symbol: storage
+   Definitions
+      At line 1 in file asm\asm.s
+   Uses
+      None
+Comment: storage unused
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+fib 00000000
+
+Symbol: fib
+   Definitions
+      At line 10 in file asm\asm.s
+   Uses
+      At line 8 in file asm\asm.s
+Comment: fib used once
+loop 00000010
+
+Symbol: loop
+   Definitions
+      At line 21 in file asm\asm.s
+   Uses
+      At line 27 in file asm\asm.s
+Comment: loop used once
+mainarea 00000000
+
+Symbol: mainarea
+   Definitions
+      At line 6 in file asm\asm.s
+   Uses
+      None
+Comment: mainarea unused
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+report 00000000
+
+Symbol: report
+   Definitions
+      At line 7 in file asm\asm.s
+   Uses
+      At line 31 in file asm\asm.s
+Comment: report used once
+1 symbol
+343 symbols in table
