@@ -15,26 +15,26 @@ ARM Macro Assembler    Page 1
     9 00000004 4604            MOV              r4, r0
    10 00000006         
    11 00000006         ; Load C struct contents into registers
-   12 00000006 6825            LDR              r5, [r4]
-   13 00000008 6866            LDR              r6, [r4, #4]
-   14 0000000A 68A7            LDR              r7, [r4, #8]
-   15 0000000C F8D4 800C       LDR              r8, [r4, #12]
+   12 00000006 6825            LDR              r5, [r4]    ; Callback
+   13 00000008 6866            LDR              r6, [r4, #4] ; PTR
+   14 0000000A 68A7            LDR              r7, [r4, #8] ; x
+   15 0000000C F8D4 800C       LDR              r8, [r4, #12] ; y
    16 00000010         
    17 00000010         ; Add integer data in structure and return it
-   18 00000010 442E            ADD              r6, r5, r6
-   19 00000012 6066            STR              r6, [r4, #4]
-   20 00000014         
-   21 00000014         ; Call the callback function 
-   22 00000014         ; Input argument ptr
-   23 00000014 4638            MOV              r0, r7
-   24 00000016 47C0            BLX              r8
-   25 00000018         
-   26 00000018         ; Restore registers from stack
-   27 00000018 E8BD 41F0       LDMFD            sp!, {r4-r8,lr}
-   28 0000001C         ; Return to main.c
-   29 0000001C 4770            BX               lr
-   30 0000001E         
-   31 0000001E                 END
+   18 00000010 44B8            ADD              r8, r7, r8
+   19 00000012 F8C4 800C       STR              r8, [r4, #12]
+   20 00000016         
+   21 00000016         ; Call the callback function 
+   22 00000016         ; Input argument ptr
+   23 00000016 4630            MOV              r0, r6
+   24 00000018 47A8            BLX              r5
+   25 0000001A         
+   26 0000001A         ; Restore registers from stack
+   27 0000001A E8BD 41F0       LDMFD            sp!, {r4-r8,lr}
+   28 0000001E         ; Return to main.c
+   29 0000001E 4770            BX               lr
+   30 00000020         
+   31 00000020                 END
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4.fp.sp 
 --depend=.\objects\asm.d -o.\objects\asm.o -I.\RTE\_STM32F407_Flash -I"C:\Users
 \Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include" -I"C:\Us
