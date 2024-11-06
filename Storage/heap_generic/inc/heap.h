@@ -9,7 +9,7 @@ typedef struct {
 	int_fast8_t (*comparator) (void *, void *);
 } heap_t;
 
-#define HEAP_INITIALISER(store, comparator) { .store = (store), .size = 0, .comparator = (comparator) }
+#define HEAP_INITIALISER(arg_store, arg_comparator) { .store = (arg_store), .size = 0, .comparator = (arg_comparator) }
 
 void heap_insert(heap_t *heap, void *value);
 void *heap_extract(heap_t *heap);
