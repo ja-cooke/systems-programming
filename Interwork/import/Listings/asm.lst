@@ -4,75 +4,71 @@
 ARM Macro Assembler    Page 1 
 
 
-    1 00000000                 AREA             storage,DATA
-    2 00000000         array
-    3 00000000 00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00 00 00 
-              00               SPACE            4*19        ; Declares a 20-wor
-                                                            d storage area
-    4 0000004C         array_end
-    5 0000004C         
-    6 0000004C                 AREA             mainarea,CODE
-    7 00000000                 IMPORT           report
-    8 00000000                 EXPORT           fib
-    9 00000000         
-   10 00000000         fib
-   11 00000000 B570            STMFD            sp!, {r4-r6, lr}
-   12 00000002         
-   13 00000002 4C08            LDR              r4, =array
-   14 00000004 4D08            LDR              r5, =array_end
-   15 00000006         
-   16 00000006 F04F 0201       MOV              r2, #1
-   17 0000000A F04F 0301       MOV              r3, #1
-   18 0000000E         
-   19 0000000E C40C            STMIA            r4!, {r2, r3}
-   20 00000010         
-   21 00000010         loop
-   22 00000010 441A            ADD              r2, r2, r3
-   23 00000012 4413            ADD              r3, r2, r3
-   24 00000014 C40C            STMIA            r4!, {r2, r3}
-   25 00000016         
-   26 00000016 42AC            CMP              r4, r5
-   27 00000018 D3FA            BCC              loop
-   28 0000001A         
-   29 0000001A 4618            MOV              r0, r3
-   30 0000001C         
-   31 0000001C F7FF FFFE       BL               report
-   32 00000020         
-   33 00000020 E8BD 4070       LDMFD            sp!, {r4-r6, lr}
+    1 00000000                 AREA             mainarea,CODE
+    2 00000000                 IMPORT           report
+    3 00000000                 EXPORT           fib
+    4 00000000         
+    5 00000000         zero
+    6 00000000 F04F 0000       MOV              r0, #0
+    7 00000004 F7FF FFFE       BL               report
+    8 00000008 E023            B                exit
+    9 0000000A         
+   10 0000000A         one
+   11 0000000A 2E00            CMP              r6, #0
+   12 0000000C D0F8            BEQ              zero
+   13 0000000E         
+   14 0000000E F04F 0001       MOV              r0, #1
+   15 00000012 F7FF FFFE       BL               report
+   16 00000016 E01C            B                exit
+   17 00000018         
+   18 00000018         fib
+   19 00000018 B570            STMFD            sp!, {r4-r6, lr} ; preserve scr
+                                                            atch registers
+   20 0000001A         
+   21 0000001A 4606            MOV              r6, r0      ; number of fib num
+                                                            bers to compute
+   22 0000001C         
+   23 0000001C 2E03            CMP              r6, #3
+   24 0000001E D3F4            BCC              one
+   25 00000020         
+   26 00000020 F04F 0201       MOV              r2, #1
+   27 00000024 F04F 0301       MOV              r3, #1
+   28 00000028 F1A6 0602       SUB              r6, #2
+   29 0000002C         
+   30 0000002C F016 0F01       TST              r6, #1
+   31 00000030 D006            BEQ              loop
+   32 00000032 E7FF            B                odd_offset
+   33 00000034         
+   34 00000034         odd_offset
+   35 00000034 4413            ADD              r3, r2, r3
+   36 00000036 F1A6 0601       SUB              r6, #1
+   37 0000003A         
+   38 0000003A 2E00            CMP              r6, #0
+   39 0000003C D800            BHI              loop
+   40 0000003E E005            B                rep
+   41 00000040         
+   42 00000040         loop
+   43 00000040 441A            ADD              r2, r2, r3
+   44 00000042 4413            ADD              r3, r2, r3
+   45 00000044 F1A6 0602       SUB              r6, #2
+   46 00000048         
+   47 00000048 2E00            CMP              r6, #0
+   48 0000004A D8F9            BHI              loop
+   49 0000004C         
+   50 0000004C         rep
+   51 0000004C 4618            MOV              r0, r3
+   52 0000004E F7FF FFFE       BL               report
+   53 00000052         
+   54 00000052         exit
+   55 00000052 E8BD 4070       LDMFD            sp!, {r4-r6, lr}
+   56 00000056         
+   57 00000056                 END
 
 
 
 ARM Macro Assembler    Page 2 
 
 
-   34 00000024         
-   35 00000024                 END
-              00000000 
-              00000000 
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4.fp.sp 
 --depend=.\objects\asm.d -o.\objects\asm.o -I.\RTE\_STM32F407_Flash -IC:\Keil_v
 5\ARM\PACK\ARM\CMSIS\6.1.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F
@@ -85,62 +81,80 @@ _VERSION SETA 541" --predefine="STM32F407xx SETA 1" --predefine="_RTE_ SETA 1"
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Relocatable symbols
 
-array 00000000
+exit 00000052
 
-Symbol: array
+Symbol: exit
    Definitions
-      At line 2 in file asm\asm.s
+      At line 54 in file asm\asm.s
    Uses
-      At line 13 in file asm\asm.s
-Comment: array used once
-array_end 0000004C
+      At line 8 in file asm\asm.s
+      At line 16 in file asm\asm.s
 
-Symbol: array_end
-   Definitions
-      At line 4 in file asm\asm.s
-   Uses
-      At line 14 in file asm\asm.s
-Comment: array_end used once
-storage 00000000
-
-Symbol: storage
-   Definitions
-      At line 1 in file asm\asm.s
-   Uses
-      None
-Comment: storage unused
-3 symbols
-
-
-
-ARM Macro Assembler    Page 1 Alphabetic symbol ordering
-Relocatable symbols
-
-fib 00000000
+fib 00000018
 
 Symbol: fib
    Definitions
-      At line 10 in file asm\asm.s
+      At line 18 in file asm\asm.s
    Uses
-      At line 8 in file asm\asm.s
+      At line 3 in file asm\asm.s
 Comment: fib used once
-loop 00000010
+loop 00000040
 
 Symbol: loop
    Definitions
-      At line 21 in file asm\asm.s
+      At line 42 in file asm\asm.s
    Uses
-      At line 27 in file asm\asm.s
-Comment: loop used once
+      At line 31 in file asm\asm.s
+      At line 39 in file asm\asm.s
+      At line 48 in file asm\asm.s
+
 mainarea 00000000
 
 Symbol: mainarea
    Definitions
-      At line 6 in file asm\asm.s
+      At line 1 in file asm\asm.s
    Uses
       None
 Comment: mainarea unused
-3 symbols
+odd_offset 00000034
+
+Symbol: odd_offset
+   Definitions
+      At line 34 in file asm\asm.s
+   Uses
+      At line 32 in file asm\asm.s
+Comment: odd_offset used once
+one 0000000A
+
+Symbol: one
+   Definitions
+      At line 10 in file asm\asm.s
+   Uses
+      At line 24 in file asm\asm.s
+Comment: one used once
+rep 0000004C
+
+Symbol: rep
+   Definitions
+      At line 50 in file asm\asm.s
+   Uses
+      At line 40 in file asm\asm.s
+Comment: rep used once
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+zero 00000000
+
+Symbol: zero
+   Definitions
+      At line 5 in file asm\asm.s
+   Uses
+      At line 12 in file asm\asm.s
+Comment: zero used once
+8 symbols
 
 
 
@@ -151,9 +165,11 @@ report 00000000
 
 Symbol: report
    Definitions
-      At line 7 in file asm\asm.s
+      At line 2 in file asm\asm.s
    Uses
-      At line 31 in file asm\asm.s
-Comment: report used once
+      At line 7 in file asm\asm.s
+      At line 15 in file asm\asm.s
+      At line 52 in file asm\asm.s
+
 1 symbol
 343 symbols in table

@@ -1,0 +1,194 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             storage,DATA
+    2 00000000         array
+    3 00000000 00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00            SPACE            4*20        ; Declares a 20-wor
+                                                            d storage area
+    4 00000050         array_end
+    5 00000050         
+    6 00000050                 AREA             mainarea,CODE
+    7 00000000                 EXPORT           asm_main
+    8 00000000         asm_main
+    9 00000000         ;input
+   10 00000000         
+   11 00000000 F04F 0414       MOV              r4, #20
+   12 00000004         
+   13 00000004         ; Your code goes here
+   14 00000004 480D            LDR              r0, =array
+   15 00000006 490E            LDR              r1, =array_end
+   16 00000008         
+   17 00000008 F04F 0201       MOV              r2, #1      ; fib(1) = 1
+   18 0000000C         
+   19 0000000C 2C01            CMP              r4, #1
+   20 0000000E D013            BEQ              one         ; If n=1
+   21 00000010         
+   22 00000010 F04F 0301       MOV              r3, #1      ; fib(2) = 1
+   23 00000014         
+   24 00000014 C00C            STMIA            r0!, {r2, r3}
+   25 00000016         
+   26 00000016 2C02            CMP              r4, #2      ; If n=2
+   27 00000018 D00F            BEQ              exit
+   28 0000001A         
+   29 0000001A F014 0F01       TST              r4, #1
+   30 0000001E D000            BEQ              loop
+   31 00000020 E005            B                odd_offset
+   32 00000022         
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   33 00000022         loop
+   34 00000022 441A            ADD              r2, r2, r3
+   35 00000024 4413            ADD              r3, r2, r3
+   36 00000026 C00C            STMIA            r0!, {r2, r3}
+   37 00000028         
+   38 00000028 4288            CMP              r0, r1
+   39 0000002A D3FA            BCC              loop
+   40 0000002C E005            B                exit
+   41 0000002E         
+   42 0000002E         odd_offset
+   43 0000002E 4413            ADD              r3, r2, r3
+   44 00000030 C008            STMIA            r0!, {r3}
+   45 00000032 4288            CMP              r0, r1
+   46 00000034 D3F5            BCC              loop
+   47 00000036 E000            B                exit
+   48 00000038         
+   49 00000038         one
+   50 00000038 C010            STMIA            r0!, {r4}
+   51 0000003A         
+   52 0000003A         exit
+   53 0000003A E7FE            B                .           ; Loop forever
+   54 0000003C         
+   55 0000003C                 ALIGN
+   56 0000003C                 END
+              00000000 
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4.fp.sp 
+--depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_STM32F407_Flash -IC:\Keil
+_v5\ARM\PACK\ARM\CMSIS\6.1.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\STM3
+2F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__UVISI
+ON_VERSION SETA 541" --predefine="STM32F407xx SETA 1" --predefine="_RTE_ SETA 1
+" --list=.\listings\main.lst asm\main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+array 00000000
+
+Symbol: array
+   Definitions
+      At line 2 in file asm\main.s
+   Uses
+      At line 14 in file asm\main.s
+Comment: array used once
+array_end 00000050
+
+Symbol: array_end
+   Definitions
+      At line 4 in file asm\main.s
+   Uses
+      At line 15 in file asm\main.s
+Comment: array_end used once
+storage 00000000
+
+Symbol: storage
+   Definitions
+      At line 1 in file asm\main.s
+   Uses
+      None
+Comment: storage unused
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+asm_main 00000000
+
+Symbol: asm_main
+   Definitions
+      At line 8 in file asm\main.s
+   Uses
+      At line 7 in file asm\main.s
+Comment: asm_main used once
+exit 0000003A
+
+Symbol: exit
+   Definitions
+      At line 52 in file asm\main.s
+   Uses
+      At line 27 in file asm\main.s
+      At line 40 in file asm\main.s
+      At line 47 in file asm\main.s
+
+loop 00000022
+
+Symbol: loop
+   Definitions
+      At line 33 in file asm\main.s
+   Uses
+      At line 30 in file asm\main.s
+      At line 39 in file asm\main.s
+      At line 46 in file asm\main.s
+
+mainarea 00000000
+
+Symbol: mainarea
+   Definitions
+      At line 6 in file asm\main.s
+   Uses
+      None
+Comment: mainarea unused
+odd_offset 0000002E
+
+Symbol: odd_offset
+   Definitions
+      At line 42 in file asm\main.s
+   Uses
+      At line 31 in file asm\main.s
+Comment: odd_offset used once
+one 00000038
+
+Symbol: one
+   Definitions
+      At line 49 in file asm\main.s
+   Uses
+      At line 20 in file asm\main.s
+Comment: one used once
+6 symbols
+345 symbols in table

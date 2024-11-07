@@ -157,7 +157,23 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>11</LineNumber>
+          <LineNumber>38</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134229138</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\asm\asm.s</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>0x08002C92</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>0</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>134229080</Address>
           <ByteObject>0</ByteObject>
@@ -166,7 +182,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\asm\asm.s</Filename>
+          <Filename></Filename>
           <ExecCommand></ExecCommand>
           <Expression>0x08002C58</Expression>
         </Bp>

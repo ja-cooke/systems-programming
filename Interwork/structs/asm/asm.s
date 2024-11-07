@@ -9,6 +9,7 @@ process
 	MOV r4, r0
 	
 	; Load C struct contents into registers
+	;LDMIA r4, {r5,r6,r7,r8}
 	LDR r5, [r4] 		; Callback
 	LDR r6, [r4, #4]	; PTR
 	LDR r7, [r4, #8]	; x

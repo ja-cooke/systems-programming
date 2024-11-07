@@ -1,33 +1,33 @@
 	AREA mainarea,CODE
 	EXPORT fib		
 		
+	; fibonacci number generator for fib(n), the nth fib number
+	; r0 is input, r1 is output
+
 fib
-	CMP r0, #2
-	BHI branch
+	STMFD sp!, {r4-r6,lr} ; these registers require preservation
+
+	CMP r0, #2  
+	BHI branch 	; if the input is >2 then branch
 	
-	MOV r1, #1
+	MOV r1, #1	; always returns 1 if input<=2
 	
-	BX	lr; exit
+	LDMFD sp!, {r4-r6,pc} ; earlier LR pushed straight to PC: exit
 		
 branch
-	SUB r0, #1
-	
-	STMFD sp!, {r0,r4-r5,lr}
+	MOV r6, r0
+	SUB r0, r6, #1	; set r0 to n-1
+
 	BL fib 	; Call to find n-1
-	LDMFD sp!, {r0,r4-r5,lr}
+	MOV r4, r1	; output -> r4
 	
-	MOV r4, r1
+	SUB r0, r6, #2	; set r0 to n-2
 	
-	SUB r0, #1
-	
-	STMFD sp!, {r0,r4-r5,lr}
 	BL fib 	; Call to find n-2
-	LDMFD sp!, {r0,r4-r5,lr}
+	MOV r5, r1	; output -> r5
 	
-	MOV r5, r1
+	ADD r1, r4, r5 	; return r4+r5 (i.e. fib(n-1) + fin(n-2))
 	
-	ADD r1, r4, r5
-	
-	BX 	lr; exit
+	LDMFD sp!, {r4-r6,pc} ; earlier LR pushed straight to PC: exit
 	
 	END

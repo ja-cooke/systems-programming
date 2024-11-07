@@ -5,7 +5,7 @@
 
 asm_main
 
-	MOV r0, #7
+	MOV r0, #30
 	
 	BL fib 		; Your call to 'fib' goes here
 	MOV r0, r1

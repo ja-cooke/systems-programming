@@ -11,7 +11,7 @@ ARM Macro Assembler    Page 1
     5 00000000         
     6 00000000         asm_main
     7 00000000         
-    8 00000000 F04F 0004       MOV              r0, #4
+    8 00000000 F04F 001E       MOV              r0, #30
     9 00000004         
    10 00000004 F7FF FFFE       BL               fib         ; Your call to 'fib
                                                             ' goes here
@@ -22,12 +22,11 @@ ARM Macro Assembler    Page 1
    15 0000000C                 ALIGN
    16 0000000C                 END
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4.fp.sp 
---depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_STM32F407_Flash -I"C:\Use
-rs\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include" -I"C:\
-Users\Jon Cooke\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS
-\Device\ST\STM32F4xx\Include" --predefine="__EVAL SETA 1" --predefine="__UVISIO
-N_VERSION SETA 541" --predefine="STM32F407xx SETA 1" --predefine="_RTE_ SETA 1"
- --list=.\listings\main.lst asm\main.s
+--depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_STM32F407_Flash -IC:\Keil
+_v5\ARM\PACK\ARM\CMSIS\6.1.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\STM3
+2F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__UVISI
+ON_VERSION SETA 541" --predefine="STM32F407xx SETA 1" --predefine="_RTE_ SETA 1
+" --list=.\listings\main.lst asm\main.s
 
 
 
@@ -66,4 +65,4 @@ Symbol: fib
       At line 10 in file asm\main.s
 Comment: fib used once
 1 symbol
-338 symbols in table
+337 symbols in table

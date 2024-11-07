@@ -7,66 +7,76 @@ ARM Macro Assembler    Page 1
     1 00000000                 AREA             mainarea,CODE
     2 00000000                 EXPORT           fib
     3 00000000         
-    4 00000000         fib
-    5 00000000 2802            CMP              r0, #2
-    6 00000002 D802            BHI              branch
-    7 00000004         
-    8 00000004 F04F 0101       MOV              r1, #1
-    9 00000008         
-   10 00000008 4770            BX               lr          ; exit
-   11 0000000A         
-   12 0000000A         branch
-   13 0000000A F1A0 0001       SUB              r0, #1
-   14 0000000E         
-   15 0000000E B531            STMFD            sp!, {r0,r4-r5,lr}
-   16 00000010 F7FF FFFE       BL               fib         ; Call to find n-1
-   17 00000014 E8BD 4031       LDMFD            sp!, {r0,r4-r5,lr}
-   18 00000018         
-   19 00000018 460C            MOV              r4, r1
-   20 0000001A         
-   21 0000001A F1A0 0001       SUB              r0, #1
-   22 0000001E         
-   23 0000001E B531            STMFD            sp!, {r0,r4-r5,lr}
-   24 00000020 F7FF FFFE       BL               fib         ; Call to find n-2
-   25 00000024 E8BD 4031       LDMFD            sp!, {r0,r4-r5,lr}
-   26 00000028         
-   27 00000028 460D            MOV              r5, r1
-   28 0000002A         
-   29 0000002A EB04 0105       ADD              r1, r4, r5
-   30 0000002E         
-   31 0000002E 4770            BX               lr          ; exit
-   32 00000030         
-   33 00000030                 END
+    4 00000000         ; fibonacci number generator for fib(n), the nth fib num
+                       ber
+    5 00000000         ; r0 is input, r1 is output
+    6 00000000         
+    7 00000000         fib
+    8 00000000 B570            STMFD            sp!, {r4-r6,lr} ; these registe
+                                                            rs require preserva
+                                                            tion
+    9 00000002         
+   10 00000002 2802            CMP              r0, #2
+   11 00000004 D802            BHI              branch      ; if the input is >
+                                                            2 then branch
+   12 00000006         
+   13 00000006 F04F 0101       MOV              r1, #1      ; always returns 1 
+                                                            if input<=2
+   14 0000000A         
+   15 0000000A BD70            LDMFD            sp!, {r4-r6,pc} ; earlier LR pu
+                                                            shed straight to PC
+                                                            : exit
+   16 0000000C         
+   17 0000000C         branch
+   18 0000000C 4606            MOV              r6, r0
+   19 0000000E F1A6 0001       SUB              r0, r6, #1  ; set r0 to n-1
+   20 00000012         
+   21 00000012 F7FF FFFE       BL               fib         ; Call to find n-1
+   22 00000016 460C            MOV              r4, r1      ; output -> r4
+   23 00000018         
+   24 00000018 F1A6 0002       SUB              r0, r6, #2  ; set r0 to n-2
+   25 0000001C         
+   26 0000001C F7FF FFFE       BL               fib         ; Call to find n-2
+   27 00000020 460D            MOV              r5, r1      ; output -> r5
+   28 00000022         
+   29 00000022 EB04 0105       ADD              r1, r4, r5  ; return r4+r5 (i.e
+                                                            . fib(n-1) + fin(n-
+                                                            2))
+   30 00000026         
+   31 00000026 BD70            LDMFD            sp!, {r4-r6,pc} ; earlier LR pu
+                                                            shed straight to PC
+                                                            : exit
+   32 00000028         
+   33 00000028                 END
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4.fp.sp 
 --depend=.\objects\fibonnaci.d -o.\objects\fibonnaci.o -I.\RTE\_STM32F407_Flash
- -I"C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Inclu
-de" -I"C:\Users\Jon Cooke\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Dri
-vers\CMSIS\Device\ST\STM32F4xx\Include" --predefine="__EVAL SETA 1" --predefine
-="__UVISION_VERSION SETA 541" --predefine="STM32F407xx SETA 1" --predefine="_RT
-E_ SETA 1" --list=.\listings\fibonnaci.lst asm\fibonnaci.s
+ -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\6.1.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK
+\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefin
+e="__UVISION_VERSION SETA 541" --predefine="STM32F407xx SETA 1" --predefine="_R
+TE_ SETA 1" --list=.\listings\fibonnaci.lst asm\fibonnaci.s
 
 
 
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Relocatable symbols
 
-branch 0000000A
+branch 0000000C
 
 Symbol: branch
    Definitions
-      At line 12 in file asm\fibonnaci.s
+      At line 17 in file asm\fibonnaci.s
    Uses
-      At line 6 in file asm\fibonnaci.s
+      At line 11 in file asm\fibonnaci.s
 Comment: branch used once
 fib 00000000
 
 Symbol: fib
    Definitions
-      At line 4 in file asm\fibonnaci.s
+      At line 7 in file asm\fibonnaci.s
    Uses
       At line 2 in file asm\fibonnaci.s
-      At line 16 in file asm\fibonnaci.s
-      At line 24 in file asm\fibonnaci.s
+      At line 21 in file asm\fibonnaci.s
+      At line 26 in file asm\fibonnaci.s
 
 mainarea 00000000
 
@@ -77,4 +87,4 @@ Symbol: mainarea
       None
 Comment: mainarea unused
 3 symbols
-338 symbols in table
+337 symbols in table
