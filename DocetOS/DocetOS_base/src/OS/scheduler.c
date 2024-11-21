@@ -36,7 +36,28 @@ static void list_add(_OS_tasklist_t *list, OS_TCB_t *task) {
 }
 
 static void list_remove(_OS_tasklist_t *list, OS_TCB_t *task) {
-	/* Not implemented yet */
+	// – Check to see if the item being removed is the only one in the list. If it is,
+	// you’ll need to set the head pointer to zero.
+	if(task->next == task){
+		list->head = 0;
+	}
+	//– Remove the item by updating the pointers items either side of it to point
+	// to each other.
+	else{
+		OS_TCB_t *next;
+		OS_TCB_t *prev;
+		
+		next = task->next;
+		prev = task->prev;
+		
+		next->prev = prev;
+		prev->next = next;
+		//– Update the head pointer if the item being removed was the head of the
+		//list.
+		if(task == list->head){
+			list->head = next;
+		}
+	}
 }
 
 /* Round-robin scheduler */
