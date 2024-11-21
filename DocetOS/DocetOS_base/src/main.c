@@ -7,9 +7,9 @@
 
 static void task1(void const *const args) {
 	(void) args;
-	
+	reportState();
 	for (uint_fast16_t i = 0; i < 1000; ++i) {
-		printf("AAAAAAAA");
+		//printf("AAAAAAAA");
 	}
 }
 
@@ -17,7 +17,7 @@ static void task2(void const *const args) {
 	(void) args;
 	
 	for (uint_fast16_t i = 0; i < 1000; ++i) {
-		printf("BBBBBBBB");
+		//printf("BBBBBBBB");
 	}
 }
 
@@ -25,16 +25,17 @@ static void task3(void const *const args) {
 	(void) args;
 	
 	while (1) {
-		printf("CCCCCCCC");
+		//printf("CCCCCCCC");
 	}
 }
 
 /* MAIN FUNCTION */
 
 int main(void) {
-	
 	configClock();
 	configUSART2(38400);
+	
+	reportState();
 	
 	printf("\r\nDocetOS\r\n");
 	
@@ -45,8 +46,6 @@ int main(void) {
 	printf("Test: %"PRId32".\r\n", test_func1);
 	printf("Test: %"PRId32".\r\n", test_func2);
 	
-	reportState();
-
 	/* Reserve memory for two stacks and two TCBs.
 	   Remember that stacks must be 8-byte aligned. */
 	static uint32_t stack1[128] __attribute__ (( aligned(8) ));
@@ -65,6 +64,6 @@ int main(void) {
 	OS_addTask(&TCB3);
 	
 	/* Start the OS */
-	//OS_start();
+	OS_start();
 	
 }

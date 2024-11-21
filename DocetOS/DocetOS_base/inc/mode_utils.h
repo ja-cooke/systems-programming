@@ -1,8 +1,10 @@
 #ifndef MODE_UTILS_H
 #define MODE_UTILS_H
 
+#include <stdio.h>
 #include <stdint.h>
 #include <inttypes.h>
+#include <string.h>
 
 /* Status of the Processor Status Register (PSR) */
 uint32_t getPSR();
