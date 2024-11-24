@@ -1,0 +1,14 @@
+	AREA utils, CODE, READONLY
+	EXPORT getPSR, getCONTROL
+
+getPSR
+	MRS r0, PSR
+	
+	BX LR
+	
+getCONTROL
+	MRS r0, CONTROL
+	
+	BX LR
+
+	END
