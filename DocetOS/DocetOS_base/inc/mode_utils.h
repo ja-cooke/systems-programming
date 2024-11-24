@@ -6,6 +6,13 @@
 #include <inttypes.h>
 #include <string.h>
 
+#define OS_INTERNAL
+
+#include "OS/os.h"
+
+/* SVC delegate writing test */
+#define test(uint32_t) _svc_1(test_argument,SVC_TEST)
+
 /* Status of the Processor Status Register (PSR) */
 uint32_t getPSR();
 

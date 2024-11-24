@@ -1,5 +1,7 @@
 #include "mode_utils.h"
 
+void _test_delegate(_OS_SVC_StackFrame_t * const stack);
+
 /* Report the state of the CPU using the PSR and CONTROL registers */
 void reportState(){
 	
@@ -54,5 +56,19 @@ void reportState(){
 	}
 	
 	printf("%s mode, %s, %s in use.\r\n", mode, privilage, stack_pointer);
+	
+}
+
+void _test_delegate(_OS_SVC_StackFrame_t * const stack){
+	printf("\r\nTest_Delegate_Start\r\n");
+	reportState();
+	printf("\r\nTest_Delegate_End\r\n");
+	
+	uint32_t test_argument;
+	test_argument = stack->r0;
+	
+	printf("\r\nTest_Argument = %"PRId32"\r\n", test_argument);
+
+	stack->r0++;
 	
 }

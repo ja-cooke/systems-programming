@@ -9,15 +9,23 @@ static void task1(void const *const args) {
 	(void) args;
 	reportState();
 	for (uint_fast16_t i = 0; i < 1000; ++i) {
-		//printf("AAAAAAAA");
+		printf("AAAAAAAA");
 	}
 }
 
 static void task2(void const *const args) {
 	(void) args;
 	
+	uint32_t test_argument;
+	test_argument = 2011;
+	
 	for (uint_fast16_t i = 0; i < 1000; ++i) {
-		//printf("BBBBBBBB");
+		printf("BBBBBBBB");
+		
+		uint32_t test_output;
+		test_output = test(test_argument);
+		
+		printf("Test_Output = %"PRId32"\r\n", test_output);
 	}
 }
 
@@ -25,7 +33,7 @@ static void task3(void const *const args) {
 	(void) args;
 	
 	while (1) {
-		//printf("CCCCCCCC");
+		printf("CCCCCCCC");
 	}
 }
 
