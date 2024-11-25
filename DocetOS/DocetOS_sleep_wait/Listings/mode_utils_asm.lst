@@ -20,12 +20,11 @@ ARM Macro Assembler    Page 1
    14 0000000C                 END
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4 --fpu=
 SoftVFP --depend=.\objects\mode_utils_asm.d -o.\objects\mode_utils_asm.o -I.\RT
-E\_STM32F407_Flash -I"C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.
-0\CMSIS\Core\Include" -I"C:\Users\Jon Cooke\AppData\Local\Arm\Packs\Keil\STM32F
-4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include" --predefine="__EVAL S
-ETA 1" --predefine="__UVISION_VERSION SETA 541" --predefine="STM32F407xx SETA 1
-" --predefine="_RTE_ SETA 1" --list=.\listings\mode_utils_asm.lst src\mode_util
-s_asm.s
+E\_STM32F407_Flash -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\6.1.0\CMSIS\Core\Include -IC
+:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\
+Include --predefine="__UVISION_VERSION SETA 541" --predefine="STM32F407xx SETA 
+1" --predefine="_RTE_ SETA 1" --list=.\listings\mode_utils_asm.lst src\mode_uti
+ls_asm.s
 
 
 
@@ -57,4 +56,4 @@ Symbol: utils
       None
 Comment: utils unused
 3 symbols
-337 symbols in table
+336 symbols in table

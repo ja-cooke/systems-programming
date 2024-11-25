@@ -1,4 +1,5 @@
 #include "OS/os.h"
+#include "OS/sleep.h"
 #include "Utils/utils.h"
 #include "mode_utils.h"
 #include <stdio.h>
@@ -8,18 +9,18 @@
 static void task1(void const *const args) {
 	(void) args;
 	
-	reportState();
-	
-	for (uint_fast16_t i = 0; i < 1000; ++i) {
+	while (1) {
 		printf("AAAAAAAA");
+		OS_sleep(100);
 	}
 }
 
 static void task2(void const *const args) {
 	(void) args;
 	
-	for (uint_fast16_t i = 0; i < 1000; ++i) {
+	while (1) {
 		printf("BBBBBBBB");
+		OS_sleep(20);
 	}
 }
 
@@ -63,7 +64,7 @@ int main(void) {
 	/* Add the tasks to the scheduler */
 	OS_addTask(&TCB1);
 	OS_addTask(&TCB2);
-	OS_addTask(&TCB3);
+	//OS_addTask(&TCB3);
 	
 	/* Start the OS */
 	OS_start();

@@ -63,10 +63,37 @@ static void list_remove(_OS_tasklist_t *list, OS_TCB_t *task) {
 /* Round-robin scheduler */
 OS_TCB_t const * _OS_schedule(void) {
 	if (task_list.head) {
-		task_list.head = task_list.head->next;
-		task_list.head->state &= ~TASK_STATE_YIELD;
-		return task_list.head;
+		OS_TCB_t * first_task = task_list.head;
+		
+		/* Cycle through all tasks until finding one that is awake */
+		do {
+			task_list.head = task_list.head->next;
+				
+			// Check the sleep state, do not return if true
+			if (task_list.head->state &= TASK_STATE_SLEEP){
+				uint32_t wake_time;
+				uint32_t current_time;
+				
+				wake_time = task_list.head->data;
+				current_time = OS_elapsedTicks(); // what to do after overflow?
+				
+				// If the wake time has passed
+				if (current_time > wake_time) {
+					// Clear the sleep flag
+					task_list.head->state &= ~TASK_STATE_SLEEP;
+					task_list.head->state &= ~TASK_STATE_YIELD;
+					return task_list.head;
+				}
+			}
+			else {
+				task_list.head->state &= ~TASK_STATE_YIELD;
+				return task_list.head;
+			}
+		} while (task_list.head != first_task);
+		// Return idle if all tasks are alseep
+		return _OS_idleTCB_p;
 	}
+	
 	// No tasks are runnable, so return the idle task
 	return _OS_idleTCB_p;
 }

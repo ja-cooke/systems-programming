@@ -17,6 +17,8 @@ typedef struct s_OS_TCB_t {
 	uint32_t volatile state;
 	struct s_OS_TCB_t * prev;
 	struct s_OS_TCB_t * next;
+	/* General data fields */
+	uint32_t data;
 } OS_TCB_t;
 
 
@@ -56,6 +58,7 @@ void _OS_taskExit_delegate(void);
 
 /* Constants that define bits in a thread's 'state' field. */
 #define TASK_STATE_YIELD    (1UL << 0) // Bit zero is the 'yield' flag
+#define TASK_STATE_SLEEP		(1UL << 1) // Bit one is the 'sleep' flag
 
 #endif /* os_internal */
 
