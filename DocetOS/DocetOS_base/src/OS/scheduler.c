@@ -113,3 +113,6 @@ void _OS_taskExit_delegate(void) {
 	list_remove(&task_list, tcb);
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
+
+void _OS_wait_delegate(void) {
+}

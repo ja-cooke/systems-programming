@@ -20,6 +20,7 @@ enum OS_SVC_e {
 	OS_SVC_YIELD,
 	OS_SVC_SCHEDULE,
 	SVC_TEST,
+	OS_SVC_WAIT,
 };
 
 /***************************/
