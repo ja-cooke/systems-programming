@@ -21,6 +21,7 @@
 */
 
 static _OS_tasklist_t task_list = {.head = 0};
+static _OS_tasklist_t wait_list = {.head = 0};
 
 static void list_add(_OS_tasklist_t *list, OS_TCB_t *task) {
 	if (!(list->head)) {
@@ -58,6 +59,24 @@ static void list_remove(_OS_tasklist_t *list, OS_TCB_t *task) {
 			list->head = next;
 		}
 	}
+}
+
+static void list_push_sl(_OS_tasklist_t *list, OS_TCB_t *task) {
+	do {
+		// Equivalent to: new_task->next = list->head;
+		OS_TCB_t *head = (OS_TCB_t *) __LDREXW ((uint32_t *)&(list->head));
+		task->next = head;
+		// Equivalent to: list->head = new_task;
+	} while (__STREXW ((uint32_t) task, (uint32_t *)&(list->head)));
+}
+
+static OS_TCB_t * list_pop_sl (_OS_tasklist_t *list) {
+	OS_TCB_t *task;
+	do {
+		// task = list->head
+		task = (OS_TCB_t *) __LDREXW ((uint32_t *)&(list->head));
+	} while (__STREXW ((uint32_t) task->next, (uint32_t *)&list->head)); // list->head = task->next
+	return task;
 }
 
 /* Round-robin scheduler */
