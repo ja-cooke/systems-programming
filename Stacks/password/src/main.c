@@ -10,7 +10,7 @@ int main(void) {
 	configClock();
 	configUSART2(38400);
 
-	char const *pwd_store = "password";
+	static char const *pwd_store = "password";
 	char attempt[10];
 	
 	// Try to overwrite the link register here so that secret() is run
