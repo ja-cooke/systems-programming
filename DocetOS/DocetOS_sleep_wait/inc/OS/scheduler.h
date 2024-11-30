@@ -39,7 +39,9 @@ typedef struct s_OS_TCB_t {
    The fourth argument is a void pointer to data that the task should receive. */
 void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func)(void const * const), void const * const data);
 
+/* Other prototypes */
 void OS_addTask(OS_TCB_t * const tcb);
+void OS_notifyAll(void);
 
 /*========================*/
 /*      INTERNAL API      */

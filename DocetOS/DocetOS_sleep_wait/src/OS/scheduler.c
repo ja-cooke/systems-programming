@@ -22,6 +22,7 @@
 
 static _OS_tasklist_t task_list = {.head = 0};
 static _OS_tasklist_t wait_list = {.head = 0};
+static _OS_tasklist_t pending_list = {.head = 0};
 
 static void list_add(_OS_tasklist_t *list, OS_TCB_t *task) {
 	if (!(list->head)) {
@@ -72,10 +73,8 @@ static void list_push_sl(_OS_tasklist_t *list, OS_TCB_t *task) {
 
 static OS_TCB_t * list_pop_sl (_OS_tasklist_t *list) {
 	OS_TCB_t *task;
-	
 	task = list->head;
 	list->head = task->next;
-	
 	/* I do not believe that this implementation of LDREXW/STREXW is required
 	 * The first line does not modify the list as is the case in the push function
 	 * it only reads it, the modification occurs in a single instruction which cannot
@@ -89,6 +88,13 @@ static OS_TCB_t * list_pop_sl (_OS_tasklist_t *list) {
 
 /* Round-robin scheduler */
 OS_TCB_t const * _OS_schedule(void) {
+	
+	while (pending_list.head) {
+		OS_TCB_t * tcb;
+		tcb = list_pop_sl(&pending_list);
+		list_add(&task_list, tcb);
+	}
+	
 	if (task_list.head) {
 		OS_TCB_t * first_task = task_list.head;
 		
@@ -169,8 +175,17 @@ void _OS_taskExit_delegate(void) {
 }
 
 void _OS_wait_delegate(void) {
-	OS_TCB_t * current_task = task_list.head;
-	list_remove(&task_list, current_task);
-	list_push_sl(&wait_list, current_task);
+	OS_TCB_t * tcb = task_list.head;
+	list_remove(&task_list, tcb);
+	list_push_sl(&wait_list, tcb);
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
+}
+
+void OS_notifyAll(void) {
+	while (wait_list.head) {
+		OS_TCB_t * tcb;
+		tcb = list_pop_sl(&wait_list);
+		list_push_sl(&pending_list, tcb);
+		//SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
+	}
 }
