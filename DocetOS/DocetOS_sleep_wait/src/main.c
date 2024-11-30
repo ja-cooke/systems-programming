@@ -11,7 +11,7 @@ static void task1(void const *const args) {
 	
 	while (1) {
 		printf("AAAAAAAA");
-		OS_sleep(10);
+		OS_wait();
 	}
 }
 
@@ -19,8 +19,7 @@ static void task2(void const *const args) {
 	(void) args;
 	
 	while (1) {
-		//printf("BBBBBBBB");
-		OS_sleep(20);
+		printf("BBBBBBBB");
 	}
 }
 

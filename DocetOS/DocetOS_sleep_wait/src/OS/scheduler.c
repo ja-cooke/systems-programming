@@ -72,10 +72,18 @@ static void list_push_sl(_OS_tasklist_t *list, OS_TCB_t *task) {
 
 static OS_TCB_t * list_pop_sl (_OS_tasklist_t *list) {
 	OS_TCB_t *task;
-	do {
+	
+	task = list->head;
+	list->head = task->next;
+	
+	/* I do not believe that this implementation of LDREXW/STREXW is required
+	 * The first line does not modify the list as is the case in the push function
+	 * it only reads it, the modification occurs in a single instruction which cannot
+	 * (to my knowledge) be interrupted. */
+	/* do {
 		// task = list->head
 		task = (OS_TCB_t *) __LDREXW ((uint32_t *)&(list->head));
-	} while (__STREXW ((uint32_t) task->next, (uint32_t *)&list->head)); // list->head = task->next
+	} while (__STREXW ((uint32_t) task->next, (uint32_t *)&list->head)); // list->head = task->next */
 	return task;
 }
 
@@ -157,5 +165,12 @@ void _OS_taskExit_delegate(void) {
 	// Remove the given TCB from the list of tasks so it won't be run again
 	OS_TCB_t * tcb = OS_currentTCB();
 	list_remove(&task_list, tcb);
+	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
+}
+
+void _OS_wait_delegate(void) {
+	OS_TCB_t * current_task = task_list.head;
+	list_remove(&task_list, current_task);
+	list_push_sl(&wait_list, current_task);
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
