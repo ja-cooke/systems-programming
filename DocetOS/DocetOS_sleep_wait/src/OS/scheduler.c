@@ -86,9 +86,16 @@ static OS_TCB_t * list_pop_sl (_OS_tasklist_t *list) {
 	return task;
 }
 
+/* -------------------------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------- */
+
 /* Round-robin scheduler */
 OS_TCB_t const * _OS_schedule(void) {
 	
+	
+	/* Add all notified tasks back into the task list */
 	while (pending_list.head) {
 		OS_TCB_t * tcb;
 		tcb = list_pop_sl(&pending_list);
@@ -130,6 +137,12 @@ OS_TCB_t const * _OS_schedule(void) {
 	// No tasks are runnable, so return the idle task
 	return _OS_idleTCB_p;
 }
+
+/* -------------------------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------- */
+
 
 /* Initialises a task control block (TCB) and its associated stack.  See os.h for details. */
 void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func)(void const * const), void const * const data) {
@@ -186,6 +199,5 @@ void OS_notifyAll(void) {
 		OS_TCB_t * tcb;
 		tcb = list_pop_sl(&wait_list);
 		list_push_sl(&pending_list, tcb);
-		//SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 	}
 }

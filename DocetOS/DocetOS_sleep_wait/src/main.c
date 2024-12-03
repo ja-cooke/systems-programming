@@ -18,10 +18,10 @@ static void task1(void const *const args) {
 static void task2(void const *const args) {
 	(void) args;
 	
-	for (uint32_t i=0;i<100;i++) {
+	while(1) {
 		printf("BBBBBBBB");
+		OS_notifyAll();
 	}
-	OS_notifyAll();
 }
 
 static void task3(void const *const args) {
