@@ -10,7 +10,9 @@ static void task1(void const *const args) {
 	(void) args;
 	
 	while (1) {
-		printf("AAAAAAAA");
+		for (uint32_t i=0;i<10;i++){
+			printf("AAAAAAAA");
+		}
 		OS_wait();
 	}
 }
@@ -18,9 +20,11 @@ static void task1(void const *const args) {
 static void task2(void const *const args) {
 	(void) args;
 	
-	while(1) {
-		printf("BBBBBBBB");
-		OS_notifyAll();
+	while (1) {
+		for (uint32_t i=0;i<10;i++){
+			printf("BBBBBBBB");
+		}
+		OS_wait();
 	}
 }
 
@@ -28,7 +32,10 @@ static void task3(void const *const args) {
 	(void) args;
 	
 	while (1) {
-		printf("CCCCCCCC");
+		for (uint32_t i=0;i<100;i++){
+			printf("CCCCCCCC");
+		}
+		OS_notifyAll();
 	}
 }
 
@@ -64,7 +71,7 @@ int main(void) {
 	/* Add the tasks to the scheduler */
 	OS_addTask(&TCB1);
 	OS_addTask(&TCB2);
-	//OS_addTask(&TCB3);
+	OS_addTask(&TCB3);
 	
 	/* Start the OS */
 	OS_start();

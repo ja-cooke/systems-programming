@@ -18,7 +18,7 @@ typedef struct s_OS_TCB_t {
 	struct s_OS_TCB_t * prev;
 	struct s_OS_TCB_t * next;
 	/* General data fields */
-	uint32_t data;
+	uint32_t volatile data;
 } OS_TCB_t;
 
 
