@@ -2,6 +2,7 @@
 ".\objects\mode_utils.o"
 ".\objects\main.o"
 ".\objects\mode_utils_asm.o"
+".\objects\mutex.o"
 ".\objects\scheduler.o"
 ".\objects\os.o"
 ".\objects\os_asm.o"

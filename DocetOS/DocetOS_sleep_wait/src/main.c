@@ -1,17 +1,22 @@
 #include "OS/os.h"
 #include "OS/sleep.h"
+#include "OS/mutex.h"
 #include "Utils/utils.h"
 #include "mode_utils.h"
 #include <stdio.h>
 #include <stdint.h>
 #include <inttypes.h>
 
+static OS_mutex_t mutex;
+
 static void task1(void const *const args) {
 	(void) args;
 	
 	while (1) {
 		for (uint32_t i=0;i<10;i++){
-			printf("AAAAAAAA");
+			OS_mutex_aquire(&mutex, OS_currentTCB());
+			printf("--DO_NOT_INTERUPT-A--");
+			OS_mutex_release(&mutex, OS_currentTCB());
 		}
 		OS_wait();
 	}
@@ -22,7 +27,9 @@ static void task2(void const *const args) {
 	
 	while (1) {
 		for (uint32_t i=0;i<10;i++){
-			printf("BBBBBBBB");
+			OS_mutex_aquire(&mutex, OS_currentTCB());
+			printf("--DO_NOT_INTERUPT-B--");
+			OS_mutex_release(&mutex, OS_currentTCB());
 		}
 		OS_wait();
 	}
@@ -33,7 +40,9 @@ static void task3(void const *const args) {
 	
 	while (1) {
 		for (uint32_t i=0;i<100;i++){
-			printf("CCCCCCCC");
+			OS_mutex_aquire(&mutex, OS_currentTCB());
+			printf("--DO_NOT_INTERUPT-C--");
+			OS_mutex_release(&mutex, OS_currentTCB());
 		}
 		OS_notifyAll();
 	}
@@ -42,6 +51,9 @@ static void task3(void const *const args) {
 /* MAIN FUNCTION */
 
 int main(void) {
+	mutex.counter = 0;
+	mutex.tcb = 0;
+	
 	configClock();
 	configUSART2(38400);
 	
