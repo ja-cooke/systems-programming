@@ -7,7 +7,8 @@ void OS_mutex_aquire(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
 	uint32_t repeat = 0;
 	
 	do {
-
+		uint32_t notification_counter = getNotificationCounter();
+		
 		//Equivalent to: OS_TCB_t * tcb = mutex->tcb
 		OS_TCB_t * mutex_tcb = (OS_TCB_t *) __LDREXW((uint32_t *)&(mutex->tcb));
 		
@@ -17,8 +18,7 @@ void OS_mutex_aquire(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
 			//(void) notification_counter;
 		}
 		else if (mutex_tcb != current_tcb) {
-			//uint32_t notification_counter = getNotificationCounter();
-			OS_wait(getNotificationCounter());
+			OS_wait(notification_counter);
 			repeat = 1;
 		}
 	} while (repeat);
@@ -31,6 +31,7 @@ void OS_mutex_acquire_refactor(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
 	// break statement is hit... I think
 	
 	do {
+		uint32_t notification_counter = getNotificationCounter();
 		OS_TCB_t * mutex_tcb = (OS_TCB_t *) __LDREXW((uint32_t *)&(mutex->tcb));
 		
 		if (!mutex_tcb) {
@@ -38,7 +39,7 @@ void OS_mutex_acquire_refactor(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
 				break;
 			}
 			else {
-				OS_wait(getNotificationCounter());
+				OS_wait(notification_counter);
 				continue;
 			}
 		}

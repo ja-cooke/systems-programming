@@ -159,7 +159,7 @@
           <Type>0</Type>
           <LineNumber>197</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134226874</Address>
+          <Address>134226882</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -169,22 +169,6 @@
           <Filename>.\src\OS\scheduler.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\DocetOS\src/OS/scheduler.c\197</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>203</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134226902</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\src\OS\scheduler.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\DocetOS\src/OS/scheduler.c\203</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>

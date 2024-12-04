@@ -39,7 +39,7 @@ static void task3(void const *const args) {
 	(void) args;
 	
 	while (1) {
-		for (uint32_t i=0;i<100;i++){
+		for (uint32_t i=0;i<10;i++){
 			OS_mutex_aquire(&mutex, OS_currentTCB());
 			printf("--DO_NOT_INTERUPT-C--");
 			OS_mutex_release(&mutex, OS_currentTCB());
