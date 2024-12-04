@@ -42,6 +42,7 @@ void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func
 /* Other prototypes */
 void OS_addTask(OS_TCB_t * const tcb);
 void OS_notifyAll(void);
+uint32_t getNotificationCounter(void);
 
 /*========================*/
 /*      INTERNAL API      */
