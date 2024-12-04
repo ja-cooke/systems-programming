@@ -43,7 +43,7 @@ uint32_t OS_elapsedTicks(void);
 /* SVC delegate to yield the current task */
 #define OS_yield() _svc_0(OS_SVC_YIELD)
 /* SVC delegate to set the current task to sleep */
-#define OS_wait() _svc_1(uint32_t, OS_SVC_WAIT)
+#define OS_wait(uint32_t) _svc_1(NOTIFICATION_COUNTER, OS_SVC_WAIT)
 
 /*========================*/
 /*      INTERNAL API      */
