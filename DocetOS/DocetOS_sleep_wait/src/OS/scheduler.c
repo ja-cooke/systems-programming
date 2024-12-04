@@ -7,7 +7,6 @@
 
 #include <string.h>
 
-
 /* This is an implementation of an extremely simple round-robin scheduler.
 
    A task list structure is declared.  Tasks are added to the list to create a circular buffer.
@@ -189,10 +188,26 @@ void _OS_taskExit_delegate(void) {
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
 
-void _OS_wait_delegate(void) {
-	OS_TCB_t * tcb = task_list.head;
-	list_remove(&task_list, tcb);
-	list_push_sl(&wait_list, tcb);
+/* SVC handler that adds the current tcb to the wait list. Effectively sets
+   the task to sleep until the OS is notified. */
+void _OS_wait_delegate(_OS_SVC_StackFrame_t * const stack) {
+	
+	/* Checks the stack to see if the value of the notification
+	 * counter has been changed before continuing. */
+	if (stack->r0 != notification_counter) {
+		// return 1 to indicate failure
+		stack->r0 = 1;
+	}
+	else {
+		/* Add the tcb to the wait list */
+		OS_TCB_t * tcb = task_list.head;
+		list_remove(&task_list, tcb);
+		list_push_sl(&wait_list, tcb);
+		
+		// return 0 to indicate success
+		stack->r0 = 0;
+	}
+	/* Set PendSV bit for context switch */
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
 
