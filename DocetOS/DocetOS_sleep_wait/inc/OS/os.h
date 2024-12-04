@@ -20,7 +20,6 @@ enum OS_SVC_e {
 	OS_SVC_YIELD,
 	OS_SVC_SCHEDULE,
 	OS_SVC_WAIT,
-	OS_SVC_NOTIFICATION_COUNTER
 };
 
 /***************************/
@@ -44,7 +43,7 @@ uint32_t OS_elapsedTicks(void);
 /* SVC delegate to yield the current task */
 #define OS_yield() _svc_0(OS_SVC_YIELD)
 /* SVC delegate to set the current task to sleep */
-#define OS_wait(uint32) _svc_1(OS_SVC_NOTIFICATION_COUNTER, OS_SVC_WAIT)
+#define OS_wait(uint32) _svc_1(notification_counter, OS_SVC_WAIT)
 
 /*========================*/
 /*      INTERNAL API      */

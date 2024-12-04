@@ -18,7 +18,7 @@ static void task1(void const *const args) {
 			printf("--DO_NOT_INTERUPT-A--");
 			OS_mutex_release(&mutex, OS_currentTCB());
 		}
-		OS_wait();
+		//OS_wait();
 	}
 }
 
@@ -31,7 +31,7 @@ static void task2(void const *const args) {
 			printf("--DO_NOT_INTERUPT-B--");
 			OS_mutex_release(&mutex, OS_currentTCB());
 		}
-		OS_wait();
+		//OS_wait();
 	}
 }
 
@@ -44,7 +44,7 @@ static void task3(void const *const args) {
 			printf("--DO_NOT_INTERUPT-C--");
 			OS_mutex_release(&mutex, OS_currentTCB());
 		}
-		OS_notifyAll();
+		//OS_notifyAll();
 	}
 }
 

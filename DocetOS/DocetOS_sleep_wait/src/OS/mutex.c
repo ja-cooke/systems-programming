@@ -7,7 +7,6 @@ void OS_mutex_aquire(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
 	uint32_t repeat = 0;
 	
 	do {
-		uint32_t notification_counter = getNotificationCounter();
 
 		//Equivalent to: OS_TCB_t * tcb = mutex->tcb
 		OS_TCB_t * mutex_tcb = (OS_TCB_t *) __LDREXW((uint32_t *)&(mutex->tcb));
@@ -15,10 +14,11 @@ void OS_mutex_aquire(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
 		if (mutex_tcb == 0) {
 			// Equivalent to: mutex->tcb = current_tcb
 			repeat = __STREXW ((uint32_t) current_tcb, (uint32_t *)&(mutex->tcb));
-			(void) notification_counter;
+			//(void) notification_counter;
 		}
 		else if (mutex_tcb != current_tcb) {
-			OS_wait(notification_counter);
+			//uint32_t notification_counter = getNotificationCounter();
+			OS_wait(getNotificationCounter());
 			repeat = 1;
 		}
 	} while (repeat);
