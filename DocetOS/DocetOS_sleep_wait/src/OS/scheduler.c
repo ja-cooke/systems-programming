@@ -74,15 +74,13 @@ static void list_push_sl(_OS_tasklist_t *list, OS_TCB_t *task) {
 
 static OS_TCB_t * list_pop_sl (_OS_tasklist_t *list) {
 	OS_TCB_t *task;
-	task = list->head;
-	list->head = task->next;
-	/* I do not believe that this implementation of LDREXW/STREXW is required
-	 * The first line does not modify the list as is the case in the push function
-	 * it only reads it, the modification occurs in a single instruction which cannot
-	 * (to my knowledge) be interrupted. */
-	/* do {
+	do {
 		// task = list->head
 		task = (OS_TCB_t *) __LDREXW ((uint32_t *)&(list->head));
+		if (!task) {
+			__CLREX();
+			return 0;
+		}
 	} while (__STREXW ((uint32_t) task->next, (uint32_t *)&list->head)); // list->head = task->next */
 	return task;
 }
@@ -97,9 +95,8 @@ OS_TCB_t const * _OS_schedule(void) {
 	
 	
 	/* Add all notified tasks back into the task list */
-	while (pending_list.head) {
-		OS_TCB_t * tcb;
-		tcb = list_pop_sl(&pending_list);
+	OS_TCB_t * tcb;
+	while ((tcb = list_pop_sl(&pending_list))) {
 		list_add(&task_list, tcb);
 	}
 	

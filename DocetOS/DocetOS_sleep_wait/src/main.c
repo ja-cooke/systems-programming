@@ -7,18 +7,15 @@
 #include <stdint.h>
 #include <inttypes.h>
 
-static OS_mutex_t mutex;
+static OS_mutex_t mutex = OS_MUTEX_STATIC_INITIALISER;
 
 static void task1(void const *const args) {
 	(void) args;
 	
 	while (1) {
-		for (uint32_t i=0;i<10;i++){
-			OS_mutex_aquire(&mutex, OS_currentTCB());
-			printf("--DO_NOT_INTERUPT-A--");
-			OS_mutex_release(&mutex, OS_currentTCB());
-		}
-		//OS_wait();
+		OS_mutex_aquire(&mutex, OS_currentTCB());
+		printf("--DO_NOT_INTERUPT-A--");
+		OS_mutex_release(&mutex, OS_currentTCB());
 	}
 }
 
@@ -26,12 +23,9 @@ static void task2(void const *const args) {
 	(void) args;
 	
 	while (1) {
-		for (uint32_t i=0;i<10;i++){
-			OS_mutex_aquire(&mutex, OS_currentTCB());
-			printf("--DO_NOT_INTERUPT-B--");
-			OS_mutex_release(&mutex, OS_currentTCB());
-		}
-		//OS_wait();
+		OS_mutex_aquire(&mutex, OS_currentTCB());
+		printf("--DO_NOT_INTERUPT-B--");
+		OS_mutex_release(&mutex, OS_currentTCB());
 	}
 }
 
@@ -39,21 +33,15 @@ static void task3(void const *const args) {
 	(void) args;
 	
 	while (1) {
-		for (uint32_t i=0;i<10;i++){
 			OS_mutex_aquire(&mutex, OS_currentTCB());
 			printf("--DO_NOT_INTERUPT-C--");
 			OS_mutex_release(&mutex, OS_currentTCB());
-		}
-		//OS_notifyAll();
 	}
 }
 
 /* MAIN FUNCTION */
 
 int main(void) {
-	mutex.counter = 0;
-	mutex.tcb = 0;
-	
 	configClock();
 	configUSART2(38400);
 	

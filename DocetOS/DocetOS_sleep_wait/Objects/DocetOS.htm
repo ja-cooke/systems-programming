@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\DocetOS.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\DocetOS.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Wed Dec  4 22:08:12 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Thu Dec  5 14:03:11 2024
 <BR><P>
 <H3>Maximum Stack Usage =        324 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1512,8 +1512,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> os_asm.o(OS_func)
 </UL>
-<P><STRONG><a name="[f8]"></a>_OS_schedule</STRONG> (Thumb, 252 bytes, Stack size 32 bytes, scheduler.o(.text._OS_schedule))
-<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = _OS_schedule &rArr; list_add
+<P><STRONG><a name="[f8]"></a>_OS_schedule</STRONG> (Thumb, 242 bytes, Stack size 32 bytes, scheduler.o(.text._OS_schedule))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = _OS_schedule &rArr; list_pop_sl
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_elapsedTicks
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;list_add
@@ -1626,7 +1626,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_mutex_aquire
 </UL>
 
-<P><STRONG><a name="[9f]"></a>main</STRONG> (Thumb, 220 bytes, Stack size 40 bytes, main.o(.text.main))
+<P><STRONG><a name="[9f]"></a>main</STRONG> (Thumb, 206 bytes, Stack size 40 bytes, main.o(.text.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 248 + Unknown Stack Size
 <LI>Call Chain = main &rArr; reportState &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1729,8 +1729,8 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[8]"></a>PendSV_Handler</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, os_asm.o(OS_func))
-<BR><BR>[Stack]<UL><LI>Max Depth = 40 + Unknown Stack Size
-<LI>Call Chain = PendSV_Handler &rArr; _OS_schedule &rArr; list_add
+<BR><BR>[Stack]<UL><LI>Max Depth = 44 + Unknown Stack Size
+<LI>Call Chain = PendSV_Handler &rArr; _OS_schedule &rArr; list_pop_sl
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_OS_schedule
 </UL>
@@ -1806,8 +1806,8 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[61]"></a>task1</STRONG> (Thumb, 78 bytes, Stack size 24 bytes, main.o(.text.task1))
-<BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
+<P><STRONG><a name="[61]"></a>task1</STRONG> (Thumb, 54 bytes, Stack size 16 bytes, main.o(.text.task1))
+<BR><BR>[Stack]<UL><LI>Max Depth = 160 + Unknown Stack Size
 <LI>Call Chain = task1 &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf
@@ -1817,8 +1817,8 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
-<P><STRONG><a name="[62]"></a>task2</STRONG> (Thumb, 78 bytes, Stack size 24 bytes, main.o(.text.task2))
-<BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
+<P><STRONG><a name="[62]"></a>task2</STRONG> (Thumb, 54 bytes, Stack size 16 bytes, main.o(.text.task2))
+<BR><BR>[Stack]<UL><LI>Max Depth = 160 + Unknown Stack Size
 <LI>Call Chain = task2 &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf
@@ -1828,8 +1828,8 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
-<P><STRONG><a name="[63]"></a>task3</STRONG> (Thumb, 78 bytes, Stack size 24 bytes, main.o(.text.task3))
-<BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
+<P><STRONG><a name="[63]"></a>task3</STRONG> (Thumb, 54 bytes, Stack size 16 bytes, main.o(.text.task3))
+<BR><BR>[Stack]<UL><LI>Max Depth = 160 + Unknown Stack Size
 <LI>Call Chain = task3 &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf
@@ -1845,8 +1845,8 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_mutex_aquire
 </UL>
 
-<P><STRONG><a name="[f1]"></a>list_pop_sl</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, scheduler.o(.text.list_pop_sl))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = list_pop_sl
+<P><STRONG><a name="[f1]"></a>list_pop_sl</STRONG> (Thumb, 60 bytes, Stack size 12 bytes, scheduler.o(.text.list_pop_sl))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = list_pop_sl
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_OS_schedule
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_notifyAll

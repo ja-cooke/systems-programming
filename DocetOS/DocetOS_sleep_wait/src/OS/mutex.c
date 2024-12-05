@@ -49,6 +49,7 @@ void OS_mutex_acquire_refactor(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
 	mutex->counter++;
 }
 
+
 void OS_mutex_release(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
 	// Safety check:
 	if (current_tcb == mutex->tcb) {
