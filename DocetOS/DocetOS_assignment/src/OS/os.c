@@ -7,6 +7,8 @@
 
 __ALIGNED(8)
 
+// GLOBAL ----------------------------------------------------------------------
+
 /* Idle task stack frame area and TCB.  The TCB is not declared const, to ensure that it is placed in writable
    memory by the compiler.  The pointer to the TCB _is_ declared const, as it is visible externally - but it will
    still be writable by the assembly-language context switch. */
@@ -21,6 +23,8 @@ OS_TCB_t const * const _OS_idleTCB_p = &_OS_idleTCB;
 
 /* Total elapsed ticks */
 static volatile uint32_t _ticks = 0;
+
+// FUNCTIONS -------------------------------------------------------------------
 
 /* GLOBAL: Holds pointer to current TCB.  DO NOT MODIFY, EVER. */
 OS_TCB_t * volatile _currentTCB = 0;
