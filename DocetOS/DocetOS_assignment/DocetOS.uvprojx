@@ -395,11 +395,6 @@
               <FilePath>.\src\main.c</FilePath>
             </File>
             <File>
-              <FileName>mode_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\inc\mode_utils.h</FilePath>
-            </File>
-            <File>
               <FileName>mode_utils_asm.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\src\mode_utils_asm.s</FilePath>
@@ -437,12 +432,7 @@
             <File>
               <FileName>sleep.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\src\OS\sleep.h</FilePath>
-            </File>
-            <File>
-              <FileName>mutex.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\inc\OS\mutex.h</FilePath>
+              <FilePath>.\inc\OS\sleep.h</FilePath>
             </File>
           </Files>
         </Group>

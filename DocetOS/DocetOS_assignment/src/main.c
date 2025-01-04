@@ -1,11 +1,12 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <inttypes.h>
+
+#include "mode_utils.h"
 #include "OS/os.h"
 #include "OS/sleep.h"
 #include "OS/mutex.h"
 #include "Utils/utils.h"
-#include "mode_utils.h"
-#include <stdio.h>
-#include <stdint.h>
-#include <inttypes.h>
 
 static OS_mutex_t mutex = OS_MUTEX_STATIC_INITIALISER;
 
