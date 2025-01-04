@@ -101,7 +101,7 @@ OS_TCB_t const * _OS_schedule(void) {
 	}
 	
 	if (task_list.head) {
-		OS_TCB_t * first_task = task_list.head;
+		OS_TCB_t * firstTask = task_list.head;
 		
 		/* Cycle through all tasks until finding one that is awake */
 		do {
@@ -109,16 +109,16 @@ OS_TCB_t const * _OS_schedule(void) {
 				
 			// Check the sleep state, do not return if true
 			if (task_list.head->state &= TASK_STATE_SLEEP){
-				uint32_t wake_time;
-				uint32_t current_time;
+				uint32_t wakeTime;
+				uint32_t currentTime;
 				
-				wake_time = task_list.head->data;
+				wakeTime = task_list.head->data;
 				/* is it possible to solve the overflow problem by implementing
 				   current_time and wake_time as signed integers */
-				current_time = OS_elapsedTicks(); // what to do after overflow?
+				currentTime = OS_elapsedTicks(); // what to do after overflow?
 				
 				// If the wake time has passed
-				if (current_time > wake_time) {
+				if (currentTime > wakeTime) {
 					// Clear the sleep flag
 					task_list.head->state &= ~TASK_STATE_SLEEP;
 					task_list.head->state &= ~TASK_STATE_YIELD;
@@ -129,7 +129,7 @@ OS_TCB_t const * _OS_schedule(void) {
 				task_list.head->state &= ~TASK_STATE_YIELD;
 				return task_list.head;
 			}
-		} while (task_list.head != first_task);
+		} while (task_list.head != firstTask);
 		// Return idle if all tasks are alseep
 		return _OS_idleTCB_p;
 	}

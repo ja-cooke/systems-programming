@@ -849,11 +849,12 @@ SoftVFP --depend=.\objects\startup_stm32f407xx.d -o.\objects\startup_stm32f407x
 ARM Macro Assembler    Page 14 
 
 
-x.o -I.\RTE\_STM32F407_Flash -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\6.1.0\CMSIS\Core\I
-nclude -IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\
-STM32F4xx\Include --predefine="__UVISION_VERSION SETA 541" --predefine="STM32F4
-07xx SETA 1" --predefine="_RTE_ SETA 1" --list=.\listings\startup_stm32f407xx.l
-st RTE/Device/STM32F407VGTx/startup_stm32f407xx.s
+x.o -I.\RTE\_STM32F407_Flash -I"C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\
+CMSIS\6.1.0\CMSIS\Core\Include" -I"C:\Users\Jon Cooke\AppData\Local\Arm\Packs\K
+eil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include" --predefine
+="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 541" --predefine="STM32F40
+7xx SETA 1" --predefine="_RTE_ SETA 1" --list=.\listings\startup_stm32f407xx.ls
+t RTE/Device/STM32F407VGTx/startup_stm32f407xx.s
 
 
 
@@ -1957,4 +1958,4 @@ Symbol: __use_two_region_memory
       None
 Comment: __use_two_region_memory unused
 3 symbols
-447 symbols in table
+448 symbols in table

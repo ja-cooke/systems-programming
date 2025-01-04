@@ -2,12 +2,11 @@
 #define MEMPOOL_H
 #include <stddef.h>
 
-struct mempool_item_s {
-	struct mempool_item_s *next;
-};
-typedef struct mempool_item_s mempool_item_t;
+typedef struct s_mempool_item {
+	struct s_mempool_item *next;
+} mempool_item_t;
 
-typedef struct {
+typedef struct s_mempool {
 	mempool_item_t *head;
 } mempool_t;
 
@@ -15,7 +14,7 @@ typedef struct {
 
 void * static_alloc(size_t bytes);
 
-void *pool_allocate(mempool_t *pool);
+void * pool_allocate(mempool_t *pool);
 void pool_deallocate(mempool_t *pool, void *block);
 void pool_init(mempool_t *pool, size_t blocksize, size_t blocks);
 	

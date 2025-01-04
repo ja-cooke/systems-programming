@@ -29,8 +29,8 @@ void * static_alloc(size_t bytes) {
 	}
 }
 
-void *pool_allocate(mempool_t *pool) {
-	void * output;
+void * pool_allocate(mempool_t *pool) {
+	void *output;
 	
 	// Return the head of the list of blocks
 	output = pool->head;
@@ -42,7 +42,6 @@ void *pool_allocate(mempool_t *pool) {
 	else{
 		return 0;
 	}
-	
 	return output;
 }
 

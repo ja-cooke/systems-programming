@@ -5,6 +5,6 @@
 
 #define OS_INTERNAL
 
-void OS_sleep(uint32_t argument);
+void OS_sleep(uint32_t sleepTime);
 
 #endif /* SLEEP_H */
