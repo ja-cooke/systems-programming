@@ -429,11 +429,6 @@
               <FileType>1</FileType>
               <FilePath>.\src\OS\sleep.c</FilePath>
             </File>
-            <File>
-              <FileName>sleep.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\inc\OS\sleep.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
