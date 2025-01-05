@@ -23,6 +23,7 @@ static _OS_tasklist_t task_list = {.head = 0};
 static _OS_tasklist_t wait_list = {.head = 0};
 static _OS_tasklist_t pending_list = {.head = 0};
 
+// Used by OS_wait to ensure that no notifications have occurred whilst it is already running
 static uint32_t notification_counter = 0;
 
 static void list_add(_OS_tasklist_t *list, OS_TCB_t *task) {

@@ -429,6 +429,26 @@
               <FileType>1</FileType>
               <FilePath>.\src\OS\sleep.c</FilePath>
             </File>
+            <File>
+              <FileName>semaphore.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\OS\semaphore.c</FilePath>
+            </File>
+            <File>
+              <FileName>heap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\OS\heap.c</FilePath>
+            </File>
+            <File>
+              <FileName>mempool.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\OS\mempool.c</FilePath>
+            </File>
+            <File>
+              <FileName>queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\OS\queue.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
