@@ -24,6 +24,16 @@ static void task1(void const *const args) {
 	(void) args;
 	
 	while (1) {
+		
+		for(uint32_t i = 0; i<100; i++){
+			// ALLOCATION //
+			/* Allocate one block for data packets and fill them in */
+			packet_t *p1 = pool_allocate(&pool);
+			p1->id = 1;
+			strncpy(p1->data, "AAA", 10);
+			pool_deallocate(&pool, p1);
+		}
+		
 		// ALLOCATION //
 		/* Allocate one block for data packets and fill them in */
 		packet_t *p1 = pool_allocate(&pool);
@@ -35,10 +45,12 @@ static void task1(void const *const args) {
 		printf("First allocated packet (id %" PRIu32 ", data '%s') at address %p\r\n", p1->id, p1->data, (void *)p1);
 		OS_mutex_release(&mutex, OS_currentTCB());
 		
+		OS_sleep(1000);
+		
 		// DEALLOCATION
 		pool_deallocate(&pool, p1);
 		
-		OS_sleep(1);
+		OS_sleep(1000);
 	}
 }
 
@@ -47,12 +59,22 @@ static void task2(void const *const args) {
 	
 	while (1) {
 		
+		for(uint32_t i = 0; i<100; i++){
+			// ALLOCATION //
+			/* Allocate one block for data packets and fill them in */
+			packet_t *p2 = pool_allocate(&pool);
+			p2->id = 2;
+			strncpy(p2->data, "BBB", 10);
+			pool_deallocate(&pool, p2);
+		}
+		
 		// ALLOCATION //
 		/* Allocate one block for data packets and fill them in */
 		packet_t *p2 = pool_allocate(&pool);
 		p2->id = 2;
 		strncpy(p2->data, "BBB", 10);
 		
+		OS_sleep(1000);
 		
 		// PRINTING //
 		OS_mutex_aquire(&mutex, OS_currentTCB());
@@ -60,11 +82,12 @@ static void task2(void const *const args) {
 		printf("Second allocated packet (id %" PRIu32 ", data '%s') at address %p\r\n", p2->id, p2->data, (void *)p2);
 		OS_mutex_release(&mutex, OS_currentTCB());
 		
+		OS_sleep(1000);
 		
 		// DEALLOCATION
 		pool_deallocate(&pool, p2);
 		
-		OS_sleep(1);
+		OS_sleep(1000);
 	}
 }
 
@@ -73,12 +96,22 @@ static void task3(void const *const args) {
 	
 	while (1) {
 		
+		for(uint32_t i = 0; i<100; i++){
+			// ALLOCATION //
+			/* Allocate one block for data packets and fill them in */
+			packet_t *p3 = pool_allocate(&pool);
+			p3->id = 3;
+			strncpy(p3->data, "CCC", 10);
+			pool_deallocate(&pool, p3);
+		}
+		
 		// ALLOCATION //
 		/* Allocate one block for data packets and fill them in */
 		packet_t *p3 = pool_allocate(&pool);
 		p3->id = 3;
 		strncpy(p3->data, "CCC", 10);
 		
+		OS_sleep(1000);
 		
 		// PRINTING //
 		OS_mutex_aquire(&mutex, OS_currentTCB());
@@ -86,10 +119,12 @@ static void task3(void const *const args) {
 		printf("Third allocated packet (id %" PRIu32 ", data '%s') at address %p\r\n", p3->id, p3->data, (void *)p3);
 		OS_mutex_release(&mutex, OS_currentTCB());
 		
+		OS_sleep(1000);
+		
 		// DEALLOCATION
 		pool_deallocate(&pool, p3);
 		
-		OS_sleep(1);
+		OS_sleep(1000);
 	}
 }
 
