@@ -4,7 +4,7 @@
 #include "OS/os.h"
 
 typedef struct s_OS_mutex_t {
-	struct s_OS_TCB_t * tcb;
+	struct s_OS_TCB_t *tcb;
 	uint32_t counter;
 } OS_mutex_t;
 

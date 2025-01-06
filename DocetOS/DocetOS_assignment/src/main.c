@@ -7,8 +7,18 @@
 #include "OS/sleep.h"
 #include "OS/mutex.h"
 #include "Utils/utils.h"
+#include "OS/mempool.h"
 
 static OS_mutex_t mutex = OS_MUTEX_STATIC_INITIALISER;
+
+/* Declare and intialise a memory pool */
+static mempool_t pool = MEMPOOL_INITIALISER;
+
+/* Example data packet structure, just for demonstration purposes */
+typedef struct {
+	uint32_t id;
+	char data[12];
+} packet_t;
 
 static void task1(void const *const args) {
 	(void) args;
@@ -45,6 +55,8 @@ static void task3(void const *const args) {
 int main(void) {
 	configClock();
 	configUSART2(38400);
+	
+	pool_init(&pool, sizeof(packet_t), 10);
 	
 	reportState();
 	

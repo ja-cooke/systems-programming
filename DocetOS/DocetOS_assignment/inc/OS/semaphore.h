@@ -1,5 +1,5 @@
-#ifndef MUTEX_H
-#define MUTEX_H
+#ifndef SEMAPHORE_H
+#define SEMAPHORE_H
 
 #include "OS/os.h"
 
@@ -21,4 +21,4 @@ void OS_semBinary_acquire(OS_semBinary_t *semaphore);
 void OS_semBinary_acquire_refactor(OS_semBinary_t *semaphore);
 void OS_semBinary_release(OS_semBinary_t *semaphore);
 
-#endif /* MUTEX_H */
+#endif /* SEMAPHORE_H */

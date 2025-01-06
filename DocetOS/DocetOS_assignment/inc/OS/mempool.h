@@ -1,6 +1,8 @@
 #ifndef MEMPOOL_H
 #define MEMPOOL_H
 #include <stddef.h>
+#include "cmsis_compiler.h"
+#include "OS/semaphore.h"
 
 typedef struct s_mempool_item {
 	struct s_mempool_item *next;
@@ -8,6 +10,7 @@ typedef struct s_mempool_item {
 
 typedef struct s_mempool {
 	mempool_item_t *head;
+	OS_semaphore_t *blocksFree;
 } mempool_t;
 
 #define MEMPOOL_INITIALISER { .head = 0 }
