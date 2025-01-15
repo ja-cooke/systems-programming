@@ -68,7 +68,7 @@ typedef struct {
 
 /* Function Prototypes */
 
-OS_TCB_t * roundRobin(_OS_tasklist_t task_list);
+OS_TCB_t * roundRobin(_OS_tasklist_t *task_list);
 OS_TCB_t const * _OS_schedule(void);
 
 /* SVC delegates */

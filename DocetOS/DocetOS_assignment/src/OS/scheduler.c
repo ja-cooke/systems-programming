@@ -96,21 +96,21 @@ static OS_TCB_t * list_pop_sl (_OS_tasklist_t *list) {
 /* -------------------------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------------------------- */
 
-OS_TCB_t * roundRobin(_OS_tasklist_t task_list) {
+OS_TCB_t * roundRobin(_OS_tasklist_t *task_list) {
 
-	if (task_list.head) {
-		OS_TCB_t * firstTask = task_list.head;
+	if (task_list->head) {
+		OS_TCB_t * firstTask = task_list->head;
 		
 		/* Cycle through all tasks until finding one that is awake */
 		do {
-			task_list.head = task_list.head->next;
+			task_list->head = task_list->head->next;
 				
 			// Check the sleep state, do not return if true
-			if (task_list.head->state &= TASK_STATE_SLEEP){
+			if (task_list->head->state &= TASK_STATE_SLEEP){
 				uint32_t wakeTime;
 				uint32_t currentTime;
 				
-				wakeTime = task_list.head->data;
+				wakeTime = task_list->head->data;
 				/* is it possible to solve the overflow problem by implementing
 				   current_time and wake_time as signed integers */
 				currentTime = OS_elapsedTicks(); // what to do after overflow?
@@ -118,16 +118,16 @@ OS_TCB_t * roundRobin(_OS_tasklist_t task_list) {
 				// If the wake time has passed
 				if (currentTime > wakeTime) {
 					// Clear the sleep flag
-					task_list.head->state &= ~TASK_STATE_SLEEP;
-					task_list.head->state &= ~TASK_STATE_YIELD;
-					return task_list.head;
+					task_list->head->state &= ~TASK_STATE_SLEEP;
+					task_list->head->state &= ~TASK_STATE_YIELD;
+					return task_list->head;
 				}
 			}
 			else {
-				task_list.head->state &= ~TASK_STATE_YIELD;
-				return task_list.head;
+				task_list->head->state &= ~TASK_STATE_YIELD;
+				return task_list->head;
 			}
-		} while (task_list.head != firstTask);
+		} while (task_list->head != firstTask);
 		
 		/* 
 		 * Return 0 if all tasks are alseep.
@@ -152,7 +152,7 @@ OS_TCB_t const * _OS_schedule(void) {
 	for (uint32_t i = 0; i < maxPriorities; i++) {
 		_OS_tasklist_t * task_list = schedule.priorityArray[i];
 		
-		if((tcb = roundRobin(*task_list))) {
+		if((tcb = roundRobin(task_list))) {
 			return tcb;
 		}
 	}

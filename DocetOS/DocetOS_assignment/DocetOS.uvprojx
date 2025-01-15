@@ -454,11 +454,6 @@
               <FileType>1</FileType>
               <FilePath>.\src\OS\static_alloc.c</FilePath>
             </File>
-            <File>
-              <FileName>static_alloc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\inc\OS\static_alloc.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

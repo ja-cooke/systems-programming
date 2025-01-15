@@ -139,9 +139,9 @@ int main(void) {
 	static uint32_t stack1[128] __attribute__ (( aligned(8) ));
 	static uint32_t stack2[128] __attribute__ (( aligned(8) ));
 	static uint32_t stack3[128] __attribute__ (( aligned(8) ));
-	static OS_TCB_t TCB1 = {.priority = 5};
-	static OS_TCB_t TCB2 = {.priority = 4};
-	static OS_TCB_t TCB3 = {.priority = 3};
+	static OS_TCB_t TCB1 = {.priority = 0};
+	static OS_TCB_t TCB2 = {.priority = 0};
+	static OS_TCB_t TCB3 = {.priority = 0};
 
 	/* Initialise the TCBs using the two functions above */
 	OS_initialiseTCB(&TCB1, stack1+128, task1, NULL);
