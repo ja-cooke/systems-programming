@@ -19,7 +19,8 @@
 	 OS_schedule() in this implementation.
 */
 
-static _OS_tasklist_t task_list = {.head = 0};
+
+static _OS_fpSchedule_t schedule = {.priorityArray = 0};
 static _OS_tasklist_t wait_list = {.head = 0};
 static _OS_tasklist_t pending_list = {.head = 0};
 
@@ -174,17 +175,56 @@ void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func
 	};
 }
 
-/* 'Add task' */
-void OS_addTask(OS_TCB_t * const tcb) {
-	list_add(&task_list, tcb);
+/* -----------------------------------------------------------------------------
+ * -----------------------------------------------------------------------------
+ * -----------------------------------------------------------------------------
+ * -----------------------------------------------------------------------------
+ */
+
+/* 'Add task' 
+ *
+ * Redesign will include logic to build priority array if not already constructed
+ */
+
+void OS_constructSchedule(void) {
+	
+	for (uint32_t i = 0; i < maxPriorities; i++) {
+		
+		_OS_tasklist_t task_list = {.head = 0, .priority = i};
+		schedule.priorityArray[i] = &task_list;
+	}
 }
+
+void OS_addTask(OS_TCB_t * const tcb) {
+	
+	uint32_t tcbPriority = tcb->priority;
+	
+	/* If empty, construct the full scheduler priority array */
+	if (*schedule.priorityArray == 0) {
+		OS_constructSchedule();
+	}
+	
+	list_add(schedule.priorityArray[tcbPriority], tcb);
+}
+
+/* -----------------------------------------------------------------------------
+ * -----------------------------------------------------------------------------
+ * -----------------------------------------------------------------------------
+ * -----------------------------------------------------------------------------
+ */
 
 /* SVC handler that's called by _OS_task_end when a task finishes.  Removes the
    task from the scheduler and then queues PendSV to reschedule. */
 void _OS_taskExit_delegate(void) {
 	// Remove the given TCB from the list of tasks so it won't be run again
 	OS_TCB_t * tcb = OS_currentTCB();
-	list_remove(&task_list, tcb);
+	
+	/* Acquire the task_list of correct priority from the schedule */
+	uint32_t tcbPriority = tcb->priority;
+	
+	list_remove(schedule.priorityArray[tcbPriority], tcb);
+	
+	/* Initiate context switch */
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
 
@@ -199,6 +239,10 @@ void _OS_wait_delegate(_OS_SVC_StackFrame_t * const stack) {
 		stack->r0 = 1;
 	}
 	else {
+		/* Acquire the task_list of correct priority from the schedule */
+		uint32_t tcbPriority = tcb->priority;
+		_OS_tasklist_t task_list = *schedule.priorityArray[tcbPriority];
+		
 		/* Add the tcb to the wait list */
 		OS_TCB_t * tcb = task_list.head;
 		list_remove(&task_list, tcb);

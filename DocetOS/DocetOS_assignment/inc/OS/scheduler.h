@@ -15,6 +15,9 @@ typedef struct s_OS_TCB_t {
 	   runnable, or whatever.  Only one bit of this field is currently defined (see the #define
 	   below), so you can use the remaining 31 bits for anything you like. */
 	uint32_t volatile state;
+	/* Priority must be fixed at run-time */
+	uint32_t const priority;
+	
 	struct s_OS_TCB_t * prev;
 	struct s_OS_TCB_t * next;
 	/* General data fields */
@@ -40,6 +43,7 @@ typedef struct s_OS_TCB_t {
 void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func)(void const * const), void const * const data);
 
 /* Other prototypes */
+void OS_constructSchedule(void);
 void OS_addTask(OS_TCB_t * const tcb);
 void OS_notifyAll(void);
 uint32_t getNotificationCounter(void);
@@ -52,9 +56,17 @@ uint32_t getNotificationCounter(void);
 
 OS_TCB_t const * _OS_schedule(void);
 
+#define maxPriorities 5UL
+
 typedef struct {
 	OS_TCB_t * head;
+	/* Contains priority so lists can be identified within the scheduler */
+	const uint32_t priority;
 } _OS_tasklist_t;
+
+typedef struct {
+	_OS_tasklist_t * priorityArray[maxPriorities];
+} _OS_fpSchedule_t;
 
 /* SVC delegates */
 void _OS_taskExit_delegate(void);
