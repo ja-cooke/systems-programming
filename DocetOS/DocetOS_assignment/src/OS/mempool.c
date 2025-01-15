@@ -3,16 +3,16 @@
 #include "OS/mempool.h"
 
 // 16KB pool size
-#define STATIC_ALLOC_POOLSIZE 16384UL
-#define STATIC_ALLOC_ALIGNMENT 8UL
+#define MEMPOOL_ALLOC_POOLSIZE 16384UL
+#define MEMPOOL_ALLOC_ALIGNMENT 8UL
 
 static const uint32_t totalBlocks = 16384/8;
 
-static uint8_t static_pool[STATIC_ALLOC_POOLSIZE] __attribute__ (( aligned(STATIC_ALLOC_ALIGNMENT) ));;
-static size_t pool_index = STATIC_ALLOC_POOLSIZE;
-static uint32_t alignmentMask = ~(STATIC_ALLOC_ALIGNMENT-1);
+static uint8_t static_pool[MEMPOOL_ALLOC_POOLSIZE] __attribute__ (( aligned(MEMPOOL_ALLOC_ALIGNMENT) ));;
+static size_t pool_index = MEMPOOL_ALLOC_POOLSIZE;
+static uint32_t alignmentMask = ~(MEMPOOL_ALLOC_ALIGNMENT-1);
 
-void * static_alloc(size_t bytes) {
+void * poolStaticAlloc(size_t bytes) {
 	/* 
 	* Check that the requested number of bytes is available in the array. This is 
 	* easy because the pool array index decreases: if the index is greater than
@@ -91,9 +91,9 @@ void pool_init(mempool_t *pool, size_t blocksize, size_t blocks){
 	blocksize = (blocksize + 7UL) & alignmentMask;
 	
 	size_t pool_index = 0;
-	pool->head = static_alloc(blocksize*blocks);
+	pool->head = poolStaticAlloc(blocksize*blocks);
 	
-	/* If the static_alloc fails pool->head = 0 */
+	/* If the poolStaticAlloc fails pool->head = 0 */
 	if(pool->head){
 		/* Creates an array of block indices and adds this to the pool list*/
 		for (size_t i = 0; i < blocks; ++i) {

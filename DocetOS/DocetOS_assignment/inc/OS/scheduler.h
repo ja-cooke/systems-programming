@@ -54,19 +54,22 @@ uint32_t getNotificationCounter(void);
 
 #ifdef OS_INTERNAL
 
-OS_TCB_t const * _OS_schedule(void);
-
 #define maxPriorities 5UL
 
 typedef struct {
 	OS_TCB_t * head;
 	/* Contains priority so lists can be identified within the scheduler */
-	const uint32_t priority;
+	uint32_t priority;
 } _OS_tasklist_t;
 
 typedef struct {
 	_OS_tasklist_t * priorityArray[maxPriorities];
 } _OS_fpSchedule_t;
+
+/* Function Prototypes */
+
+OS_TCB_t * roundRobin(_OS_tasklist_t task_list);
+OS_TCB_t const * _OS_schedule(void);
 
 /* SVC delegates */
 void _OS_taskExit_delegate(void);

@@ -11,6 +11,7 @@
 ".\objects\heap.o"
 ".\objects\mempool.o"
 ".\objects\queue.o"
+".\objects\static_alloc.o"
 ".\objects\hardfault.o"
 ".\objects\utils.o"
 ".\objects\retarget_io.o"

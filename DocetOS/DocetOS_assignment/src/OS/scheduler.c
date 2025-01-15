@@ -2,6 +2,7 @@
 
 #include "OS/scheduler.h"
 #include "OS/os.h"
+#include "OS/static_alloc.h"
 
 #include "stm32f4xx.h"
 
@@ -19,7 +20,6 @@
 	 OS_schedule() in this implementation.
 */
 
-
 static _OS_fpSchedule_t schedule = {.priorityArray = 0};
 static _OS_tasklist_t wait_list = {.head = 0};
 static _OS_tasklist_t pending_list = {.head = 0};
@@ -28,10 +28,12 @@ static _OS_tasklist_t pending_list = {.head = 0};
 static uint32_t notification_counter = 0;
 
 static void list_add(_OS_tasklist_t *list, OS_TCB_t *task) {
+	/* If the list head is null  point the list to the task*/
 	if (!(list->head)) {
 		task->next = task;
 		task->prev = task;
 		list->head = task;
+	/* Otherwise, make the task the new head of the list */
 	} else {
 		task->next = list->head;
 		task->prev = list->head->prev;
@@ -74,6 +76,8 @@ static void list_push_sl(_OS_tasklist_t *list, OS_TCB_t *task) {
 	} while (__STREXW ((uint32_t) task, (uint32_t *)&(list->head)));
 }
 
+// TODO
+// Currently, popping from the pending list always returns the tasks to the same priority or something
 static OS_TCB_t * list_pop_sl (_OS_tasklist_t *list) {
 	OS_TCB_t *task;
 	do {
@@ -92,16 +96,8 @@ static OS_TCB_t * list_pop_sl (_OS_tasklist_t *list) {
 /* -------------------------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------------------------- */
 
-/* Round-robin scheduler */
-OS_TCB_t const * _OS_schedule(void) {
-	
-	
-	/* Add all notified tasks back into the task list */
-	OS_TCB_t * tcb;
-	while ((tcb = list_pop_sl(&pending_list))) {
-		list_add(&task_list, tcb);
-	}
-	
+OS_TCB_t * roundRobin(_OS_tasklist_t task_list) {
+
 	if (task_list.head) {
 		OS_TCB_t * firstTask = task_list.head;
 		
@@ -132,8 +128,33 @@ OS_TCB_t const * _OS_schedule(void) {
 				return task_list.head;
 			}
 		} while (task_list.head != firstTask);
-		// Return idle if all tasks are alseep
-		return _OS_idleTCB_p;
+		
+		/* 
+		 * Return 0 if all tasks are alseep.
+		 * Indicates that _OS_idleTCB_p must be returned from _OS_schedule()
+		 */
+		return 0;
+	}
+	return 0;
+}
+
+/* Fixed Priority Array of Round-Robins scheduler */
+OS_TCB_t const * _OS_schedule(void) {
+	
+	/* Add all notified tasks back into the task list */
+	OS_TCB_t * tcb;
+	while ((tcb = list_pop_sl(&pending_list))) {
+		// DANGER ZONE
+		list_add(schedule.priorityArray[tcb->priority], tcb);
+		// DANGER ZONE
+	}
+	
+	for (uint32_t i = 0; i < maxPriorities; i++) {
+		_OS_tasklist_t * task_list = schedule.priorityArray[i];
+		
+		if((tcb = roundRobin(*task_list))) {
+			return tcb;
+		}
 	}
 	
 	// No tasks are runnable, so return the idle task
@@ -187,24 +208,27 @@ void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func
  */
 
 void OS_constructSchedule(void) {
+	/* Static allocation of enough memory to hold the schedule */
+	_OS_tasklist_t * listAddresses = static_alloc(maxPriorities * sizeof(_OS_tasklist_t));
 	
 	for (uint32_t i = 0; i < maxPriorities; i++) {
-		
-		_OS_tasklist_t task_list = {.head = 0, .priority = i};
-		schedule.priorityArray[i] = &task_list;
+		schedule.priorityArray[i] = &listAddresses[i];
+		schedule.priorityArray[i]->priority = i;
 	}
 }
 
 void OS_addTask(OS_TCB_t * const tcb) {
-	
-	uint32_t tcbPriority = tcb->priority;
 	
 	/* If empty, construct the full scheduler priority array */
 	if (*schedule.priorityArray == 0) {
 		OS_constructSchedule();
 	}
 	
-	list_add(schedule.priorityArray[tcbPriority], tcb);
+	/* Acquire the task_list of correct priority from the schedule */
+	uint32_t tcbPriority = tcb->priority;
+	_OS_tasklist_t * task_list_ptr = schedule.priorityArray[tcbPriority];
+	
+	list_add(task_list_ptr, tcb);
 }
 
 /* -----------------------------------------------------------------------------
@@ -220,9 +244,11 @@ void _OS_taskExit_delegate(void) {
 	OS_TCB_t * tcb = OS_currentTCB();
 	
 	/* Acquire the task_list of correct priority from the schedule */
+	// DANGER ZONE
 	uint32_t tcbPriority = tcb->priority;
-	
-	list_remove(schedule.priorityArray[tcbPriority], tcb);
+	_OS_tasklist_t * task_list_ptr = schedule.priorityArray[tcbPriority];
+	// DANGER ZONE
+	list_remove(task_list_ptr, tcb);
 	
 	/* Initiate context switch */
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
@@ -239,13 +265,16 @@ void _OS_wait_delegate(_OS_SVC_StackFrame_t * const stack) {
 		stack->r0 = 1;
 	}
 	else {
+		OS_TCB_t * tcb = OS_currentTCB();
+		
 		/* Acquire the task_list of correct priority from the schedule */
+		// DANGER ZONE
 		uint32_t tcbPriority = tcb->priority;
-		_OS_tasklist_t task_list = *schedule.priorityArray[tcbPriority];
+		_OS_tasklist_t * task_list_ptr = schedule.priorityArray[tcbPriority];
+		// DANGER ZONE
 		
 		/* Add the tcb to the wait list */
-		OS_TCB_t * tcb = task_list.head;
-		list_remove(&task_list, tcb);
+		list_remove(task_list_ptr, tcb);
 		list_push_sl(&wait_list, tcb);
 		
 		// return 0 to indicate success

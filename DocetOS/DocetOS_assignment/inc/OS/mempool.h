@@ -15,7 +15,7 @@ typedef struct s_mempool {
 
 #define MEMPOOL_INITIALISER { .head = 0 }
 
-void * static_alloc(size_t bytes);
+void * poolStaticAlloc(size_t bytes);
 
 void * pool_allocate(mempool_t *pool);
 void pool_deallocate(mempool_t *pool, void *block);
