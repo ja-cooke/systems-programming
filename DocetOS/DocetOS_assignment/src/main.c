@@ -24,7 +24,7 @@ static void task1(void const *const args) {
 	(void) args;
 	
 	while (1) {
-		
+		OS_sleep(1000);
 		for(uint32_t i = 0; i<100000; i++){
 			// ALLOCATION //
 			/* Allocate one block for data packets and fill them in */
@@ -48,13 +48,14 @@ static void task1(void const *const args) {
 		// DEALLOCATION
 		pool_deallocate(&pool, p1);
 	}
+	
 }
 
 static void task2(void const *const args) {
 	(void) args;
 	
 	while (1) {
-		
+		OS_sleep(1000);
 		for(uint32_t i = 0; i<10000; i++){
 			// ALLOCATION //
 			/* Allocate one block for data packets and fill them in */
@@ -79,7 +80,6 @@ static void task2(void const *const args) {
 		
 		// DEALLOCATION
 		pool_deallocate(&pool, p2);
-	
 	}
 }
 
@@ -139,9 +139,9 @@ int main(void) {
 	static uint32_t stack1[128] __attribute__ (( aligned(8) ));
 	static uint32_t stack2[128] __attribute__ (( aligned(8) ));
 	static uint32_t stack3[128] __attribute__ (( aligned(8) ));
-	static OS_TCB_t TCB1 = {.priority = 0};
-	static OS_TCB_t TCB2 = {.priority = 0};
-	static OS_TCB_t TCB3 = {.priority = 0};
+	static OS_TCB_t TCB1 = {.priority = 3};
+	static OS_TCB_t TCB2 = {.priority = 1};
+	static OS_TCB_t TCB3 = {.priority = 4};
 
 	/* Initialise the TCBs using the two functions above */
 	OS_initialiseTCB(&TCB1, stack1+128, task1, NULL);
