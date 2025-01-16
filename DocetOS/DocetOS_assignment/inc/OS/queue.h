@@ -5,12 +5,11 @@
 #include "OS/scheduler.h"
 #include "OS/semaphore.h"
 
-#define QUEUE_SIZE 2048
+#define QUEUE_SIZE 10
 
 typedef struct {
 	void *memoryAddress;
-	OS_TCB_t *sender;
-	OS_TCB_t *receiver;
+	uint32_t commID;
 } OS_commsPacket_t;
 
 typedef struct {
@@ -20,14 +19,16 @@ typedef struct {
 	uint32_t remove;
 } OS_commsQueue_t;
 
-#define QUEUE_INITIALISER { .packets = {0}, .insert = 0, .remove = 0 }
-#define PACKET_INITIALISER { .memoryAddress = 0, .sender = 0, .receiver = 0 }
+#define QUEUE_INITIALISER { .packets = {0}, .accessToken = {0}, .insert = 0, .remove = 0 }
+#define PACKET_INITIALISER { .memoryAddress = 0, .commID = 0 }
 
-void OS_sendPacket(void *packet, OS_TCB_t *receiver);
-void OS_receivePacket(void **packet, OS_TCB_t *sender);
+void OS_initCommsQueue(void);
+
+void OS_sendPacket(void *packet, uint32_t commID);
+void * OS_receivePacket(uint32_t commID);
 
 void spaces(OS_commsQueue_t *queue);
 uint32_t queue_put(OS_commsQueue_t *queue, OS_commsPacket_t packet);
-uint32_t queue_get(OS_commsQueue_t *queue, OS_commsPacket_t *packet);
+uint32_t queue_get(OS_commsQueue_t *queue, OS_commsPacket_t *packet, uint32_t commID);
 
 #endif /* QUEUE_H */

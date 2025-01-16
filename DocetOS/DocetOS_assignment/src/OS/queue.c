@@ -8,15 +8,17 @@ static int32_t *spaces_left_ptr = &spaces_left;
 
 static OS_commsQueue_t commsQueue = QUEUE_INITIALISER;
 
-void OS_sendPacket(void *packet, OS_TCB_t *receiver) {
+void OS_initCommsQueue(void) {
+	commsQueue.accessToken.available = 1;
+}
+
+void OS_sendPacket(void *packet, uint32_t commID) {
 	// DANGER ZONE
-	OS_TCB_t * current_tcb = OS_currentTCB();
 	uint32_t sendError = 0;
 	
 	OS_commsPacket_t packetPacked = PACKET_INITIALISER;
-	packetPacked.memoryAddress = &packet;
-	packetPacked.sender = current_tcb;
-	packetPacked.receiver = receiver;
+	packetPacked.memoryAddress = packet;
+	packetPacked.commID = commID;
 	
 	do {
 		sendError = queue_put(&commsQueue, packetPacked);
@@ -24,26 +26,27 @@ void OS_sendPacket(void *packet, OS_TCB_t *receiver) {
 	// DANGER ZONE
 }
 
-void OS_receivePacket(void **packet, OS_TCB_t *sender) {
+void * OS_receivePacket(uint32_t commID) {
 	// DANGER ZONE
-  uint32_t receiveError = 1;
+  uint32_t notReceived = 1;
 	OS_commsPacket_t packetPacked = PACKET_INITIALISER;
 	
-	while(receiveError) {
+	/* 
+	 * Listens for the packet.
+	 * Sets the task to wait if the packet is not yet available.
+	 */
+	while(notReceived) {
 		uint32_t notification_counter = getNotificationCounter();
-		receiveError = queue_get(&commsQueue, &packetPacked);
-		if (receiveError) {
+		notReceived = queue_get(&commsQueue, &packetPacked, commID);
+		if(notReceived) {
 			OS_wait(notification_counter);
 		}
 	}
-	/* Other tasks may be waiting for the next item in the queue */
-	OS_notifyAll();
 	
-	packet = packetPacked.memoryAddress;
-	sender = packetPacked.sender;
+	/* Unpacks packet data pointer */
+	void *packet = packetPacked.memoryAddress;
 	
-	(void) packet;
-	(void) sender;
+	return packet;
 	// DANGER ZONE
 }
 
@@ -78,9 +81,8 @@ uint32_t queue_put(OS_commsQueue_t *queue, OS_commsPacket_t packet) {
 	// DANGER ZONE
 }
 
-uint32_t queue_get(OS_commsQueue_t *queue, OS_commsPacket_t *packet) {	
+uint32_t queue_get(OS_commsQueue_t *queue, OS_commsPacket_t *packet, uint32_t commID) {	
 	// DANGER ZONE
-	
 	OS_semBinary_acquire(&queue->accessToken);
 	
 	uint32_t insert = queue->insert;
@@ -91,18 +93,22 @@ uint32_t queue_get(OS_commsQueue_t *queue, OS_commsPacket_t *packet) {
 		OS_semBinary_release(&queue->accessToken);
 		return 1;
 	}
-	/* If the queue is not empty, check to see if the next item in the queue is
-   * intended for the current TCB, and if it is, retrieve it. */
-	else if (&queue->packets[queue->packets[queue->remove].receiver == OS_currentTCB()]){
+	/* 
+	 * If the queue is not empty, and the commID matches the one expected, 
+	 * retrieve it. 
+	 */
+	else if (queue->packets[queue->remove].commID == commID){
 		*packet = queue->packets[queue->remove];
 		queue->remove = (queue->remove + 1) % QUEUE_SIZE;
 	
 		/* Queue get successful */
 		OS_semBinary_release(&queue->accessToken);
+		OS_notifyAll();
 		return 0;
 	}
-	/* If the queue is not empty, but the next item in the queue is intended for a
-	 * different TCB */
+	/*
+	 * If the queue is not empty, but the commID does not match.
+	 */
 	else {
 		OS_semBinary_release(&queue->accessToken);
 		return 1;

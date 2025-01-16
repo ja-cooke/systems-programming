@@ -36,7 +36,7 @@ void OS_semaphore_release(OS_semaphore_t *semaphore) {
 		semaphoresAvailable = (uint32_t) __LDREXW((uint32_t *)&(semaphore->available));
 		
 		// Equivalent to: semaphore->available = semaphoresAvailable++
-	} while (__STREXW ((uint32_t) semaphoresAvailable++, (uint32_t *)&(semaphore->available)));
+	} while (__STREXW ((uint32_t) ++semaphoresAvailable, (uint32_t *)&(semaphore->available)));
 			
 	// Would be a good idea to write in seperate notification for semaphores and mutexes
 	OS_notifyAll();
@@ -79,7 +79,7 @@ void OS_semBinary_release(OS_semBinary_t *semaphore) {
 		semaphoreAvailable = (uint32_t) __LDREXW((uint32_t *)&(semaphore->available));
 		
 		// Equivalent to: semaphore->available = semaphoreAvailable++
-	} while (__STREXW ((uint32_t) semaphoreAvailable++, (uint32_t *)&(semaphore->available)));
+	} while (__STREXW ((uint32_t) ++semaphoreAvailable, (uint32_t *)&(semaphore->available)));
 			
 	// Would be a good idea to write in seperate notification for semaphores and mutexes
 	OS_notifyAll();

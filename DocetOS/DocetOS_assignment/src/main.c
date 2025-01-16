@@ -8,6 +8,7 @@
 #include "OS/mutex.h"
 #include "Utils/utils.h"
 #include "OS/mempool.h"
+#include "OS/queue.h"
 
 static OS_mutex_t mutex = OS_MUTEX_STATIC_INITIALISER;
 
@@ -25,6 +26,18 @@ static void task1(void const *const args) {
 	
 	while (1) {
 		OS_sleep(1000);
+		
+		// Inter-Task Communication Test
+		// ---- SEND TEST ---------
+		
+		packet_t *commsTestPackTransmitter = pool_allocate(&pool);
+		commsTestPackTransmitter->id = 2049;
+		strncpy(commsTestPackTransmitter->data, "CommsTest", 10);
+		
+		OS_sendPacket(commsTestPackTransmitter, 1);
+		
+		// ---- SEND TEST END ---------
+		
 		for(uint32_t i = 0; i<100000; i++){
 			// ALLOCATION //
 			/* Allocate one block for data packets and fill them in */
@@ -56,6 +69,21 @@ static void task2(void const *const args) {
 	
 	while (1) {
 		OS_sleep(1000);
+		
+		// ---- RECEIVE TEST ---------
+	
+		void **r1_ptr = OS_receivePacket(1);
+		packet_t *r1 = (packet_t *) r1_ptr;
+		
+		OS_mutex_aquire(&mutex, OS_currentTCB());
+		printf("--DO_NOT_INTERRUPT--");
+		printf("Packet Received (id %" PRIu32 ", data '%s') at address %p\r\n", r1->id, r1->data, &r1->data);
+		OS_mutex_release(&mutex, OS_currentTCB());
+		
+		pool_deallocate(&pool, r1_ptr);
+	
+		// ---- RECEIVE TEST END ---------
+		
 		for(uint32_t i = 0; i<10000; i++){
 			// ALLOCATION //
 			/* Allocate one block for data packets and fill them in */
@@ -122,6 +150,7 @@ int main(void) {
 	configUSART2(38400);
 	
 	pool_init(&pool, sizeof(packet_t), 10);
+	OS_initCommsQueue();
 	
 	reportState();
 	
@@ -139,9 +168,9 @@ int main(void) {
 	static uint32_t stack1[128] __attribute__ (( aligned(8) ));
 	static uint32_t stack2[128] __attribute__ (( aligned(8) ));
 	static uint32_t stack3[128] __attribute__ (( aligned(8) ));
-	static OS_TCB_t TCB1 = {.priority = 3};
-	static OS_TCB_t TCB2 = {.priority = 1};
-	static OS_TCB_t TCB3 = {.priority = 4};
+	static OS_TCB_t TCB1 = {.priority = 0};
+	static OS_TCB_t TCB2 = {.priority = 0};
+	static OS_TCB_t TCB3 = {.priority = 0};
 
 	/* Initialise the TCBs using the two functions above */
 	OS_initialiseTCB(&TCB1, stack1+128, task1, NULL);
