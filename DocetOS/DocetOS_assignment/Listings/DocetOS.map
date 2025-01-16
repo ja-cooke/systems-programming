@@ -823,11 +823,11 @@ Removing Unused input sections from the image.
     Removing mempool.o(.ARM.exidx.text.pool_deallocate), (8 bytes).
     Removing mempool.o(.ARM.exidx.text.pool_init), (8 bytes).
     Removing queue.o(.text), (0 bytes).
-    Removing queue.o(.text.spaces), (50 bytes).
+    Removing queue.o(.text.spaces), (58 bytes).
     Removing queue.o(.ARM.exidx.text.spaces), (8 bytes).
-    Removing queue.o(.text.queue_put), (98 bytes).
+    Removing queue.o(.text.queue_put), (104 bytes).
     Removing queue.o(.ARM.exidx.text.queue_put), (8 bytes).
-    Removing queue.o(.text.queue_get), (96 bytes).
+    Removing queue.o(.text.queue_get), (98 bytes).
     Removing queue.o(.ARM.exidx.text.queue_get), (8 bytes).
     Removing queue.o(.data.spaces_left_ptr), (4 bytes).
     Removing queue.o(.rodata.str1.1), (18 bytes).
@@ -860,7 +860,7 @@ Removing Unused input sections from the image.
     Removing system_stm32f4xx.o(.ARM.exidx.text.SystemCoreClockUpdate), (8 bytes).
     Removing system_stm32f4xx.o(.rodata.APBPrescTable), (8 bytes).
 
-104 unused section(s) (total 1586 bytes) removed from the image.
+104 unused section(s) (total 1602 bytes) removed from the image.
 
 ==============================================================================
 

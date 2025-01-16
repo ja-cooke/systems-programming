@@ -12,13 +12,12 @@ typedef struct s_OS_semBinary_t {
 } OS_semBinary_t;
 
 #define OS_SEMAPHORE_STATIC_INITIALISER {.available = 0}
+#define OS_BINARY_SEMAPHORE_STATIC_INITIALISER {.available = 1}
 
 void OS_semaphore_acquire(OS_semaphore_t *semaphore);
-void OS_semaphore_acquire_refactor(OS_semaphore_t *semaphore);
 void OS_semaphore_release(OS_semaphore_t *semaphore);
 
 void OS_semBinary_acquire(OS_semBinary_t *semaphore);
-void OS_semBinary_acquire_refactor(OS_semBinary_t *semaphore);
 void OS_semBinary_release(OS_semBinary_t *semaphore);
 
 #endif /* SEMAPHORE_H */
