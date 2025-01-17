@@ -17,6 +17,7 @@ typedef struct s_OS_TCB_t {
 	uint32_t volatile state;
 	/* Priority must be fixed at run-time */
 	uint32_t const priority;
+	int32_t volatile tempPriority;
 	
 	struct s_OS_TCB_t * prev;
 	struct s_OS_TCB_t * next;

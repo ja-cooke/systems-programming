@@ -18,6 +18,14 @@ void OS_mutex_aquire(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
 			//(void) notification_counter;
 		}
 		else if (mutex_tcb != current_tcb) {
+			int32_t *mutex_TCBPriority = 0;
+			do {
+				// Equivalent to: int32_t *mutex_TCBPriority = mutex_tcb->priority
+				mutex_TCBPriority = (int32_t *) __LDREXW((uint32_t *)&(mutex_tcb->priority));
+				current_tcb->tempPriority = (int32_t) mutex_tcb->priority;
+			
+			} while(__STREXW ((uint32_t) mutex_TCBPriority, (uint32_t *)&(current_tcb->tempPriority)));
+				
 			OS_wait(notification_counter);
 			repeat = 1;
 		}
@@ -59,6 +67,11 @@ void OS_mutex_release(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
 		if (mutex->counter == 0) {
 			// Set the TCB field to zero too
 			mutex->tcb = 0;
+			
+			if (current_tcb->tempPriority != -1) {
+				current_tcb->tempPriority = -1;
+				// Now need a new wait_delegate to change the task priority
+			}
 			// Call OS_notifyAll()
 			OS_notifyAll();
 		}

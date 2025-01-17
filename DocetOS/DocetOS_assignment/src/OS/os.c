@@ -58,6 +58,7 @@ void _OS_schedule_delegate(void) {
 }
 
 /* Starts the OS and never returns. */
+
 void OS_start(void) {
 	// This call never returns (and enables interrupts and resets the stack)
 	_task_init_switch(&_OS_idleTCB);
