@@ -105,58 +105,35 @@ static OS_TCB_t * list_pop_sl (_OS_tasklist_t *list) {
 
 static OS_TCB_t * roundRobin(_OS_tasklist_t *task_list) {
 
+	/* Returns the next task if the list is not empty. */ 
 	if (task_list->head) {
-		OS_TCB_t * firstTask = task_list->head;
-		
-		/* Cycle through all tasks until finding one that is awake */
-		do {
-			task_list->head = task_list->head->next;
-				
-			// Check the sleep state, do not return if true
-			if (task_list->head->state &= TASK_STATE_SLEEP){
-				uint32_t wakeTime;
-				uint32_t currentTime;
-				
-				wakeTime = task_list->head->data;
-				/* is it possible to solve the overflow problem by implementing
-				   current_time and wake_time as signed integers */
-				currentTime = OS_elapsedTicks(); // what to do after overflow?
-				
-				// If the wake time has passed
-				if (currentTime > wakeTime) {
-					// Clear the sleep flag
-					task_list->head->state &= ~TASK_STATE_SLEEP;
-					task_list->head->state &= ~TASK_STATE_YIELD;
-					return task_list->head;
-				}
-			}
-			else {
-				task_list->head->state &= ~TASK_STATE_YIELD;
-				return task_list->head;
-			}
-		} while (task_list->head != firstTask);
-		
-		/* 
-		 * Returns 0 if all tasks are alseep.
-		 * Indicates that _OS_idleTCB_p must be returned from _OS_schedule()
-		 */
+		task_list->head = task_list->head->next;
+		task_list->head->state &= ~TASK_STATE_YIELD;
+		return task_list->head;
+	}
+	else {
+		/* List Empty, no tasks to run. */
 		return 0;
 	}
-	return 0;
 }
 
 static void OS_wake(void) {
 	OS_semBinary_acquire(&sleepHeap.accessToken);
 	
-	while(!heap_isEmpty(&sleepHeap)) {
-
-		/* is it possible to solve the overflow problem by implementing
+	/* is it possible to solve the overflow problem by implementing
 		 * current_time and wake_time as signed integers */
-		uint32_t currentTime = OS_elapsedTicks(); // what to do after overflow?
-		uint32_t wakeTime = ((OS_TCB_t *) sleepHeap.store)->priority;
-					
+	uint32_t currentTime = OS_elapsedTicks(); // what to do after overflow?
+	
+	/* Overflow solution:
+	 * if timerOverflow is set to 1 all tasks will be woken up
+	 */
+	uint32_t timerOverflow = SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk;
+	
+	uint32_t wakeTime = ((OS_TCB_t *) sleepHeap.store)->priority;
+	
+	while(!heap_isEmpty(&sleepHeap)) {
 		// If the wake time has passed
-		if (currentTime > wakeTime) {
+		if (currentTime > wakeTime || timerOverflow) {
 			// Clear the sleep flag
 			OS_TCB_t *tcb = heap_extract(&sleepHeap);
 			tcb->state &= ~TASK_STATE_SLEEP;
@@ -181,10 +158,12 @@ static void sortPending(void) {
 
 /* Fixed Priority Array of Round-Robins scheduler */
 OS_TCB_t const * _OS_schedule(void) {
+	/* Tasks which have finished sleeping are added to the task lists */ 
 	OS_wake();
-	/* Add all notified tasks back into the task list */
+	/* Adds all notified waiting tasks back into the task lists */
 	sortPending();
 	
+	/* Checks priortyArray for tasks in each task list, highest priority first */
 	for (uint32_t i = 0; i < maxPriorities; i++) {
 		_OS_tasklist_t * task_list = schedule.priorityArray[i];
 		

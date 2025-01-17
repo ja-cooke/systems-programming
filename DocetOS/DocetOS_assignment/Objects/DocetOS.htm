@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\DocetOS.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\DocetOS.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Fri Jan 17 17:24:13 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Fri Jan 17 21:25:11 2025
 <BR><P>
 <H3>Maximum Stack Usage =        324 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1476,8 +1476,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[107]"></a>OS_elapsedTicks</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, os.o(.text.OS_elapsedTicks))
-<BR><BR>[Called By]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;roundRobin
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_wake
+<BR><BR>[Called By]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_wake
 <LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_sleep
 </UL>
 
@@ -1629,7 +1628,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> os_asm.o(OS_func)
 </UL>
 <P><STRONG><a name="[112]"></a>_OS_schedule</STRONG> (Thumb, 90 bytes, Stack size 24 bytes, scheduler.o(.text._OS_schedule))
-<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = _OS_schedule &rArr; OS_wake &rArr; heap_extract &rArr; heap_down &rArr; find_children
+<BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = _OS_schedule &rArr; OS_wake &rArr; heap_extract &rArr; heap_down &rArr; find_children
 </UL>
 <BR>[Calls]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;roundRobin
 <LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sortPending
@@ -1956,7 +1955,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[8]"></a>PendSV_Handler</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, os_asm.o(OS_func))
-<BR><BR>[Stack]<UL><LI>Max Depth = 144 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 152 + Unknown Stack Size
 <LI>Call Chain = PendSV_Handler &rArr; _OS_schedule &rArr; OS_wake &rArr; heap_extract &rArr; heap_down &rArr; find_children
 </UL>
 <BR>[Calls]<UL><LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_OS_schedule
@@ -2085,13 +2084,13 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_mutex_aquire
 </UL>
 
-<P><STRONG><a name="[10c]"></a>OS_wake</STRONG> (Thumb, 138 bytes, Stack size 24 bytes, scheduler.o(.text.OS_wake))
-<BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = OS_wake &rArr; heap_extract &rArr; heap_down &rArr; find_children
+<P><STRONG><a name="[10c]"></a>OS_wake</STRONG> (Thumb, 158 bytes, Stack size 32 bytes, scheduler.o(.text.OS_wake))
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = OS_wake &rArr; heap_extract &rArr; heap_down &rArr; find_children
 </UL>
 <BR>[Calls]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_semBinary_release
 <LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;heap_extract
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_elapsedTicks
 <LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;heap_isEmpty
+<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_elapsedTicks
 <LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_semBinary_acquire
 <LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;list_push_sl
 </UL>
@@ -2107,10 +2106,8 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_OS_schedule
 </UL>
 
-<P><STRONG><a name="[114]"></a>roundRobin</STRONG> (Thumb, 158 bytes, Stack size 32 bytes, scheduler.o(.text.roundRobin))
-<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = roundRobin
-</UL>
-<BR>[Calls]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_elapsedTicks
+<P><STRONG><a name="[114]"></a>roundRobin</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, scheduler.o(.text.roundRobin))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = roundRobin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_OS_schedule
 </UL>
