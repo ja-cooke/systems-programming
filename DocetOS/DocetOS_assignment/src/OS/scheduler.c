@@ -358,8 +358,8 @@ static int32_t comparator(void *input_a, void *input_b){
 	OS_TCB_t *input_a_cast = input_a;
 	OS_TCB_t *input_b_cast = input_b;
 	
-	uint32_t priority_a = input_a_cast->priority;
-	uint32_t priority_b = input_b_cast->priority;
+	uint32_t priority_a = input_a_cast->data;
+	uint32_t priority_b = input_b_cast->data;
 	// Return > 0 if the first parameter is "greater"
 	if(priority_a > priority_b){
 		return 1;
