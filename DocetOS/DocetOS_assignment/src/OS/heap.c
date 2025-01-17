@@ -35,7 +35,7 @@ static uint32_t find_children(uint32_t parent_index, uint32_t heap_size){
 	}
 }
 
-static void heap_up(heap_t *heap) {
+static void heap_up(OS_heap_t *heap) {
 	// offset array to concatinate the 'store' array from 1
 	// This makes navigation of the heap more human readable
 	void ** const offset_store = heap->store - 1;
@@ -75,7 +75,7 @@ static void heap_up(heap_t *heap) {
 	}
 }
 
-static void heap_down(heap_t *heap) {
+static void heap_down(OS_heap_t *heap) {
 	// offset array to concatinate the 'store' array from 1
 	// This makes navigation of the heap more human readable
 	void ** const offset_store = heap->store - 1;
@@ -93,7 +93,7 @@ static void heap_down(heap_t *heap) {
 	uint32_t child_index_b = 0;
 	uint32_t smallest_child_index = 0;
 	
-	int_fast8_t comparator_result = 0;
+	int32_t comparator_result = 0;
 	
 	// 1. Start with the root element as a 'parent node'
 	parent_index = 1;
@@ -155,13 +155,13 @@ static void heap_down(heap_t *heap) {
 	}
 }
 
-void heap_insert(heap_t *heap, void * item) {
+void heap_insert(OS_heap_t *heap, void * item) {
 	// The new element is always added to the end of a heap
 	heap->store[(heap->size)++] = item;
 	heap_up(heap);
 }
 
-void * heap_extract(heap_t *heap) {
+void * heap_extract(OS_heap_t *heap) {
 	// The root value is extracted, and the space filled by the value from the end
 	// If the heap is empty, this will fail horribly...
 	void * item = heap->store[0];
@@ -170,6 +170,6 @@ void * heap_extract(heap_t *heap) {
 	return item;
 }
 
-uint_fast8_t heap_isEmpty(heap_t *heap) {
+uint32_t heap_isEmpty(OS_heap_t *heap) {
 	return !(heap->size);
 }

@@ -20,6 +20,7 @@ enum OS_SVC_e {
 	OS_SVC_YIELD,
 	OS_SVC_SCHEDULE,
 	OS_SVC_WAIT,
+	OS_SVC_SLEEP_HEAP,
 };
 
 /***************************/
@@ -42,8 +43,10 @@ uint32_t OS_elapsedTicks(void);
 
 /* SVC delegate to yield the current task */
 #define OS_yield() _svc_0(OS_SVC_YIELD)
-/* SVC delegate to set the current task to sleep */
+/* SVC delegate to set the current task to wait */
 #define OS_wait(uint32) _svc_1(notification_counter, OS_SVC_WAIT)
+/* SVC delegate to add the current task to the sleep heap*/
+#define OS_sleepHeap(uint32) _svc_1(sleep_counter, OS_SVC_SLEEP_HEAP)
 
 /*========================*/
 /*      INTERNAL API      */
@@ -159,6 +162,7 @@ void _OS_yield_delegate(void);
 void _OS_schedule_delegate(void);
 void _OS_enable_systick_delegate(void);
 void _OS_wait_delegate(_OS_SVC_StackFrame_t * const stack);
+void _OS_sleepHeap_delegate(_OS_SVC_StackFrame_t * const stack);
 
 #endif /* OS_INTERNAL */
 

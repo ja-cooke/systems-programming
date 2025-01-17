@@ -47,6 +47,7 @@ void OS_constructSchedule(void);
 void OS_addTask(OS_TCB_t * const tcb);
 void OS_notifyAll(void);
 uint32_t getNotificationCounter(void);
+uint32_t getSleepCounter(void);
 
 /*========================*/
 /*      INTERNAL API      */
@@ -67,8 +68,6 @@ typedef struct {
 } _OS_fpSchedule_t;
 
 /* Function Prototypes */
-
-OS_TCB_t * roundRobin(_OS_tasklist_t *task_list);
 OS_TCB_t const * _OS_schedule(void);
 
 /* SVC delegates */
