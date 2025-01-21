@@ -127,13 +127,15 @@ static void OS_wake(void) {
 	/* Overflow solution:
 	 * if timerOverflow is set to 1 all tasks will be woken up
 	 */
-	uint32_t timerOverflow = SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk;
+	//uint32_t timerOverflow = 0; //SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk;
 	
-	uint32_t wakeTime = ((OS_TCB_t *) sleepHeap.store)->priority;
+	OS_TCB_t ** store = (OS_TCB_t **) sleepHeap.store;
+	
 	
 	while(!heap_isEmpty(&sleepHeap)) {
+		uint32_t wakeTime = store[0]->wakeTime;
 		// If the wake time has passed
-		if (currentTime > wakeTime || timerOverflow) {
+		if (currentTime >= wakeTime) { // || timerOverflow
 			// Clear the sleep flag
 			OS_TCB_t *tcb = heap_extract(&sleepHeap);
 			tcb->state &= ~TASK_STATE_SLEEP;
@@ -296,6 +298,7 @@ void _OS_wait_delegate(_OS_SVC_StackFrame_t * const stack) {
 		// return 0 to indicate success
 		stack->r0 = 0;
 	}
+	//OS_yield();
 	/* Set PendSV bit for context switch */
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
@@ -324,12 +327,13 @@ void _OS_sleepHeap_delegate(_OS_SVC_StackFrame_t * const stack) {
 		heap_insert(&sleepHeap, tcb);
 		OS_semBinary_release(&sleepHeap.accessToken);
 		// DANGER ZONE
-		//list_push_sl(&wait_list, tcb);
 		
 		// return 0 to indicate success
 		stack->r0 = 0;
 	}
+	
 	/* Set PendSV bit for context switch */
+	//_currentTCB->state |= TASK_STATE_YIELD;
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 
 }
@@ -358,14 +362,14 @@ static int32_t comparator(void *input_a, void *input_b){
 	OS_TCB_t *input_a_cast = input_a;
 	OS_TCB_t *input_b_cast = input_b;
 	
-	uint32_t priority_a = input_a_cast->data;
-	uint32_t priority_b = input_b_cast->data;
+	uint32_t wakeTime_a = input_a_cast->wakeTime;
+	uint32_t wakeTime_b = input_b_cast->wakeTime;
 	// Return > 0 if the first parameter is "greater"
-	if(priority_a > priority_b){
+	if(wakeTime_a > wakeTime_b){
 		return 1;
 	}
 	// Return < 0 if the first parameter is "less"
-	else if(priority_a < priority_b){
+	else if(wakeTime_a < wakeTime_b){
 		return -1;
 	}
 	// Return 0 if the first parameter is "equal"

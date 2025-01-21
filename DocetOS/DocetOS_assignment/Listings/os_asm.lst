@@ -127,7 +127,7 @@ ARM Macro Assembler    Page 2
   107 00000086         ; For deployment, uncomment this line and the CPU will s
                        leep when idling, waking only to
   108 00000086         ; handle interrupts.
-  109 00000086         ;   WFI
+  109 00000086         ;    WFI
 
 
 

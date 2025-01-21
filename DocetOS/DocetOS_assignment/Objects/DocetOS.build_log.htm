@@ -22,32 +22,25 @@ Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
 C:\Users\Jon Cooke\Documents\Education\York\Year4\SystemsProgrammingforARM\systems-programming\DocetOS\DocetOS_assignment\DocetOS.uvprojx
-Project File Date:  01/15/2025
+Project File Date:  01/21/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.22', folder: 'C:\Users\Jon Cooke\AppData\Local\Keil_v5\ARM\ARMCLANG\Bin'
-Rebuild target 'STM32F407 Flash'
-compiling sleep.c...
-compiling queue.c...
-assembling mode_utils_asm.s...
-compiling semaphore.c...
-assembling os_asm.s...
-compiling heap.c...
-compiling static_alloc.c...
-compiling main.c...
-compiling utils.c...
-compiling mutex.c...
-compiling mempool.c...
-assembling startup_stm32f407xx.s...
-compiling hardfault.c...
-compiling retarget_io.c...
-compiling scheduler.c...
-compiling system_stm32f4xx.c...
-compiling mode_utils.c...
-compiling os.c...
+Build target 'STM32F407 Flash'
+tasks.c(7): warning: unused variable 'mutex_p2' [-Wunused-variable]
+    7 | static OS_mutex_t mutex_p2 = OS_MUTEX_STATIC_INITIALISER;
+      |                   ^~~~~~~~
+tasks.c(8): warning: unused variable 'mutex_p3' [-Wunused-variable]
+    8 | static OS_mutex_t mutex_p3 = OS_MUTEX_STATIC_INITIALISER;
+      |                   ^~~~~~~~
+tasks.c(9): warning: unused variable 'mutex_p4' [-Wunused-variable]
+    9 | static OS_mutex_t mutex_p4 = OS_MUTEX_STATIC_INITIALISER;
+      |                   ^~~~~~~~
+3 warnings generated.
+compiling tasks.c...
 linking...
-Program Size: Code=16284 RO-data=1400 RW-data=172 ZI-data=36580  
-".\Objects\DocetOS.axf" - 0 Error(s), 0 Warning(s).
+Program Size: Code=15244 RO-data=1500 RW-data=288 ZI-data=40216  
+".\Objects\DocetOS.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -80,22 +73,22 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE@6.1.0
 
    * Component: Keil::Compiler&ARM Compiler:I/O:STDOUT&User@1.2.0
-      Source file:   Template/stdout_user.c
-      Source file:   Template/stdout_display.c
-      Source file:   Source/retarget_io.c
       Source file:   Template/stdout_USART.c
+      Source file:   Template/stdout_user.c
+      Source file:   Source/retarget_io.c
+      Source file:   Template/stdout_display.c
 
    * Component: Keil::Compiler&ARM Compiler:I/O:TTY&User@1.2.0
-      Source file:   Template/tty_user.c
       Source file:   Source/retarget_io.c
+      Source file:   Template/tty_user.c
 
    * Component: Keil::Device:Startup@2.6.3
+      Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
+      Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
       Source file:   MDK/Device/Source/ARM/STM32F40xxx_41xxx_OPT.s
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f407xx.s
-      Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
-      Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

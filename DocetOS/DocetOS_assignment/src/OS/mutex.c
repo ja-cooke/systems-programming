@@ -1,8 +1,9 @@
 #include "OS/mutex.h"
 
-void OS_mutex_aquire(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
+void OS_mutex_aquire(OS_mutex_t * mutex) {
 	// In this implementation STREX is not always called
 	// Unsure if this might cause problems or not.
+	OS_TCB_t * current_tcb = OS_currentTCB();
 	
 	uint32_t repeat = 0;
 	
@@ -50,7 +51,9 @@ void OS_mutex_acquire_refactor(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
 }
 
 
-void OS_mutex_release(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
+void OS_mutex_release(OS_mutex_t * mutex) {
+	 OS_TCB_t * current_tcb = OS_currentTCB();
+	
 	// Safety check:
 	if (current_tcb == mutex->tcb) {
 		// Decrement counter field

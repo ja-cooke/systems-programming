@@ -3,6 +3,7 @@
 ".\objects\main.o"
 ".\objects\mode_utils_asm.o"
 ".\objects\mutex.o"
+".\objects\tasks.o"
 ".\objects\scheduler.o"
 ".\objects\os.o"
 ".\objects\os_asm.o"

@@ -404,6 +404,11 @@
               <FileType>1</FileType>
               <FilePath>.\src\OS\mutex.c</FilePath>
             </File>
+            <File>
+              <FileName>tasks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tasks.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
