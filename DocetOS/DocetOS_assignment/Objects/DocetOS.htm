@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\DocetOS.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\DocetOS.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Wed Jan 22 03:26:17 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Wed Jan 22 17:58:38 2025
 <BR><P>
 <H3>Maximum Stack Usage =        324 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1911,12 +1911,6 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[130]"></a>poolStaticAlloc</STRONG> (Thumb, 78 bytes, Stack size 8 bytes, mempool.o(.text.poolStaticAlloc))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = poolStaticAlloc
-</UL>
-<BR>[Called By]<UL><LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pool_init
-</UL>
-
 <P><STRONG><a name="[122]"></a>pool_allocate</STRONG> (Thumb, 80 bytes, Stack size 24 bytes, mempool.o(.text.pool_allocate))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = pool_allocate &rArr; OS_semaphore_acquire &rArr; _svc_1
 </UL>
@@ -1936,7 +1930,7 @@ Global Symbols
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
 </UL>
 
-<P><STRONG><a name="[12a]"></a>pool_init</STRONG> (Thumb, 154 bytes, Stack size 32 bytes, mempool.o(.text.pool_init))
+<P><STRONG><a name="[12a]"></a>pool_init</STRONG> (Thumb, 200 bytes, Stack size 32 bytes, mempool.o(.text.pool_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = pool_init &rArr; pool_deallocate &rArr; OS_semaphore_release &rArr; OS_notifyAll &rArr; list_pop_sl
 </UL>
 <BR>[Calls]<UL><LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;poolStaticAlloc
@@ -1965,7 +1959,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_sendPacket
 </UL>
 
-<P><STRONG><a name="[12c]"></a>reportState</STRONG> (Thumb, 202 bytes, Stack size 64 bytes, mode_utils.o(.text.reportState))
+<P><STRONG><a name="[12c]"></a>reportState</STRONG> (Thumb, 218 bytes, Stack size 64 bytes, mode_utils.o(.text.reportState))
 <BR><BR>[Stack]<UL><LI>Max Depth = 208 + Unknown Stack Size
 <LI>Call Chain = reportState &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -2304,6 +2298,12 @@ Local Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = find_children
 </UL>
 <BR>[Called By]<UL><LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;heap_down
+</UL>
+
+<P><STRONG><a name="[130]"></a>poolStaticAlloc</STRONG> (Thumb, 78 bytes, Stack size 8 bytes, mempool.o(.text.poolStaticAlloc))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = poolStaticAlloc
+</UL>
+<BR>[Called By]<UL><LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pool_init
 </UL>
 
 <P><STRONG><a name="[104]"></a>_svc_1</STRONG> (Thumb, 30 bytes, Stack size 24 bytes, queue.o(.text._svc_1))

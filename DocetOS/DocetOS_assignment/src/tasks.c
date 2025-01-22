@@ -3,6 +3,7 @@
 #include "tasks.h"
 #include "OS/static_alloc.h"
 
+/* Seperate Mutexes are required for each task priority level */
 static OS_mutex_t mutex_p0 = OS_MUTEX_STATIC_INITIALISER;
 static OS_mutex_t mutex_p1 = OS_MUTEX_STATIC_INITIALISER;
 static OS_mutex_t mutex_p2 = OS_MUTEX_STATIC_INITIALISER;
@@ -11,12 +12,14 @@ static OS_mutex_t mutex_p4 = OS_MUTEX_STATIC_INITIALISER;
 
 /* Declare and intialise a memory pool */
 static mempool_t pool = MEMPOOL_INITIALISER;
-static mempool_t * const pool_ptr = &pool;
+static uint32_t const poolSize = 100;
 
+/* Used to check that sleeping tasks are waking in the correct order */
 static uint32_t sleepID = 0;
 
+/* Dynamic memory pools must be initialised prior to starting the OS. */
 void initialiseOSResources(void){
-	pool_init(pool_ptr, sizeof(packet_t), 100);
+	pool_init(&pool, sizeof(packet_t), poolSize);
 	OS_initCommsQueue();
 	
 	reportState();
@@ -42,7 +45,7 @@ void task1(void const *const args) {
 		// Inter-Task Communication Test
 		// ---- SEND TEST ---------
 		
-		packet_t *commsTestPackTransmitter = pool_allocate(pool_ptr);
+		packet_t *commsTestPackTransmitter = pool_allocate(&pool);
 		commsTestPackTransmitter->id = 2049;
 		strncpy(commsTestPackTransmitter->data, "CommsTest", 10);
 		
@@ -53,15 +56,15 @@ void task1(void const *const args) {
 		for(uint32_t i = 0; i<100000; i++){
 			// ALLOCATION //
 			/* Allocate one block for data packets and fill them in */
-			packet_t *p1 = pool_allocate(pool_ptr);
+			packet_t *p1 = pool_allocate(&pool);
 			p1->id = 1;
 			strncpy(p1->data, "AAA", 10);
-			pool_deallocate(pool_ptr, p1);
+			pool_deallocate(&pool, p1);
 		}
 		
 		// ALLOCATION //
 		/* Allocate one block for data packets and fill them in */
-		packet_t *p1 = pool_allocate(pool_ptr);
+		packet_t *p1 = pool_allocate(&pool);
 		p1->id = 1;
 		strncpy(p1->data, "AAA", 10);
 		
@@ -71,7 +74,7 @@ void task1(void const *const args) {
 		OS_mutex_release(&mutex_p0);
 		
 		// DEALLOCATION
-		pool_deallocate(pool_ptr, p1);
+		pool_deallocate(&pool, p1);
 	}
 	
 }
@@ -92,22 +95,22 @@ void task2(void const *const args) {
 		printf("Packet Received (id %" PRIu32 ", data '%s') at address %p\r\n", r1->id, r1->data, &r1->data);
 		OS_mutex_release(&mutex_p0);
 		
-		pool_deallocate(pool_ptr, r1_ptr);
+		pool_deallocate(&pool, r1_ptr);
 	
 		// ---- RECEIVE TEST END ---------
 		
 		for(uint32_t i = 0; i<10000; i++){
 			// ALLOCATION //
 			/* Allocate one block for data packets and fill them in */
-			packet_t *p2 = pool_allocate(pool_ptr);
+			packet_t *p2 = pool_allocate(&pool);
 			p2->id = 2;
 			strncpy(p2->data, "BBB", 10);
-			pool_deallocate(pool_ptr, p2);
+			pool_deallocate(&pool, p2);
 		}
 		
 		// ALLOCATION //
 		/* Allocate one block for data packets and fill them in */
-		packet_t *p2 = pool_allocate(pool_ptr);
+		packet_t *p2 = pool_allocate(&pool);
 		p2->id = 2;
 		strncpy(p2->data, "BBB", 10);
 		
@@ -119,7 +122,7 @@ void task2(void const *const args) {
 		OS_mutex_release(&mutex_p0);
 		
 		// DEALLOCATION
-		pool_deallocate(pool_ptr, p2);
+		pool_deallocate(&pool, p2);
 	}
 }
 
@@ -131,15 +134,15 @@ void task3(void const *const args) {
 		for(uint32_t i = 0; i<110000; i++){
 			// ALLOCATION //
 			/* Allocate one block for data packets and fill them in */
-			packet_t *p3 = pool_allocate(pool_ptr);
+			packet_t *p3 = pool_allocate(&pool);
 			p3->id = 3;
 			strncpy(p3->data, "CCC", 10);
-			pool_deallocate(pool_ptr, p3);
+			pool_deallocate(&pool, p3);
 		}
 		
 		// ALLOCATION //
 		/* Allocate one block for data packets and fill them in */
-		packet_t *p3 = pool_allocate(pool_ptr);
+		packet_t *p3 = pool_allocate(&pool);
 		p3->id = 3;
 		strncpy(p3->data, "CCC", 10);
 		
@@ -150,7 +153,7 @@ void task3(void const *const args) {
 		OS_mutex_release(&mutex_p0);
 		
 		// DEALLOCATION
-		pool_deallocate(pool_ptr, p3);
+		pool_deallocate(&pool, p3);
 	}
 }
 
@@ -209,7 +212,7 @@ void chattyTask(void const *const args) {
 			OS_sleep(1000);
 			
 			uint32_t randomID = (uint32_t) rand();
-			packet_t *commsTestPackTransmitter = pool_allocate(pool_ptr);
+			packet_t *commsTestPackTransmitter = pool_allocate(&pool);
 			commsTestPackTransmitter->id = randomID;
 			strncpy(commsTestPackTransmitter->data, "HelloWorld", 10);
 			
@@ -220,7 +223,7 @@ void chattyTask(void const *const args) {
 			OS_sendPacket(commsTestPackTransmitter, 1);
 			
 			randomID = (uint32_t) rand();
-			commsTestPackTransmitter = pool_allocate(pool_ptr);
+			commsTestPackTransmitter = pool_allocate(&pool);
 			commsTestPackTransmitter->id = randomID;
 			strncpy(commsTestPackTransmitter->data, "HalloWelt", 10);
 			
@@ -256,7 +259,7 @@ void listeningTask(void const *const args) {
 			printf("Packet Received (id %" PRIu32 ", data '%s') at address %p\r\n", r1->id, r1->data, &r1->data);
 			OS_mutex_release(&mutex_p3);
 			
-			pool_deallocate(pool_ptr, r1_ptr);
+			pool_deallocate(&pool, r1_ptr);
 			
 			OS_mutex_aquire(&mutex_p3);
 			printf("Listening on Channel 5\r\n");
@@ -269,7 +272,7 @@ void listeningTask(void const *const args) {
 			printf("Packet Received (id %" PRIu32 ", data '%s') at address %p\r\n", r1->id, r1->data, &r1->data);
 			OS_mutex_release(&mutex_p3);
 			
-			pool_deallocate(pool_ptr, r1_ptr);
+			pool_deallocate(&pool, r1_ptr);
 		}
 	}
 }
@@ -288,7 +291,7 @@ void greedyTask(void const *const args) {
 		for(uint32_t i = 0; i<10; i++){
 			// ALLOCATION //
 			/* Allocate one block for data packets and fill them in */
-			memoryTest[i] = pool_allocate(pool_ptr);
+			memoryTest[i] = pool_allocate(&pool);
 			memoryTest[i]->id = i;
 			strncpy(memoryTest[i]->data, "IMPORTANT", 10);
 			
@@ -302,7 +305,7 @@ void greedyTask(void const *const args) {
 		OS_sleep(5000);
 		
 		for(uint32_t i = 0; i<10; i++) {
-			pool_deallocate(pool_ptr, memoryTest[i]);
+			pool_deallocate(&pool, memoryTest[i]);
 		}
 	}
 }

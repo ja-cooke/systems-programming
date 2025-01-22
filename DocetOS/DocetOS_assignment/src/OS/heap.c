@@ -1,5 +1,12 @@
 #include "OS/heap.h"
 
+/* 
+ * GENERIC BINARY HEAP 
+ * 
+ * A suitable comparator must be implemented for the datatype with which this 
+ * abstract data structure is to be used.
+ */
+
 static void swap_elements(void **element_a, void **element_b){
 	// Swaps the contents of two memory elements
 	// Store the value of element_a in a memory buffer

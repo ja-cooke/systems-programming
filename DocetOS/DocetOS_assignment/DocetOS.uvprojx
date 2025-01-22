@@ -407,7 +407,7 @@
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\tasks.c</FilePath>
+              <FilePath>.\src\tasks.c</FilePath>
             </File>
           </Files>
         </Group>

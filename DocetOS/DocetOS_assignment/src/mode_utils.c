@@ -34,16 +34,18 @@ void reportState(){
 	
 	if (psr == 0){
 		strcpy(mode, "Thread");
+		
+		if (npriv == 0){
+			strcpy(privilage, "privilaged");
+		}
+		else{
+			strcpy(privilage, "unprivilaged");
+		}
 	}
 	else{
+		/* Handler mode code is always privilaged */
 		strcpy(mode, "Handler");
-	}
-	
-	if (npriv == 0){
 		strcpy(privilage, "privilaged");
-	}
-	else{
-		strcpy(privilage, "unprivilaged");
 	}
 	
 	if (spsel == 0){

@@ -1,5 +1,12 @@
 #include "OS/mutex.h"
 
+/* 
+ * RE-ENTRANT MUTEX
+ * 
+ * For fixed priority tasks. A seperate mutex must be used for each priority 
+ * level in order to prevent deadlocks.
+ */
+
 void OS_mutex_aquire(OS_mutex_t * mutex) {
 	// In this implementation STREX is not always called
 	// Unsure if this might cause problems or not.

@@ -3,6 +3,18 @@
 #include "OS/queue.h"
 #include "OS/semaphore.h"
 
+/*
+ * POINTER QUEUE
+ *
+ * Pointer queue which tasks can use to pass memory locations to one another. 
+ * Transmissions must be allocated an uint32_t channel number which can be used 
+ * by the receiving task to listen to the message.
+ *
+ * Memory locations are packaged within transmission packets which also contain 
+ * a communications channel and ID number, which enable concurrent
+ * communications.
+ */
+
 static int32_t spaces_left = 0;
 static int32_t *spaces_left_ptr = &spaces_left;
 

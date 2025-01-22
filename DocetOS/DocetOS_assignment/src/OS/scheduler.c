@@ -9,17 +9,23 @@
 
 #include <string.h>
 
-/* This is an implementation of an extremely simple round-robin scheduler.
-
-   A task list structure is declared.  Tasks are added to the list to create a circular buffer.
-	 When tasks finish, they are removed from the list.  When the scheduler is invoked, it simply
-	 advances the head pointer, and returns it.  If the head pointer is null, a pointer to the
-	 idle task is returned instead.
-	 
-	 The scheduler is reasonably efficient but not very flexible.  The "yield" flag is not
-	 checked, but merely cleared before a task is returned, so OS_yield() is equivalent to
-	 OS_schedule() in this implementation.
-*/
+/* 
+ * FIXED PRIORITY SCHEDULER
+ *
+ * Each priority level operates on a round robin. 
+ *
+ * A schedule structure is declared: an array of task lists sorted by priority.  
+ * Tasks are added to the lists by priority creating circular buffers for each 
+ * list.
+ * 
+ * When tasks finish, they are removed from the schedule. When the scheduler is 
+ * invoked, it progresses through the array from highest (0) to lowest priority
+ * until it finds a task, advances the head pointer, and returns it.  
+ * If the head pointers all lists are null, the idle task is returned instead.
+ * 
+ * The "yield" flag is not checked, but merely cleared before a task is 
+ * returned, so OS_yield() is equivalent to OS_schedule().
+ */
 
 static _OS_fpSchedule_t schedule = {.priorityArray = 0};
 static _OS_tasklist_t wait_list = {.head = 0};
@@ -33,6 +39,10 @@ static OS_heap_t sleepHeap = HEAP_INITIALISER(store, comparator, OS_BINARY_SEMAP
 static uint32_t notification_counter = 0;
 // Used by OS_sleepHeap to ensure that no notifications have occurred whilst it is already running
 static uint32_t sleep_counter = 0;
+
+/* -------------------------------------------------------------------------- */
+/* ------------------------ DATA STRUCTURE ACCESS --------------------------- */
+/* -------------------------------------------------------------------------- */
 
 static void list_add(_OS_tasklist_t *list, OS_TCB_t *task) {
 	/* If the list head is null  point the list to the task*/
@@ -83,8 +93,6 @@ static void list_push_sl(_OS_tasklist_t *list, OS_TCB_t *task) {
 	} while (__STREXW ((uint32_t) task, (uint32_t *)&(list->head)));
 }
 
-// TODO
-// Currently, popping from the pending list always returns the tasks to the same priority or something
 static OS_TCB_t * list_pop_sl (_OS_tasklist_t *list) {
 	OS_TCB_t *task;
 	do {
@@ -98,10 +106,9 @@ static OS_TCB_t * list_pop_sl (_OS_tasklist_t *list) {
 	return task;
 }
 
-/* -------------------------------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/* ------------------------- Scheduler Components --------------------------- */
+/* -------------------------------------------------------------------------- */
 
 static OS_TCB_t * roundRobin(_OS_tasklist_t *task_list) {
 
@@ -158,6 +165,10 @@ static void sortPending(void) {
 	}
 }
 
+/* -------------------------------------------------------------------------- */
+/* ------------------------- FIXED PRIORITY SCHEDULER ----------------------- */
+/* -------------------------------------------------------------------------- */
+
 /* Fixed Priority Array of Round-Robins scheduler */
 OS_TCB_t const * _OS_schedule(void) {
 	/* Tasks which have finished sleeping are added to the task lists */ 
@@ -179,10 +190,26 @@ OS_TCB_t const * _OS_schedule(void) {
 	return _OS_idleTCB_p;
 }
 
-/* -------------------------------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+
+void OS_constructSchedule(void) {
+	/* Static allocation of enough memory to hold the schedule */
+	_OS_tasklist_t * listAddresses = static_alloc(maxPriorities * sizeof(_OS_tasklist_t));
+	
+	for (uint32_t i = 0; i < maxPriorities; i++) {
+		schedule.priorityArray[i] = &listAddresses[i];
+		schedule.priorityArray[i]->priority = i;
+	}
+}
+
+
+/* -------------------------------------------------------------------------- */
+/* --------------------------- OS INTERACTIONS ------------------------------ */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
 
 
 /* Initialises a task control block (TCB) and its associated stack.  See os.h for details. */
@@ -214,27 +241,7 @@ void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func
 	};
 }
 
-/* -----------------------------------------------------------------------------
- * -----------------------------------------------------------------------------
- * -----------------------------------------------------------------------------
- * -----------------------------------------------------------------------------
- */
-
-/* 'Add task' 
- *
- * Redesign will include logic to build priority array if not already constructed
- */
-
-void OS_constructSchedule(void) {
-	/* Static allocation of enough memory to hold the schedule */
-	_OS_tasklist_t * listAddresses = static_alloc(maxPriorities * sizeof(_OS_tasklist_t));
-	
-	for (uint32_t i = 0; i < maxPriorities; i++) {
-		schedule.priorityArray[i] = &listAddresses[i];
-		schedule.priorityArray[i]->priority = i;
-	}
-}
-
+/* Includes logic to build priority array if not already constructed */
 void OS_addTask(OS_TCB_t * const tcb) {
 	
 	/* If empty, construct the full scheduler priority array */
@@ -249,8 +256,56 @@ void OS_addTask(OS_TCB_t * const tcb) {
 	list_add(task_list_ptr, tcb);
 }
 
+void OS_notifyAll(void) {
+	// check code for fast-fail OS_wait() function
+	notification_counter++;
+	
+	while (wait_list.head) {
+		OS_TCB_t * tcb;
+		tcb = list_pop_sl(&wait_list);
+		list_push_sl(&pending_list, tcb);
+	}
+}
+
 /* -----------------------------------------------------------------------------
+ * ------------------------------MISC FUNCTIONS --------------------------------
  * -----------------------------------------------------------------------------
+ * -----------------------------------------------------------------------------
+ */
+
+
+uint32_t getNotificationCounter(void){
+	return notification_counter;
+}
+
+uint32_t getSleepCounter(void){
+	return sleep_counter;
+}
+
+static int32_t comparator(void *input_a, void *input_b){
+	
+	OS_TCB_t *input_a_cast = input_a;
+	OS_TCB_t *input_b_cast = input_b;
+	
+	uint32_t wakeTime_a = input_a_cast->wakeTime;
+	uint32_t wakeTime_b = input_b_cast->wakeTime;
+	// Return > 0 if the first parameter is "greater"
+	if(wakeTime_a > wakeTime_b){
+		return 1;
+	}
+	// Return < 0 if the first parameter is "less"
+	else if(wakeTime_a < wakeTime_b){
+		return -1;
+	}
+	// Return 0 if the first parameter is "equal"
+	else{
+		return 0;
+	}
+}
+
+
+/* -----------------------------------------------------------------------------
+ * ----------------------------- SVC DELEGATES ---------------------------------
  * -----------------------------------------------------------------------------
  * -----------------------------------------------------------------------------
  */
@@ -336,44 +391,4 @@ void _OS_sleepHeap_delegate(_OS_SVC_StackFrame_t * const stack) {
 	//_currentTCB->state |= TASK_STATE_YIELD;
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 
-}
-
-void OS_notifyAll(void) {
-	// check code for fast-fail OS_wait() function
-	notification_counter++;
-	
-	while (wait_list.head) {
-		OS_TCB_t * tcb;
-		tcb = list_pop_sl(&wait_list);
-		list_push_sl(&pending_list, tcb);
-	}
-}
-
-uint32_t getNotificationCounter(void){
-	return notification_counter;
-}
-
-uint32_t getSleepCounter(void){
-	return sleep_counter;
-}
-
-static int32_t comparator(void *input_a, void *input_b){
-	
-	OS_TCB_t *input_a_cast = input_a;
-	OS_TCB_t *input_b_cast = input_b;
-	
-	uint32_t wakeTime_a = input_a_cast->wakeTime;
-	uint32_t wakeTime_b = input_b_cast->wakeTime;
-	// Return > 0 if the first parameter is "greater"
-	if(wakeTime_a > wakeTime_b){
-		return 1;
-	}
-	// Return < 0 if the first parameter is "less"
-	else if(wakeTime_a < wakeTime_b){
-		return -1;
-	}
-	// Return 0 if the first parameter is "equal"
-	else{
-		return 0;
-	}
 }
