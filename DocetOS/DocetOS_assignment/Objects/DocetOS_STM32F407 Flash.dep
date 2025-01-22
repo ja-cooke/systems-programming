@@ -6,17 +6,17 @@ I (inc\OS\os.h)(0x678A7A1B)
 I (inc\OS\scheduler.h)(0x678FC6DF)
 I (C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\cmsis_compiler.h)(0x664C3AF8)
 I (C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\cmsis_armclang.h)(0x664C3AF8)
-F (.\src\main.c)(0x678FF4BE)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I inc -Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow -Wpadded -Wmissing-variable-declarations -Wmissing-prototypes -Wvla-I./RTE/_STM32F407_Flash-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include"-D__UVISION_VERSION="541" -DSTM32F407xx -D_RTE_ -DHSE_VALUE="8000000" -DPLL_M="8" -DPLL_N="336" -DPLL_P="2" -DPLL_Q="7"-o ./objects/main.o -MMD)
+F (.\src\main.c)(0x679046FC)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I inc -Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow -Wpadded -Wmissing-variable-declarations -Wmissing-prototypes -Wvla-I./RTE/_STM32F407_Flash-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include"-D__UVISION_VERSION="541" -DSTM32F407xx -D_RTE_ -DHSE_VALUE="8000000" -DPLL_M="8" -DPLL_N="336" -DPLL_P="2" -DPLL_Q="7"-o ./objects/main.o -MMD)
 I (inc\OS\os.h)(0x678A7A1B)
 I (inc\OS\scheduler.h)(0x678FC6DF)
 I (C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\cmsis_compiler.h)(0x664C3AF8)
 I (C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\cmsis_armclang.h)(0x664C3AF8)
-I (inc\tasks.h)(0x678FBC64)
+I (inc\tasks.h)(0x679046DB)
 I (inc\mode_utils.h)(0x675B57F5)
 I (inc\OS\sleep.h)(0x6775A1A4)
 I (inc\OS\mutex.h)(0x678FC03B)
 I (inc\Utils\utils.h)(0x675B57F5)
-I (inc\OS\mempool.h)(0x6788216D)
+I (inc\OS\mempool.h)(0x67905F84)
 I (inc\OS\semaphore.h)(0x678A7FC9)
 I (inc\OS\queue.h)(0x678996AE)
 F (.\src\mode_utils_asm.s)(0x67797502)(--cpu Cortex-M4 --fpu=SoftVFP --pd "__EVAL SETA 1" -g --diag_suppress=A1950W-I.\RTE\_STM32F407_Flash-I"C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include"-I"C:\Users\Jon Cooke\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include"--pd "__UVISION_VERSION SETA 541"--pd "STM32F407xx SETA 1"--pd "_RTE_ SETA 1"--list .\listings\mode_utils_asm.lst--xref -o .\objects\mode_utils_asm.o--depend .\objects\mode_utils_asm.d)
@@ -26,8 +26,8 @@ I (inc\OS\os.h)(0x678A7A1B)
 I (inc\OS\scheduler.h)(0x678FC6DF)
 I (C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\cmsis_compiler.h)(0x664C3AF8)
 I (C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\cmsis_armclang.h)(0x664C3AF8)
-F (.\tasks.c)(0x678FF950)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I inc -Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow -Wpadded -Wmissing-variable-declarations -Wmissing-prototypes -Wvla-I./RTE/_STM32F407_Flash-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include"-D__UVISION_VERSION="541" -DSTM32F407xx -D_RTE_ -DHSE_VALUE="8000000" -DPLL_M="8" -DPLL_N="336" -DPLL_P="2" -DPLL_Q="7"-o ./objects/tasks.o -MMD)
-I (inc\tasks.h)(0x678FBC64)
+F (.\tasks.c)(0x67906558)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I inc -Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow -Wpadded -Wmissing-variable-declarations -Wmissing-prototypes -Wvla-I./RTE/_STM32F407_Flash-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include"-D__UVISION_VERSION="541" -DSTM32F407xx -D_RTE_ -DHSE_VALUE="8000000" -DPLL_M="8" -DPLL_N="336" -DPLL_P="2" -DPLL_Q="7"-o ./objects/tasks.o -MMD)
+I (inc\tasks.h)(0x679046DB)
 I (inc\mode_utils.h)(0x675B57F5)
 I (inc\OS\os.h)(0x678A7A1B)
 I (inc\OS\scheduler.h)(0x678FC6DF)
@@ -36,9 +36,10 @@ I (C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include
 I (inc\OS\sleep.h)(0x6775A1A4)
 I (inc\OS\mutex.h)(0x678FC03B)
 I (inc\Utils\utils.h)(0x675B57F5)
-I (inc\OS\mempool.h)(0x6788216D)
+I (inc\OS\mempool.h)(0x67905F84)
 I (inc\OS\semaphore.h)(0x678A7FC9)
 I (inc\OS\queue.h)(0x678996AE)
+I (inc\OS\static_alloc.h)(0x6788216D)
 F (.\src\OS\scheduler.c)(0x678FEC1C)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I inc -Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow -Wpadded -Wmissing-variable-declarations -Wmissing-prototypes -Wvla-I./RTE/_STM32F407_Flash-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include"-D__UVISION_VERSION="541" -DSTM32F407xx -D_RTE_ -DHSE_VALUE="8000000" -DPLL_M="8" -DPLL_N="336" -DPLL_P="2" -DPLL_Q="7"-o ./objects/scheduler.o -MMD)
 I (inc\OS\scheduler.h)(0x678FC6DF)
 I (inc\OS\os.h)(0x678A7A1B)
@@ -67,7 +68,7 @@ I (inc\OS\os.h)(0x678A7A1B)
 I (inc\OS\scheduler.h)(0x678FC6DF)
 I (C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\cmsis_compiler.h)(0x664C3AF8)
 I (C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\cmsis_armclang.h)(0x664C3AF8)
-F (.\src\OS\semaphore.c)(0x678985E5)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I inc -Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow -Wpadded -Wmissing-variable-declarations -Wmissing-prototypes -Wvla-I./RTE/_STM32F407_Flash-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include"-D__UVISION_VERSION="541" -DSTM32F407xx -D_RTE_ -DHSE_VALUE="8000000" -DPLL_M="8" -DPLL_N="336" -DPLL_P="2" -DPLL_Q="7"-o ./objects/semaphore.o -MMD)
+F (.\src\OS\semaphore.c)(0x67904F1D)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I inc -Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow -Wpadded -Wmissing-variable-declarations -Wmissing-prototypes -Wvla-I./RTE/_STM32F407_Flash-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include"-D__UVISION_VERSION="541" -DSTM32F407xx -D_RTE_ -DHSE_VALUE="8000000" -DPLL_M="8" -DPLL_N="336" -DPLL_P="2" -DPLL_Q="7"-o ./objects/semaphore.o -MMD)
 I (inc\OS\semaphore.h)(0x678A7FC9)
 I (inc\OS\os.h)(0x678A7A1B)
 I (inc\OS\scheduler.h)(0x678FC6DF)
@@ -80,14 +81,14 @@ I (inc\OS\os.h)(0x678A7A1B)
 I (inc\OS\scheduler.h)(0x678FC6DF)
 I (C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\cmsis_compiler.h)(0x664C3AF8)
 I (C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\cmsis_armclang.h)(0x664C3AF8)
-F (.\src\OS\mempool.c)(0x6788216D)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I inc -Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow -Wpadded -Wmissing-variable-declarations -Wmissing-prototypes -Wvla-I./RTE/_STM32F407_Flash-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include"-D__UVISION_VERSION="541" -DSTM32F407xx -D_RTE_ -DHSE_VALUE="8000000" -DPLL_M="8" -DPLL_N="336" -DPLL_P="2" -DPLL_Q="7"-o ./objects/mempool.o -MMD)
-I (inc\OS\mempool.h)(0x6788216D)
+F (.\src\OS\mempool.c)(0x67904CB9)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I inc -Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow -Wpadded -Wmissing-variable-declarations -Wmissing-prototypes -Wvla-I./RTE/_STM32F407_Flash-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include"-D__UVISION_VERSION="541" -DSTM32F407xx -D_RTE_ -DHSE_VALUE="8000000" -DPLL_M="8" -DPLL_N="336" -DPLL_P="2" -DPLL_Q="7"-o ./objects/mempool.o -MMD)
+I (inc\OS\mempool.h)(0x67905F84)
 I (C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\cmsis_compiler.h)(0x664C3AF8)
 I (C:\Users\Jon Cooke\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\cmsis_armclang.h)(0x664C3AF8)
 I (inc\OS\semaphore.h)(0x678A7FC9)
 I (inc\OS\os.h)(0x678A7A1B)
 I (inc\OS\scheduler.h)(0x678FC6DF)
-F (.\src\OS\queue.c)(0x6789970C)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I inc -Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow -Wpadded -Wmissing-variable-declarations -Wmissing-prototypes -Wvla-I./RTE/_STM32F407_Flash-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include"-D__UVISION_VERSION="541" -DSTM32F407xx -D_RTE_ -DHSE_VALUE="8000000" -DPLL_M="8" -DPLL_N="336" -DPLL_P="2" -DPLL_Q="7"-o ./objects/queue.o -MMD)
+F (.\src\OS\queue.c)(0x67903938)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I inc -Wno-declaration-after-statement -Wnon-gcc -Wshift-sign-overflow -Wpadded -Wmissing-variable-declarations -Wmissing-prototypes -Wvla-I./RTE/_STM32F407_Flash-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"C:/Users/Jon Cooke/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include"-D__UVISION_VERSION="541" -DSTM32F407xx -D_RTE_ -DHSE_VALUE="8000000" -DPLL_M="8" -DPLL_N="336" -DPLL_P="2" -DPLL_Q="7"-o ./objects/queue.o -MMD)
 I (inc\OS\queue.h)(0x678996AE)
 I (inc\OS\scheduler.h)(0x678FC6DF)
 I (inc\OS\semaphore.h)(0x678A7FC9)

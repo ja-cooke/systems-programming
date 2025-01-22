@@ -25,4 +25,12 @@ void task3(void const *const args);
 void sleepTest1(void const *const args);
 void sleepTest2(void const *const args);
 
+void chattyTask(void const *const args);
+void listeningTask(void const *const args);
+
+void greedyTask(void const *const args);
+
+void veryHighPriorityTask(void const *const args);
+void lowPriorityTask(void const *const args);
+
 #endif /* TASKS_H */

@@ -16,7 +16,7 @@ void OS_semaphore_acquire(OS_semaphore_t *semaphore) {
 		
 		if (semaphoresAvailable > 0) {
 			// Equivalent to: semaphore->available = semaphoresAvailable--
-			repeat = __STREXW ((uint32_t) semaphoresAvailable--, (uint32_t *)&(semaphore->available));
+			repeat = __STREXW ((uint32_t) --semaphoresAvailable, (uint32_t *)&(semaphore->available));
 		}
 		else if (semaphoresAvailable == 0) {
 			OS_wait(notification_counter);

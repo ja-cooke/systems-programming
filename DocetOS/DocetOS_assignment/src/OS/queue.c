@@ -24,6 +24,7 @@ void OS_sendPacket(void *packet, uint32_t commID) {
 		sendError = queue_put(&commsQueue, packetPacked);
 	} while(sendError);
 	// DANGER ZONE
+	//OS_notifyAll();
 }
 
 void * OS_receivePacket(uint32_t commID) {
@@ -41,6 +42,7 @@ void * OS_receivePacket(uint32_t commID) {
 		if(notReceived) {
 			OS_wait(notification_counter);
 		}
+		//OS_notifyAll();
 	}
 	
 	/* Unpacks packet data pointer */

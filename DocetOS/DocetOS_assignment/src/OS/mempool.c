@@ -3,10 +3,10 @@
 #include "OS/mempool.h"
 
 // 16KB pool size
-#define MEMPOOL_ALLOC_POOLSIZE 16384UL
+#define MEMPOOL_ALLOC_POOLSIZE 16348UL
 #define MEMPOOL_ALLOC_ALIGNMENT 8UL
 
-static const uint32_t totalBlocks = 16384/8;
+static const uint32_t totalBlocks = 16348/8;
 
 static uint8_t static_pool[MEMPOOL_ALLOC_POOLSIZE] __attribute__ (( aligned(MEMPOOL_ALLOC_ALIGNMENT) ));;
 static size_t pool_index = MEMPOOL_ALLOC_POOLSIZE;

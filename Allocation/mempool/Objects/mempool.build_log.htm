@@ -27,8 +27,12 @@ Project File Date:  12/31/2024
 <h2>Output:</h2>
 *** Using Compiler 'V6.22', folder: 'C:\Users\Jon Cooke\AppData\Local\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'STM32F407 Flash'
-compiling mempool.c...
 compiling main.c...
+compiling mempool.c...
+compiling retarget_io.c...
+compiling system_stm32f4xx.c...
+compiling hardfault.c...
+compiling utils.c...
 linking...
 Program Size: Code=11624 RO-data=1300 RW-data=120 ZI-data=18272  
 ".\Objects\mempool.axf" - 0 Error(s), 0 Warning(s).
@@ -64,22 +68,22 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE@6.1.0
 
    * Component: Keil::Compiler&ARM Compiler:I/O:STDOUT&User@1.2.0
-      Source file:   Source/retarget_io.c
+      Source file:   Template/stdout_display.c
       Source file:   Template/stdout_user.c
       Source file:   Template/stdout_USART.c
-      Source file:   Template/stdout_display.c
-
-   * Component: Keil::Compiler&ARM Compiler:I/O:TTY&User@1.2.0
-      Source file:   Template/tty_user.c
       Source file:   Source/retarget_io.c
 
+   * Component: Keil::Compiler&ARM Compiler:I/O:TTY&User@1.2.0
+      Source file:   Source/retarget_io.c
+      Source file:   Template/tty_user.c
+
    * Component: Keil::Device:Startup@2.6.3
-      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
       Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
-      Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
-      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f407xx.s
       Source file:   MDK/Device/Source/ARM/STM32F40xxx_41xxx_OPT.s
-Build Time Elapsed:  00:00:00
+      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f407xx.s
+      Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
+      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
