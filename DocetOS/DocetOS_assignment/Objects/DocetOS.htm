@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\Objects\DocetOS.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\DocetOS.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Wed Jan 22 17:58:38 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Wed Jan 22 19:13:19 2025
 <BR><P>
-<H3>Maximum Stack Usage =        324 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        576 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-_printf_f &rArr; _printf_fp_dec &rArr; _printf_fp_dec_real &rArr; _fp_digits &rArr; _btod_etento &rArr; _btod_emul &rArr; _e2e
+greedyTask &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 <P>
 <H3>
 Functions with no stack information
@@ -1600,7 +1600,7 @@ Global Symbols
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_wake
 </UL>
 
-<P><STRONG><a name="[108]"></a>OS_semaphore_acquire</STRONG> (Thumb, 84 bytes, Stack size 24 bytes, semaphore.o(.text.OS_semaphore_acquire))
+<P><STRONG><a name="[108]"></a>OS_semaphore_acquire</STRONG> (Thumb, 76 bytes, Stack size 24 bytes, semaphore.o(.text.OS_semaphore_acquire))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = OS_semaphore_acquire &rArr; _svc_1
 </UL>
 <BR>[Calls]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_svc_1
@@ -1821,8 +1821,8 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_sleep
 </UL>
 
-<P><STRONG><a name="[65]"></a>greedyTask</STRONG> (Thumb, 214 bytes, Stack size 72 bytes, tasks.o(.text.greedyTask))
-<BR><BR>[Stack]<UL><LI>Max Depth = 216 + Unknown Stack Size
+<P><STRONG><a name="[65]"></a>greedyTask</STRONG> (Thumb, 222 bytes, Stack size 432 bytes, tasks.o(.text.greedyTask))
+<BR><BR>[Stack]<UL><LI>Max Depth = 576 + Unknown Stack Size
 <LI>Call Chain = greedyTask &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncpy
@@ -1930,7 +1930,7 @@ Global Symbols
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
 </UL>
 
-<P><STRONG><a name="[12a]"></a>pool_init</STRONG> (Thumb, 200 bytes, Stack size 32 bytes, mempool.o(.text.pool_init))
+<P><STRONG><a name="[12a]"></a>pool_init</STRONG> (Thumb, 206 bytes, Stack size 32 bytes, mempool.o(.text.pool_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = pool_init &rArr; pool_deallocate &rArr; OS_semaphore_release &rArr; OS_notifyAll &rArr; list_pop_sl
 </UL>
 <BR>[Calls]<UL><LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;poolStaticAlloc

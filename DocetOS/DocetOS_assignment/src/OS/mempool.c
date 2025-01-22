@@ -102,14 +102,16 @@ void pool_init(mempool_t *pool, size_t blocksize, size_t blocks){
 	 * After this the measure of memory left to the dynamic memory pool is handled
 	 * in blocks of the size of the data-structure it holds.
 	 */
-	if (memoryFree > blocks * blocksize) {
+	
+	/* blocks + 1 because 1 extra block is needed to store the pool head */
+	if (memoryFree > (blocks + 1) * blocksize) {
 		/* 
 		 * A counting semaphore keeps a thread-safe record of the number of 
 	   * available memory blocks at all times.
 	   */
 		static OS_semaphore_t blocksFree = OS_SEMAPHORE_STATIC_INITIALISER;
 		blocksFree.available = (uint32_t)blocks;
-		memoryFree = totalMemory - (blocks * blocksize);
+		memoryFree = totalMemory - ((blocks + 1) * blocksize);
 	
 		// Round blocksize up to nearest multiple of 8 (one byte)
 		blocksize = (blocksize + 7UL) & alignmentMask;
@@ -120,7 +122,7 @@ void pool_init(mempool_t *pool, size_t blocksize, size_t blocks){
 		/* If the poolStaticAlloc fails pool->head = 0 */
 		if(pool->head){
 			/* Creates an array of block indices and adds this to the pool list*/
-			for (size_t i = 0; i < blocks; ++i) {
+			for (size_t i = 0; i < (blocks + 1); ++i) {
 				pool_index = i * blocksize;
 				pool_add(pool, &pool[pool_index]);
 			}

@@ -12,7 +12,7 @@ void OS_mutex_aquire(OS_mutex_t * mutex) {
 	// Unsure if this might cause problems or not.
 	OS_TCB_t * current_tcb = OS_currentTCB();
 	
-	uint32_t repeat = 0;
+	uint32_t accessError = 0;
 	
 	do {
 		uint32_t notification_counter = getNotificationCounter();
@@ -22,14 +22,14 @@ void OS_mutex_aquire(OS_mutex_t * mutex) {
 		
 		if (mutex_tcb == 0) {
 			// Equivalent to: mutex->tcb = current_tcb
-			repeat = __STREXW ((uint32_t) current_tcb, (uint32_t *)&(mutex->tcb));
+			accessError = __STREXW ((uint32_t) current_tcb, (uint32_t *)&(mutex->tcb));
 			//(void) notification_counter;
 		}
 		else if (mutex_tcb != current_tcb) {
 			OS_wait(notification_counter);
-			repeat = 1;
+			accessError = 1;
 		}
-	} while (repeat);
+	} while (accessError);
 	
 	mutex->counter++;
 }

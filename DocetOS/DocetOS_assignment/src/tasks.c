@@ -280,15 +280,15 @@ void listeningTask(void const *const args) {
 void greedyTask(void const *const args) {
 	(void) args;
 	
+	#define numItems 100UL
+	
 	OS_sleep(15000);
 	
 	while(1) {
 		
-		//packet_t **memoryTest = (packet_t **) static_alloc(sizeof(packet_t)*10);
+		packet_t *memoryTest[numItems] = {0};
 		
-		packet_t *memoryTest[10] = {0};
-		
-		for(uint32_t i = 0; i<10; i++){
+		for(uint32_t i = 0; i<numItems; i++){
 			// ALLOCATION //
 			/* Allocate one block for data packets and fill them in */
 			memoryTest[i] = pool_allocate(&pool);
@@ -300,11 +300,12 @@ void greedyTask(void const *const args) {
 			printf("--DO_NOT_INTERRUPT--");
 			printf("Allocated Memory (id %" PRIu32 ", data '%s') at address %p\r\n", memoryTest[i]->id, memoryTest[i]->data, (void *)memoryTest[i]);
 			OS_mutex_release(&mutex_p2);
+			OS_sleep(100);
 		}
 		
-		OS_sleep(5000);
+		OS_sleep(10000);
 		
-		for(uint32_t i = 0; i<10; i++) {
+		for(uint32_t i = 0; i<numItems; i++) {
 			pool_deallocate(&pool, memoryTest[i]);
 		}
 	}

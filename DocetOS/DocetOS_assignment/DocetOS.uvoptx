@@ -157,34 +157,82 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>288</LineNumber>
+          <LineNumber>19</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134229664</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>C:\Users\Jon Cooke\Documents\Education\York\Year4\SystemsProgrammingforARM\systems-programming\DocetOS\DocetOS_assignment\tasks.c</Filename>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\src\OS\semaphore.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\DocetOS\tasks.c\288</Expression>
+          <Expression></Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>291</LineNumber>
+          <LineNumber>10</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134229676</Address>
+          <Address>134226700</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>C:\Users\Jon Cooke\Documents\Education\York\Year4\SystemsProgrammingforARM\systems-programming\DocetOS\DocetOS_assignment\tasks.c</Filename>
+          <Filename>.\src\OS\semaphore.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\DocetOS\tasks.c\291</Expression>
+          <Expression>\\DocetOS\src/OS/semaphore.c\10</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>285</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134229650</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\src\tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\DocetOS\src/tasks.c\285</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>291</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134229662</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\src\tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\\src/tasks.c\291</Expression>
+        </Bp>
+        <Bp>
+          <Number>4</Number>
+          <Type>0</Type>
+          <LineNumber>287</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\src\tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -234,6 +282,11 @@
           <count>4</count>
           <WinNumber>2</WinNumber>
           <ItemText>pool_ptr</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>semaphore</ItemText>
         </Ww>
       </WatchWindow2>
       <MemoryWindow1>
