@@ -69,11 +69,11 @@ void * OS_receivePacket(uint32_t commID) {
 /*--------------------------------------------------------------------------- */
 /*------------------------------ Internal Only ------------------------------ */
 
-void spaces(OS_commsQueue_t *queue){
+static void spaces(OS_commsQueue_t *queue){
 	*spaces_left_ptr = (int32_t)(queue->remove - queue->insert) + QUEUE_SIZE - 1;
 }
 
-uint32_t queue_put(OS_commsQueue_t *queue, OS_commsPacket_t packet) {
+static uint32_t queue_put(OS_commsQueue_t *queue, OS_commsPacket_t packet) {
 	OS_semBinary_acquire(&queue->accessToken);
 	
 	spaces(queue);
@@ -95,7 +95,7 @@ uint32_t queue_put(OS_commsQueue_t *queue, OS_commsPacket_t packet) {
 	// DANGER ZONE
 }
 
-uint32_t queue_get(OS_commsQueue_t *queue, OS_commsPacket_t *packet, uint32_t commID) {	
+static uint32_t queue_get(OS_commsQueue_t *queue, OS_commsPacket_t *packet, uint32_t commID) {	
 	// DANGER ZONE
 	OS_semBinary_acquire(&queue->accessToken);
 	

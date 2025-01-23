@@ -28,6 +28,7 @@ int main(void) {
 	static uint32_t stack9[128] __attribute__ (( aligned(8) ));
 	static uint32_t stack10[128] __attribute__ (( aligned(8) ));
 	
+	/* Initilise the priority level of each task */
 	static OS_TCB_t TCB1 = {.priority = 0};
 	static OS_TCB_t TCB2 = {.priority = 0};
 	static OS_TCB_t TCB3 = {.priority = 1};
@@ -39,7 +40,7 @@ int main(void) {
 	static OS_TCB_t TCB9 = {.priority = 3};
 	static OS_TCB_t TCB10 = {.priority = 4};
 
-	/* Initialise the TCBs using the two functions above */
+	/* Initialise the TCBs using functions from tasks.c */
 	OS_initialiseTCB(&TCB1, stack1+128, veryHighPriorityTask, NULL);
 	OS_initialiseTCB(&TCB2, stack2+128, sleepTest2, NULL);
 	OS_initialiseTCB(&TCB3, stack3+128, sleepTest1, NULL);
