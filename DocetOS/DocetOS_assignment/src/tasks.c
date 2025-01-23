@@ -212,7 +212,11 @@ void chattyTask(void const *const args) {
 			OS_sleep(1000);
 			
 			uint32_t randomID = (uint32_t) rand();
-			packet_t *commsTestPackTransmitter = pool_allocate(&pool);
+			
+			do {
+				packet_t *commsTestPackTransmitter = pool_allocate(&pool);
+			} while (!commsTestPackTransmitter);
+			
 			commsTestPackTransmitter->id = randomID;
 			strncpy(commsTestPackTransmitter->data, "HelloWorld", 10);
 			
@@ -222,8 +226,13 @@ void chattyTask(void const *const args) {
 			OS_mutex_release(&mutex_p3);
 			OS_sendPacket(commsTestPackTransmitter, 1);
 			
+			
 			randomID = (uint32_t) rand();
-			commsTestPackTransmitter = pool_allocate(&pool);
+			
+			do {
+				commsTestPackTransmitter = pool_allocate(&pool);
+			} while (!commsTestPackTransmitter);
+			
 			commsTestPackTransmitter->id = randomID;
 			strncpy(commsTestPackTransmitter->data, "HalloWelt", 10);
 			
@@ -292,14 +301,23 @@ void greedyTask(void const *const args) {
 			// ALLOCATION //
 			/* Allocate one block for data packets and fill them in */
 			memoryTest[i] = pool_allocate(&pool);
-			memoryTest[i]->id = i;
-			strncpy(memoryTest[i]->data, "IMPORTANT", 10);
+
+			if (memoryTest[i]) {
+				memoryTest[i]->id = i;
+				strncpy(memoryTest[i]->data, "IMPORTANT", 10);
 			
-			// PRINTING //
-			OS_mutex_aquire(&mutex_p2);
-			printf("--DO_NOT_INTERRUPT--");
-			printf("Allocated Memory (id %" PRIu32 ", data '%s') at address %p\r\n", memoryTest[i]->id, memoryTest[i]->data, (void *)memoryTest[i]);
-			OS_mutex_release(&mutex_p2);
+				// PRINTING //
+				OS_mutex_aquire(&mutex_p2);
+				printf("--DO_NOT_INTERRUPT--");
+				printf("Allocated Memory (id %" PRIu32 ", data '%s') at address %p\r\n", memoryTest[i]->id, memoryTest[i]->data, (void *)memoryTest[i]);
+				OS_mutex_release(&mutex_p2);
+			}
+			else {
+				OS_mutex_aquire(&mutex_p2);
+				printf("--DO_NOT_INTERRUPT--");
+				printf("MEMORY POOL FULL, NO DATA ALLOCATED");
+				OS_mutex_release(&mutex_p2);
+			}
 			OS_sleep(100);
 		}
 		

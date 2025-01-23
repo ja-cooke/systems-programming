@@ -60,12 +60,12 @@ static void list_add(_OS_tasklist_t *list, OS_TCB_t *task) {
 }
 
 static void list_remove(_OS_tasklist_t *list, OS_TCB_t *task) {
-	// – Check to see if the item being removed is the only one in the list. If it is,
-	// you’ll need to set the head pointer to zero.
+	// ï¿½ Check to see if the item being removed is the only one in the list. If it is,
+	// youï¿½ll need to set the head pointer to zero.
 	if(task->next == task){
 		list->head = 0;
 	}
-	//– Remove the item by updating the pointers items either side of it to point
+	//ï¿½ Remove the item by updating the pointers items either side of it to point
 	// to each other.
 	else{
 		OS_TCB_t *next;
@@ -76,7 +76,7 @@ static void list_remove(_OS_tasklist_t *list, OS_TCB_t *task) {
 		
 		next->prev = prev;
 		prev->next = next;
-		//– Update the head pointer if the item being removed was the head of the
+		//ï¿½ Update the head pointer if the item being removed was the head of the
 		//list.
 		if(task == list->head){
 			list->head = next;
@@ -377,7 +377,7 @@ void _OS_sleepHeap_delegate(_OS_SVC_StackFrame_t * const stack) {
 		/* Add the tcb to the sleepHeap*/
 		list_remove(task_list_ptr, tcb);
 		
-		// DANGER ZONE
+		// DANGER ZONE Semaphore may not be required as Handler Mode code...
 		OS_semBinary_acquire(&sleepHeap.accessToken);
 		heap_insert(&sleepHeap, tcb);
 		OS_semBinary_release(&sleepHeap.accessToken);

@@ -18,8 +18,8 @@ typedef struct s_OS_TCB_t {
 	/* Priority must be fixed at run-time */
 	uint32_t const priority;
 	
-	struct s_OS_TCB_t * prev;
-	struct s_OS_TCB_t * next;
+	struct s_OS_TCB_t *prev;
+	struct s_OS_TCB_t *next;
 	/* General data fields */
 	uint32_t volatile wakeTime;
 } OS_TCB_t;
@@ -40,7 +40,7 @@ typedef struct s_OS_TCB_t {
      to this function.
    The third argument is a pointer to the function that the task should execute.
    The fourth argument is a void pointer to data that the task should receive. */
-void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func)(void const * const), void const * const data);
+void OS_initialiseTCB(OS_TCB_t *TCB, uint32_t * const stack, void (* const func)(void const * const), void const * const data);
 
 /* Other prototypes */
 void OS_constructSchedule(void);
@@ -58,13 +58,13 @@ uint32_t getSleepCounter(void);
 #define maxPriorities 5UL
 
 typedef struct {
-	OS_TCB_t * head;
+	OS_TCB_t *head;
 	/* Contains priority so lists can be identified within the scheduler */
 	uint32_t priority;
 } _OS_tasklist_t;
 
 typedef struct {
-	_OS_tasklist_t * priorityArray[maxPriorities];
+	_OS_tasklist_t *priorityArray[maxPriorities];
 } _OS_fpSchedule_t;
 
 /* Function Prototypes */
