@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\DocetOS.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\DocetOS.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Wed Jan 22 19:13:19 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Thu Jan 23 02:19:48 2025
 <BR><P>
 <H3>Maximum Stack Usage =        576 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1585,7 +1585,6 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;queue_get
 <LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;queue_put
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_OS_sleepHeap_delegate
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_wake
 </UL>
 
@@ -1596,7 +1595,6 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;queue_get
 <LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;queue_put
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_OS_sleepHeap_delegate
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_wake
 </UL>
 
@@ -1686,12 +1684,10 @@ Global Symbols
 <P><STRONG><a name="[6c]"></a>_OS_schedule_delegate</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, os.o(.text._OS_schedule_delegate))
 <BR>[Address Reference Count : 1]<UL><LI> os_asm.o(OS_func)
 </UL>
-<P><STRONG><a name="[6e]"></a>_OS_sleepHeap_delegate</STRONG> (Thumb, 128 bytes, Stack size 32 bytes, scheduler.o(.text._OS_sleepHeap_delegate))
-<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = _OS_sleepHeap_delegate &rArr; heap_insert &rArr; heap_up &rArr; swap_elements
+<P><STRONG><a name="[6e]"></a>_OS_sleepHeap_delegate</STRONG> (Thumb, 110 bytes, Stack size 24 bytes, scheduler.o(.text._OS_sleepHeap_delegate))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = _OS_sleepHeap_delegate &rArr; heap_insert &rArr; heap_up &rArr; swap_elements
 </UL>
 <BR>[Calls]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;heap_insert
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_semBinary_release
-<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_semBinary_acquire
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;list_remove
 <LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_currentTCB
 </UL>
@@ -1781,8 +1777,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__default_signal_display
 </UL>
 
-<P><STRONG><a name="[66]"></a>chattyTask</STRONG> (Thumb, 246 bytes, Stack size 40 bytes, tasks.o(.text.chattyTask))
-<BR><BR>[Stack]<UL><LI>Max Depth = 184 + Unknown Stack Size
+<P><STRONG><a name="[66]"></a>chattyTask</STRONG> (Thumb, 288 bytes, Stack size 32 bytes, tasks.o(.text.chattyTask))
+<BR><BR>[Stack]<UL><LI>Max Depth = 176 + Unknown Stack Size
 <LI>Call Chain = chattyTask &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncpy
@@ -1821,7 +1817,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_sleep
 </UL>
 
-<P><STRONG><a name="[65]"></a>greedyTask</STRONG> (Thumb, 222 bytes, Stack size 432 bytes, tasks.o(.text.greedyTask))
+<P><STRONG><a name="[65]"></a>greedyTask</STRONG> (Thumb, 282 bytes, Stack size 432 bytes, tasks.o(.text.greedyTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 576 + Unknown Stack Size
 <LI>Call Chain = greedyTask &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>

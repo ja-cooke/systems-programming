@@ -213,8 +213,9 @@ void chattyTask(void const *const args) {
 			
 			uint32_t randomID = (uint32_t) rand();
 			
+			packet_t *commsTestPackTransmitter = {0};
 			do {
-				packet_t *commsTestPackTransmitter = pool_allocate(&pool);
+				commsTestPackTransmitter = pool_allocate(&pool);
 			} while (!commsTestPackTransmitter);
 			
 			commsTestPackTransmitter->id = randomID;
