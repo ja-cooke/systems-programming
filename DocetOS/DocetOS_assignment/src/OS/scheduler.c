@@ -4,6 +4,7 @@
 #include "OS/os.h"
 #include "OS/static_alloc.h"
 #include "OS/heap.h"
+#include "mode_utils.h"
 
 #include "stm32f4xx.h"
 
@@ -369,19 +370,14 @@ void _OS_sleepHeap_delegate(_OS_SVC_StackFrame_t * const stack) {
 		OS_TCB_t * tcb = OS_currentTCB();
 		
 		/* Acquire the task_list of correct priority from the schedule */
-		// DANGER ZONE
 		uint32_t tcbPriority = tcb->priority;
 		_OS_tasklist_t * task_list_ptr = schedule.priorityArray[tcbPriority];
-		// DANGER ZONE
 		
 		/* Add the tcb to the sleepHeap*/
 		list_remove(task_list_ptr, tcb);
 		
-		// DANGER ZONE Semaphore may not be required as Handler Mode code...
-		OS_semBinary_acquire(&sleepHeap.accessToken);
+		// Semaphore not required as this is Handler Mode code.
 		heap_insert(&sleepHeap, tcb);
-		OS_semBinary_release(&sleepHeap.accessToken);
-		// DANGER ZONE
 		
 		// return 0 to indicate success
 		stack->r0 = 0;
