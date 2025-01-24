@@ -42,10 +42,10 @@ int main(void) {
 	/* Initialise the TCBs using the two functions above */
 	OS_initialiseTCB(&TCB1, stack1+128, veryHighPriorityTask, NULL);
 	OS_initialiseTCB(&TCB2, stack2+128, sleepTest2, NULL);
-	OS_initialiseTCB(&TCB3, stack3+128, sleepTest1, NULL);
-	OS_initialiseTCB(&TCB4, stack4+128, sleepTest2, NULL);
-	OS_initialiseTCB(&TCB5, stack5+128, sleepTest1, NULL);
-	OS_initialiseTCB(&TCB6, stack6+128, sleepTest2, NULL);
+	//OS_initialiseTCB(&TCB3, stack3+128, sleepTest1, NULL);
+	//OS_initialiseTCB(&TCB4, stack4+128, sleepTest2, NULL);
+	//OS_initialiseTCB(&TCB5, stack5+128, sleepTest1, NULL);
+	//OS_initialiseTCB(&TCB6, stack6+128, sleepTest2, NULL);
 	OS_initialiseTCB(&TCB7, stack7+128, greedyTask, NULL);
 	OS_initialiseTCB(&TCB8, stack8+128, chattyTask, NULL);
 	OS_initialiseTCB(&TCB9, stack9+128, listeningTask, NULL);

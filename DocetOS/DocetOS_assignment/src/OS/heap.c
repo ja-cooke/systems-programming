@@ -169,14 +169,17 @@ void heap_insert(OS_heap_t *heap, void * item) {
 }
 
 void * heap_extract(OS_heap_t *heap) {
-	// The root value is extracted, and the space filled by the value from the end
-	// If the heap is empty, this will fail horribly...
+	/* The root value is extracted, and the space filled by the value from the end
+	 * If the heap is empty, this will fail horribly...
+	 * So this funcition must be blocked from being run on an empty heap.
+	 */
 	void * item = heap->store[0];
 	heap->store[0] = heap->store[--(heap->size)];
 	heap_down(heap);
 	return item;
 }
 
+/* This must be used before trying to extract from the heap */
 uint32_t heap_isEmpty(OS_heap_t *heap) {
 	return !(heap->size);
 }

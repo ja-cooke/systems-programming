@@ -379,9 +379,7 @@ void _OS_sleepHeap_delegate(_OS_SVC_StackFrame_t * const stack) {
 		list_remove(task_list_ptr, tcb);
 		
 		/* Semaphor access not required in Handler Mode code */
-		//OS_semBinary_acquire(&sleepHeap.accessToken);
 		heap_insert(&sleepHeap, tcb);
-		//OS_semBinary_release(&sleepHeap.accessToken);
 		
 		// return 0 to indicate success
 		stack->r0 = 0;

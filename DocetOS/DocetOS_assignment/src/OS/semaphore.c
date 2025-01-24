@@ -1,9 +1,11 @@
 #include "OS/semaphore.h"
 
+/* 
+ * Counting Semaphores
+ * The task running will continue to attempt to acquire a semaphore until it is
+ * successful
+*/
 void OS_semaphore_acquire(OS_semaphore_t *semaphore) {
-	// In this implementation STREX is not always called
-	// Unsure if this might cause problems or not.
-	
 	uint32_t accessError = 0;
 	
 	do {
@@ -35,14 +37,14 @@ void OS_semaphore_release(OS_semaphore_t *semaphore) {
 		//Equivalent to: semaphoresAvailable = semaphore->available
 		semaphoresAvailable = (uint32_t) __LDREXW((uint32_t *)&(semaphore->available));
 		
-		// Equivalent to: semaphore->available = semaphoresAvailable++
+		// Equivalent to: semaphore->available = ++semaphoresAvailable
 	} while (__STREXW ((uint32_t) ++semaphoresAvailable, (uint32_t *)&(semaphore->available)));
 			
-	// Would be a good idea to write in seperate notification for semaphores and mutexes
 	OS_notifyAll();
 }
 
 /* 
+ * Binary Semaphore
  * Same process flow as for regular semaphores, but with boolean true-false
  * logic instead of a count.
  */

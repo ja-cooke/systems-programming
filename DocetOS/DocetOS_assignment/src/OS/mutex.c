@@ -7,9 +7,14 @@
  * level in order to prevent deadlocks.
  */
 
-void OS_mutex_aquire(OS_mutex_t * mutex) {
-	// In this implementation STREX is not always called
-	// Unsure if this might cause problems or not.
+/* 
+ * Can be called multiple times by the TCB already holding the mutex,
+ * a count of the number of times is kept.
+ * Once it has been released the same number of times it is assumed that
+ * all of the resources are available again, and the TCB is removed from the 
+ * mutex TCB field.
+ */
+void OS_mutex_acquire(OS_mutex_t * mutex) {
 	OS_TCB_t * current_tcb = OS_currentTCB();
 	
 	uint32_t accessError = 0;
@@ -23,7 +28,6 @@ void OS_mutex_aquire(OS_mutex_t * mutex) {
 		if (mutex_tcb == 0) {
 			// Equivalent to: mutex->tcb = current_tcb
 			accessError = __STREXW ((uint32_t) current_tcb, (uint32_t *)&(mutex->tcb));
-			//(void) notification_counter;
 		}
 		else if (mutex_tcb != current_tcb) {
 			OS_wait(notification_counter);
@@ -34,42 +38,21 @@ void OS_mutex_aquire(OS_mutex_t * mutex) {
 	mutex->counter++;
 }
 
-void OS_mutex_acquire_refactor(OS_mutex_t * mutex, OS_TCB_t * current_tcb) {
-	// In this implementation STREX is always called unless the 
-	// break statement is hit... I think
-	
-	do {
-		uint32_t notification_counter = getNotificationCounter();
-		OS_TCB_t * mutex_tcb = (OS_TCB_t *) __LDREXW((uint32_t *)&(mutex->tcb));
-		
-		if (!mutex_tcb) {
-			if (mutex_tcb == current_tcb) {
-				break;
-			}
-			else {
-				OS_wait(notification_counter);
-				continue;
-			}
-		}
-		
-	} while (__STREXW ((uint32_t) current_tcb, (uint32_t *)&(mutex->tcb)));
-	
-	mutex->counter++;
-}
-
-
+/* 
+ * A task can call to release the mutex multiple times
+ * only when it has released as many times as it has called
+ * to acquire will it actually be released.
+ */
 void OS_mutex_release(OS_mutex_t * mutex) {
 	 OS_TCB_t * current_tcb = OS_currentTCB();
 	
 	// Safety check:
 	if (current_tcb == mutex->tcb) {
-		// Decrement counter field
 		mutex->counter--;
-		// If it has reached zero:
 		if (mutex->counter == 0) {
-			// Set the TCB field to zero too
+			/* TCB is removed from the mutex, effectively releasing it */
 			mutex->tcb = 0;
-			// Call OS_notifyAll()
+			
 			OS_notifyAll();
 		}
 	}

@@ -1,6 +1,8 @@
 #include "OS/static_alloc.h"
 #include <stdint.h>
 
+/* Static Memory Allocation Partition */
+
 // 16KB pool size
 #define STATIC_ALLOC_POOLSIZE 16384UL
 #define STATIC_ALLOC_ALIGNMENT 8UL

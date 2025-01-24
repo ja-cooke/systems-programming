@@ -24,23 +24,27 @@ void OS_initCommsQueue(void) {
 	commsQueue.accessToken.available = 1;
 }
 
-void OS_sendPacket(void *packet, uint32_t commID) {
-	// DANGER ZONE
+/* 
+ * Wrapper for queue_put()
+ * Packs packet into an OS_commsPacket_t 
+ */
+void OS_sendPacket(void *packet, uint32_t channel) {
 	uint32_t sendError = 0;
 	
 	OS_commsPacket_t packetPacked = PACKET_INITIALISER;
 	packetPacked.memoryAddress = packet;
-	packetPacked.commID = commID;
+	packetPacked.channel = channel;
 	
 	do {
 		sendError = queue_put(&commsQueue, packetPacked);
 	} while(sendError);
-	// DANGER ZONE
-	//OS_notifyAll();
 }
 
-void * OS_receivePacket(uint32_t commID) {
-	// DANGER ZONE
+/* 
+ * Wrapper for queue_get()
+ * Unpacks packet from OS_commsPacket_t into a void pointer
+ */
+void * OS_receivePacket(uint32_t channel) {
   uint32_t notReceived = 1;
 	OS_commsPacket_t packetPacked = PACKET_INITIALISER;
 	
@@ -50,18 +54,16 @@ void * OS_receivePacket(uint32_t commID) {
 	 */
 	while(notReceived) {
 		uint32_t notification_counter = getNotificationCounter();
-		notReceived = queue_get(&commsQueue, &packetPacked, commID);
+		notReceived = queue_get(&commsQueue, &packetPacked, channel);
 		if(notReceived) {
 			OS_wait(notification_counter);
 		}
-		//OS_notifyAll();
 	}
 	
 	/* Unpacks packet data pointer */
 	void *packet = packetPacked.memoryAddress;
 	
 	return packet;
-	// DANGER ZONE
 }
 
 /*--------------------------------------------------------------------------- */ 
@@ -78,7 +80,6 @@ uint32_t queue_put(OS_commsQueue_t *queue, OS_commsPacket_t packet) {
 	
 	spaces(queue);
 	
-	// DANGER ZONE
 	if(*spaces_left_ptr>0){
 		queue->packets[queue->insert] = packet;
 		queue->insert = (queue->insert + 1) % QUEUE_SIZE;
@@ -92,11 +93,9 @@ uint32_t queue_put(OS_commsQueue_t *queue, OS_commsPacket_t packet) {
 		OS_semBinary_release(&queue->accessToken);
 		return 1;
 	}
-	// DANGER ZONE
 }
 
-uint32_t queue_get(OS_commsQueue_t *queue, OS_commsPacket_t *packet, uint32_t commID) {	
-	// DANGER ZONE
+uint32_t queue_get(OS_commsQueue_t *queue, OS_commsPacket_t *packet, uint32_t channel) {	
 	OS_semBinary_acquire(&queue->accessToken);
 	
 	uint32_t insert = queue->insert;
@@ -108,10 +107,10 @@ uint32_t queue_get(OS_commsQueue_t *queue, OS_commsPacket_t *packet, uint32_t co
 		return 1;
 	}
 	/* 
-	 * If the queue is not empty, and the commID matches the one expected, 
+	 * If the queue is not empty, and the channel matches the one expected, 
 	 * retrieve it. 
 	 */
-	else if (queue->packets[queue->remove].commID == commID){
+	else if (queue->packets[queue->remove].channel == channel){
 		*packet = queue->packets[queue->remove];
 		queue->remove = (queue->remove + 1) % QUEUE_SIZE;
 	
@@ -121,11 +120,10 @@ uint32_t queue_get(OS_commsQueue_t *queue, OS_commsPacket_t *packet, uint32_t co
 		return 0;
 	}
 	/*
-	 * If the queue is not empty, but the commID does not match.
+	 * If the queue is not empty, but the channel does not match.
 	 */
 	else {
 		OS_semBinary_release(&queue->accessToken);
 		return 1;
 	}
-	// DANGER ZONE
 }

@@ -9,7 +9,7 @@
 
 typedef struct {
 	void *memoryAddress;
-	uint32_t commID;
+	uint32_t channel;
 } OS_commsPacket_t;
 
 typedef struct {
@@ -20,15 +20,15 @@ typedef struct {
 } OS_commsQueue_t;
 
 #define QUEUE_INITIALISER { .packets = {0}, .accessToken = {0}, .insert = 0, .remove = 0 }
-#define PACKET_INITIALISER { .memoryAddress = 0, .commID = 0 }
+#define PACKET_INITIALISER { .memoryAddress = 0, .channel = 0 }
 
 void OS_initCommsQueue(void);
 
-void OS_sendPacket(void *packet, uint32_t commID);
-void * OS_receivePacket(uint32_t commID);
+void OS_sendPacket(void *packet, uint32_t channel);
+void * OS_receivePacket(uint32_t channel);
 
 void spaces(OS_commsQueue_t *queue);
 uint32_t queue_put(OS_commsQueue_t *queue, OS_commsPacket_t packet);
-uint32_t queue_get(OS_commsQueue_t *queue, OS_commsPacket_t *packet, uint32_t commID);
+uint32_t queue_get(OS_commsQueue_t *queue, OS_commsPacket_t *packet, uint32_t channel);
 
 #endif /* QUEUE_H */
