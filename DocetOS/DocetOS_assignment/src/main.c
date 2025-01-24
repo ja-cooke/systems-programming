@@ -30,9 +30,9 @@ int main(void) {
 	
 	static OS_TCB_t TCB1 = {.priority = 0};
 	static OS_TCB_t TCB2 = {.priority = 0};
-	static OS_TCB_t TCB3 = {.priority = 1};
+	static OS_TCB_t TCB3 = {.priority = 0};
 	static OS_TCB_t TCB4 = {.priority = 0};
-	static OS_TCB_t TCB5 = {.priority = 1};
+	static OS_TCB_t TCB5 = {.priority = 0};
 	static OS_TCB_t TCB6 = {.priority = 0};
 	static OS_TCB_t TCB7 = {.priority = 2};
 	static OS_TCB_t TCB8 = {.priority = 3};

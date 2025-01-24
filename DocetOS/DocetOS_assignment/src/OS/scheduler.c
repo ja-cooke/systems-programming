@@ -124,17 +124,13 @@ static OS_TCB_t * roundRobin(_OS_tasklist_t *task_list) {
 	}
 }
 
+/* Moves tasks from the Sleep Heap to the Pending List */
 static void OS_wake(void) {
 	OS_semBinary_acquire(&sleepHeap.accessToken);
 	
-	/* is it possible to solve the overflow problem by implementing
-		 * current_time and wake_time as signed integers */
+	/* An efficient and reliable method of fixing timer overflow 
+	 * has not been found */
 	uint32_t currentTime = OS_elapsedTicks(); // what to do after overflow?
-	
-	/* Overflow solution:
-	 * if timerOverflow is set to 1 all tasks will be woken up
-	 */
-	//uint32_t timerOverflow = 0; //SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk;
 	
 	OS_TCB_t ** store = (OS_TCB_t **) sleepHeap.store;
 	
@@ -142,8 +138,11 @@ static void OS_wake(void) {
 	while(!heap_isEmpty(&sleepHeap)) {
 		uint32_t wakeTime = store[0]->wakeTime;
 		// If the wake time has passed
+		/* The commented out OR logic could be used to reset tasks from sleep in the
+		 * case of a timer overflow. An efficient and reliable way of finding overflows
+		 * was not found, and so has not been implemented in this build. */
 		if (currentTime >= wakeTime) { // || timerOverflow
-			// Clear the sleep flag
+			// Clear flags and move from Heap to Pending List
 			OS_TCB_t *tcb = heap_extract(&sleepHeap);
 			tcb->state &= ~TASK_STATE_SLEEP;
 			tcb->state &= ~TASK_STATE_YIELD;
@@ -156,12 +155,12 @@ static void OS_wake(void) {
 	OS_semBinary_release(&sleepHeap.accessToken);
 }
 
+/* Used by the scheduler to sort Pending TCBs into Round Robins by
+ * their priority level. */
 static void sortPending(void) {
 	OS_TCB_t * tcb;
 	while ((tcb = list_pop_sl(&pending_list))) {
-		// DANGER ZONE
 		list_add(schedule.priorityArray[tcb->priority], tcb);
-		// DANGER ZONE
 	}
 }
 
@@ -195,6 +194,7 @@ OS_TCB_t const * _OS_schedule(void) {
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 
+/* Must be run prior to OS_start to allocate memory for the schedule */
 void OS_constructSchedule(void) {
 	/* Static allocation of enough memory to hold the schedule */
 	_OS_tasklist_t * listAddresses = static_alloc(maxPriorities * sizeof(_OS_tasklist_t));
@@ -253,9 +253,11 @@ void OS_addTask(OS_TCB_t * const tcb) {
 	uint32_t tcbPriority = tcb->priority;
 	_OS_tasklist_t * task_list_ptr = schedule.priorityArray[tcbPriority];
 	
+	/* Add the tcb to that list */
 	list_add(task_list_ptr, tcb);
 }
 
+/* Moves all TCBs from Wait List to Pending List */
 void OS_notifyAll(void) {
 	// check code for fast-fail OS_wait() function
 	notification_counter++;
@@ -282,6 +284,11 @@ uint32_t getSleepCounter(void){
 	return sleep_counter;
 }
 
+/* 
+ * Comparator for the Sleep Heap structure
+ * The Heap is generic, and the comparator defines how TCBs are sorted
+ * by wake time within the heap.
+ */
 static int32_t comparator(void *input_a, void *input_b){
 	
 	OS_TCB_t *input_a_cast = input_a;
@@ -317,10 +324,8 @@ void _OS_taskExit_delegate(void) {
 	OS_TCB_t *tcb = OS_currentTCB();
 	
 	/* Acquire the task_list of correct priority from the schedule */
-	// DANGER ZONE
 	uint32_t tcbPriority = tcb->priority;
 	_OS_tasklist_t * task_list_ptr = schedule.priorityArray[tcbPriority];
-	// DANGER ZONE
 	list_remove(task_list_ptr, tcb);
 	
 	/* Initiate context switch */
@@ -341,10 +346,8 @@ void _OS_wait_delegate(_OS_SVC_StackFrame_t * const stack) {
 		OS_TCB_t * tcb = OS_currentTCB();
 		
 		/* Acquire the task_list of correct priority from the schedule */
-		// DANGER ZONE
 		uint32_t tcbPriority = tcb->priority;
 		_OS_tasklist_t * task_list_ptr = schedule.priorityArray[tcbPriority];
-		// DANGER ZONE
 		
 		/* Add the tcb to the wait list */
 		list_remove(task_list_ptr, tcb);
@@ -353,7 +356,7 @@ void _OS_wait_delegate(_OS_SVC_StackFrame_t * const stack) {
 		// return 0 to indicate success
 		stack->r0 = 0;
 	}
-	//OS_yield();
+	
 	/* Set PendSV bit for context switch */
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
@@ -369,26 +372,22 @@ void _OS_sleepHeap_delegate(_OS_SVC_StackFrame_t * const stack) {
 		OS_TCB_t * tcb = OS_currentTCB();
 		
 		/* Acquire the task_list of correct priority from the schedule */
-		// DANGER ZONE
 		uint32_t tcbPriority = tcb->priority;
 		_OS_tasklist_t * task_list_ptr = schedule.priorityArray[tcbPriority];
-		// DANGER ZONE
 		
 		/* Add the tcb to the sleepHeap*/
 		list_remove(task_list_ptr, tcb);
 		
-		// DANGER ZONE
-		OS_semBinary_acquire(&sleepHeap.accessToken);
+		/* Semaphor access not required in Handler Mode code */
+		//OS_semBinary_acquire(&sleepHeap.accessToken);
 		heap_insert(&sleepHeap, tcb);
-		OS_semBinary_release(&sleepHeap.accessToken);
-		// DANGER ZONE
+		//OS_semBinary_release(&sleepHeap.accessToken);
 		
 		// return 0 to indicate success
 		stack->r0 = 0;
 	}
 	
 	/* Set PendSV bit for context switch */
-	//_currentTCB->state |= TASK_STATE_YIELD;
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 
 }

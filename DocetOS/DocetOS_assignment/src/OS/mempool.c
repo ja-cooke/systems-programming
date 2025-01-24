@@ -39,7 +39,6 @@ static void * poolStaticAlloc(size_t bytes) {
 	* This function is run once prior to OS_start() so synchronisation is not 
 	* required.
 	*/
-
 	if(pool_index < bytes){
 		return 0;
 	}
@@ -103,15 +102,14 @@ void pool_init(mempool_t *pool, size_t blocksize, size_t blocks){
 	 * in blocks of the size of the data-structure it holds.
 	 */
 	
-	/* blocks + 1 because 1 extra block is needed to store the pool head */
-	if (memoryFree > (blocks + 1) * blocksize) {
+	if (memoryFree > (blocks) * blocksize) {
 		/* 
 		 * A counting semaphore keeps a thread-safe record of the number of 
 	   * available memory blocks at all times.
 	   */
 		static OS_semaphore_t blocksFree = OS_SEMAPHORE_STATIC_INITIALISER;
 		blocksFree.available = (uint32_t)blocks;
-		memoryFree = totalMemory - ((blocks + 1) * blocksize);
+		memoryFree = totalMemory - ((blocks) * blocksize);
 	
 		// Round blocksize up to nearest multiple of 8 (one byte)
 		blocksize = (blocksize + 7UL) & alignmentMask;
@@ -122,7 +120,7 @@ void pool_init(mempool_t *pool, size_t blocksize, size_t blocks){
 		/* If the poolStaticAlloc fails pool->head = 0 */
 		if(pool->head){
 			/* Creates an array of block indices and adds this to the pool list*/
-			for (size_t i = 0; i < (blocks + 1); ++i) {
+			for (size_t i = 0; i < (blocks); ++i) {
 				pool_index = i * blocksize;
 				pool_add(pool, &pool[pool_index]);
 			}
@@ -134,6 +132,7 @@ void pool_init(mempool_t *pool, size_t blocksize, size_t blocks){
 		}
 	}
 	else {
+		/* Insufficient memory left in the partition: does not make a pool */
 		pool = 0;
 	}
 }

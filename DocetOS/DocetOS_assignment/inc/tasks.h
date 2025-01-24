@@ -18,9 +18,9 @@ typedef struct {
 } packet_t;
 
 void initialiseOSResources(void);
-void task1(void const *const args);
-void task2(void const *const args);
-void task3(void const *const args);
+//void task1(void const *const args);
+//void task2(void const *const args);
+//void task3(void const *const args);
 
 void sleepTest1(void const *const args);
 void sleepTest2(void const *const args);
