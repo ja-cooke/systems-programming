@@ -38,20 +38,20 @@ void sleepTest1(void const *const args) {
 	
 	while(1) {
 		uint32_t runtimeID = sleepID++;
-		OS_mutex_acquire(&mutex_p1);
+		OS_mutex_acquire(&mutex_p0);
 		printf("--DO_NOT_INTERRUPT--");
 		uint32_t currentTime = OS_elapsedTicks();
 		uint32_t sleepTime = 100;
 		printf("ID : %"PRIu32". Sleep Time : %" PRIu32 ". Current Time : %"PRIu32".\r\n", runtimeID, sleepTime, currentTime);
-		OS_mutex_release(&mutex_p1);
+		OS_mutex_release(&mutex_p0);
 		
 		OS_sleep(sleepTime);
 		
-		OS_mutex_acquire(&mutex_p1);
+		OS_mutex_acquire(&mutex_p0);
 		printf("--DO_NOT_INTERRUPT--");
 		currentTime = OS_elapsedTicks();
 		printf("ID : %"PRIu32". Waking Up Time : %"PRIu32". Current Time : %"PRIu32".\r\n", runtimeID, sleepTime, currentTime);
-		OS_mutex_release(&mutex_p1);
+		OS_mutex_release(&mutex_p0);
 	}
 }
 

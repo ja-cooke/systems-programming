@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\DocetOS.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\DocetOS.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Fri Jan 24 01:18:54 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Fri Jan 24 01:57:49 2025
 <BR><P>
 <H3>Maximum Stack Usage =        536 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -135,13 +135,13 @@ Function Pointers
  <LI><a href="#[5c]">__main</a> from __main.o(!!!main) referenced from startup_stm32f407xx.o(.text)
  <LI><a href="#[5f]">_get_lc_ctype</a> from lc_ctype_c.o(locale$$code) referenced from rt_ctype_table.o(.text)
  <LI><a href="#[5e]">_printf_input_char</a> from _printf_char_common.o(.text) referenced from _printf_char_common.o(.text)
- <LI><a href="#[64]">chattyTask</a> from tasks.o(.text.chattyTask) referenced 2 times from main.o(.text.main)
+ <LI><a href="#[63]">chattyTask</a> from tasks.o(.text.chattyTask) referenced 2 times from main.o(.text.main)
  <LI><a href="#[6d]">comparator</a> from scheduler.o(.text.comparator) referenced from scheduler.o(.data.sleepHeap)
  <LI><a href="#[5d]">fputc</a> from fputc.o(i.fputc) referenced from _printf_char_file.o(.text)
- <LI><a href="#[63]">greedyTask</a> from tasks.o(.text.greedyTask) referenced 2 times from main.o(.text.main)
- <LI><a href="#[65]">listeningTask</a> from tasks.o(.text.listeningTask) referenced 2 times from main.o(.text.main)
- <LI><a href="#[66]">lowPriorityTask</a> from tasks.o(.text.lowPriorityTask) referenced 2 times from main.o(.text.main)
- <LI><a href="#[62]">sleepTest2</a> from tasks.o(.text.sleepTest2) referenced 2 times from main.o(.text.main)
+ <LI><a href="#[62]">greedyTask</a> from tasks.o(.text.greedyTask) referenced 2 times from main.o(.text.main)
+ <LI><a href="#[64]">listeningTask</a> from tasks.o(.text.listeningTask) referenced 2 times from main.o(.text.main)
+ <LI><a href="#[65]">lowPriorityTask</a> from tasks.o(.text.lowPriorityTask) referenced 2 times from main.o(.text.main)
+ <LI><a href="#[66]">sleepTest1</a> from tasks.o(.text.sleepTest1) referenced 2 times from main.o(.text.main)
  <LI><a href="#[61]">veryHighPriorityTask</a> from tasks.o(.text.veryHighPriorityTask) referenced 2 times from main.o(.text.main)
 </UL>
 <P>
@@ -483,7 +483,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[121]"></a>rand</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, rand.o(.emb_text))
-<BR><BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
+<BR><BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
 </UL>
 
 <P><STRONG><a name="[0]"></a>Reset_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
@@ -783,11 +783,11 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_file
 </UL>
-<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lowPriorityTask
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listeningTask
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
-<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
-<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sleepTest2
+<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sleepTest1
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lowPriorityTask
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listeningTask
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
 <LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;veryHighPriorityTask
 <LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initialiseOSResources
 </UL>
@@ -807,7 +807,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[ce]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rt_memclr_w.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
+<BR><BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_initialiseTCB
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fclose_internal
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fopen
@@ -828,8 +828,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
-<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
+<BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
 </UL>
 
 <P><STRONG><a name="[11e]"></a>strcmp</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, strcmpv7em.o(.text))
@@ -1499,8 +1499,8 @@ Global Symbols
 <P><STRONG><a name="[10e]"></a>OS_elapsedTicks</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, os.o(.text.OS_elapsedTicks))
 <BR><BR>[Called By]<UL><LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_wake
 <LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_sleep
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lowPriorityTask
-<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sleepTest2
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sleepTest1
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lowPriorityTask
 </UL>
 
 <P><STRONG><a name="[12b]"></a>OS_initCommsQueue</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, queue.o(.text.OS_initCommsQueue))
@@ -1523,11 +1523,11 @@ Global Symbols
 <LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_currentTCB
 <LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_svc_1
 </UL>
-<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lowPriorityTask
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listeningTask
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
-<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
-<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sleepTest2
+<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sleepTest1
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lowPriorityTask
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listeningTask
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
 </UL>
 
 <P><STRONG><a name="[fe]"></a>OS_mutex_release</STRONG> (Thumb, 58 bytes, Stack size 16 bytes, mutex.o(.text.OS_mutex_release))
@@ -1536,11 +1536,11 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_notifyAll
 <LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_currentTCB
 </UL>
-<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lowPriorityTask
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listeningTask
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
-<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
-<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sleepTest2
+<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sleepTest1
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lowPriorityTask
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listeningTask
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
 </UL>
 
 <P><STRONG><a name="[ff]"></a>OS_notifyAll</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, scheduler.o(.text.OS_notifyAll))
@@ -1562,7 +1562,7 @@ Global Symbols
 <LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_svc_1
 <LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getNotificationCounter
 </UL>
-<BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listeningTask
+<BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listeningTask
 </UL>
 
 <P><STRONG><a name="[105]"></a>OS_semBinary_acquire</STRONG> (Thumb, 72 bytes, Stack size 24 bytes, semaphore.o(.text.OS_semBinary_acquire))
@@ -1608,7 +1608,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;queue_put
 </UL>
-<BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
+<BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
 </UL>
 
 <P><STRONG><a name="[10c]"></a>OS_sleep</STRONG> (Thumb, 86 bytes, Stack size 32 bytes, sleep.o(.text.OS_sleep))
@@ -1616,14 +1616,14 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_svc_1
 <LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getSleepCounter
-<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_elapsedTicks
 <LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_currentTCB
+<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_elapsedTicks
 </UL>
-<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lowPriorityTask
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listeningTask
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
-<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
-<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sleepTest2
+<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sleepTest1
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lowPriorityTask
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listeningTask
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
 <LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;veryHighPriorityTask
 </UL>
 
@@ -1764,7 +1764,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__default_signal_display
 </UL>
 
-<P><STRONG><a name="[64]"></a>chattyTask</STRONG> (Thumb, 246 bytes, Stack size 40 bytes, tasks.o(.text.chattyTask))
+<P><STRONG><a name="[63]"></a>chattyTask</STRONG> (Thumb, 246 bytes, Stack size 40 bytes, tasks.o(.text.chattyTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 184 + Unknown Stack Size
 <LI>Call Chain = chattyTask &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1804,7 +1804,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_sleep
 </UL>
 
-<P><STRONG><a name="[63]"></a>greedyTask</STRONG> (Thumb, 222 bytes, Stack size 392 bytes, tasks.o(.text.greedyTask))
+<P><STRONG><a name="[62]"></a>greedyTask</STRONG> (Thumb, 222 bytes, Stack size 392 bytes, tasks.o(.text.greedyTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 536 + Unknown Stack Size
 <LI>Call Chain = greedyTask &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1852,7 +1852,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[65]"></a>listeningTask</STRONG> (Thumb, 226 bytes, Stack size 40 bytes, tasks.o(.text.listeningTask))
+<P><STRONG><a name="[64]"></a>listeningTask</STRONG> (Thumb, 226 bytes, Stack size 40 bytes, tasks.o(.text.listeningTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 184 + Unknown Stack Size
 <LI>Call Chain = listeningTask &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1865,14 +1865,14 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
-<P><STRONG><a name="[66]"></a>lowPriorityTask</STRONG> (Thumb, 58 bytes, Stack size 24 bytes, tasks.o(.text.lowPriorityTask))
+<P><STRONG><a name="[65]"></a>lowPriorityTask</STRONG> (Thumb, 58 bytes, Stack size 24 bytes, tasks.o(.text.lowPriorityTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
 <LI>Call Chain = lowPriorityTask &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf
 <LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_sleep
-<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_elapsedTicks
 <LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_mutex_release
+<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_elapsedTicks
 <LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_mutex_acquire
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
@@ -1896,8 +1896,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_semaphore_acquire
 </UL>
-<BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
-<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
+<BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chattyTask
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
 </UL>
 
 <P><STRONG><a name="[124]"></a>pool_deallocate</STRONG> (Thumb, 52 bytes, Stack size 24 bytes, mempool.o(.text.pool_deallocate))
@@ -1906,8 +1906,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_semaphore_release
 </UL>
 <BR>[Called By]<UL><LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pool_init
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listeningTask
-<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listeningTask
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;greedyTask
 </UL>
 
 <P><STRONG><a name="[12a]"></a>pool_init</STRONG> (Thumb, 200 bytes, Stack size 32 bytes, mempool.o(.text.pool_init))
@@ -1939,14 +1939,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_sendPacket
 </UL>
 
-<P><STRONG><a name="[62]"></a>sleepTest2</STRONG> (Thumb, 138 bytes, Stack size 32 bytes, tasks.o(.text.sleepTest2))
+<P><STRONG><a name="[66]"></a>sleepTest1</STRONG> (Thumb, 136 bytes, Stack size 32 bytes, tasks.o(.text.sleepTest1))
 <BR><BR>[Stack]<UL><LI>Max Depth = 176 + Unknown Stack Size
-<LI>Call Chain = sleepTest2 &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
+<LI>Call Chain = sleepTest1 &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf
 <LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_sleep
-<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_elapsedTicks
 <LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_mutex_release
+<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_elapsedTicks
 <LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_mutex_acquire
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)

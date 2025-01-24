@@ -400,11 +400,6 @@
               <FilePath>.\src\mode_utils_asm.s</FilePath>
             </File>
             <File>
-              <FileName>mutex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\OS\mutex.c</FilePath>
-            </File>
-            <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\tasks.c</FilePath>
@@ -414,6 +409,11 @@
         <Group>
           <GroupName>OS</GroupName>
           <Files>
+            <File>
+              <FileName>mutex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\OS\mutex.c</FilePath>
+            </File>
             <File>
               <FileName>scheduler.c</FileName>
               <FileType>1</FileType>
