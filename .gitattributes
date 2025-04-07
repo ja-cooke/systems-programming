@@ -1,8 +1,9 @@
-*.html linguist-detectable=false
-*.htm linguist-detectable=false
 *.c linguist-language=C
 *.h linguist-language=C
 *.cpp linguist-language=C++
+*.s linguist-language=Assembly
+*.html linguist-detectable=false
+*.htm linguist-detectable=false
 *.make linguist-detectable=false
 *.drawio linguist-detectable=false
 *.uvguix linguist-detectable=false
@@ -14,3 +15,4 @@
 *.map linguist-detectable=false
 *.lst linguist-detectable=false
 *.dbgconf linguist-detectable=false
+*.d linguist-detectable=false
