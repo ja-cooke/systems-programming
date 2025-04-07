@@ -16,3 +16,4 @@
 *.lst linguist-detectable=false
 *.dbgconf linguist-detectable=false
 *.d linguist-detectable=false
+*.roff linguist-detectable=false
