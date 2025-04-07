@@ -3,3 +3,13 @@
 *.h linguist-language=C
 *.cpp linguist-language=C++
 *.make linguist-detectable=false
+*.drawio linguist-detectable=false
+*.uvguix linguist-detectable=false
+*'.Jon Cooke' linguist-detectable=false
+*.jac696 linguist-detectable=false
+*.uvprojx linguist-detectable=false
+*.uvoptx linguist-detectable=false
+*.scvd linguist-detectable=false
+*.map linguist-detectable=false
+*.lst linguist-detectable=false
+*.dbgconf linguist-detectable=false
