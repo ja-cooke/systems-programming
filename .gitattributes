@@ -19,3 +19,4 @@
 *.roff linguist-detectable=false
 *.zip linguist-detectable=false
 *.pdf linguist-detectable=false
+Roff linguist-detectable=false
