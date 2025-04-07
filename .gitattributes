@@ -17,3 +17,5 @@
 *.dbgconf linguist-detectable=false
 *.d linguist-detectable=false
 *.roff linguist-detectable=false
+*.zip linguist-detectable=false
+*.pdf linguist-detectable=false
